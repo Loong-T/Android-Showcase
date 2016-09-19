@@ -4,6 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 ext {
     supportVersion = '24.2.1'
     rxlifecycleVersion = '0.7.0'
+    retrofitVersion = '2.1.0'
 }
 
 android {
@@ -45,7 +46,9 @@ dependencies {
     compile "com.trello:rxlifecycle-android:$project.ext.rxlifecycleVersion"
 
     // IO
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-moshi:$project.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$project.ext.retrofitVersion"
     compile 'com.squareup.moshi:moshi:1.2.0'
 
     testCompile 'junit:junit:4.12'

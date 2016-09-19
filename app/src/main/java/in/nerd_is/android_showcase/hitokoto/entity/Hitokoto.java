@@ -1,5 +1,7 @@
 package in.nerd_is.android_showcase.hitokoto.entity;
 
+import com.squareup.moshi.Json;
+
 /**
  * Created by Xuqiang ZHENG on 2016/9/18.
  */
@@ -9,7 +11,8 @@ public class Hitokoto {
     public String type;
     public String from;
     public String creator;
-    public long cearted_at;
+    @Json(name = "cearted_at")
+    public Long createdAt;
 }
 /*
     {

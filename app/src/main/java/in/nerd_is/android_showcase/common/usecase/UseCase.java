@@ -10,17 +10,17 @@ import rx.subscriptions.Subscriptions;
 
 public abstract class UseCase<T> {
 
-    private Scheduler mBackgroundScheduler;
-    private Scheduler mResponseScheduler;
-    private Observable.Transformer mLifecycleTransformer;
+    private Scheduler backgroundScheduler;
+    private Scheduler responseScheduler;
+    private Observable.Transformer lifecycleTransformer;
     private Subscription subscription = Subscriptions.empty();
 
     public UseCase(@NonNull Scheduler backgroundScheduler,
                    @NonNull Scheduler responseScheduler,
                    @NonNull Observable.Transformer lifecycleTransformer) {
-        mBackgroundScheduler = backgroundScheduler;
-        mResponseScheduler = responseScheduler;
-        mLifecycleTransformer = lifecycleTransformer;
+        this.backgroundScheduler = backgroundScheduler;
+        this.responseScheduler = responseScheduler;
+        this.lifecycleTransformer = lifecycleTransformer;
     }
 
     protected abstract Observable buildUseCaseObservable(T param);
@@ -28,9 +28,9 @@ public abstract class UseCase<T> {
     @SuppressWarnings("unchecked")
     public void execute(T param, Subscriber subscriber) {
         subscription = buildUseCaseObservable(param)
-                .subscribeOn(mBackgroundScheduler)
-                .observeOn(mResponseScheduler)
-                .compose(mLifecycleTransformer)
+                .subscribeOn(backgroundScheduler)
+                .observeOn(responseScheduler)
+                .compose(lifecycleTransformer)
                 .subscribe(subscriber);
     }
 
