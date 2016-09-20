@@ -8,7 +8,7 @@ import java.util.List;
 
 import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 import in.nerd_is.android_showcase.hitokoto.repository.HitokotoDataSource;
-import in.nerd_is.android_showcase.hitokoto.repository.RemoteHitokotoRepository;
+import in.nerd_is.android_showcase.hitokoto.repository.HitokotoRemoteRepository;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -25,7 +25,7 @@ public class RemoteUnitTest {
 
     @BeforeClass
     public static void setUpClass() {
-        remoteDataSource = new RemoteHitokotoRepository();
+        remoteDataSource = new HitokotoRemoteRepository();
     }
 
     @Before

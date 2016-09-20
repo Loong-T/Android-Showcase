@@ -1,7 +1,5 @@
 package in.nerd_is.android_showcase.common.usecase;
 
-import android.support.annotation.NonNull;
-
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
@@ -15,9 +13,9 @@ public abstract class UseCase<T> {
     private Observable.Transformer lifecycleTransformer;
     private Subscription subscription = Subscriptions.empty();
 
-    public UseCase(@NonNull Scheduler backgroundScheduler,
-                   @NonNull Scheduler responseScheduler,
-                   @NonNull Observable.Transformer lifecycleTransformer) {
+    public UseCase(Scheduler backgroundScheduler,
+                   Scheduler responseScheduler,
+                   Observable.Transformer lifecycleTransformer) {
         this.backgroundScheduler = backgroundScheduler;
         this.responseScheduler = responseScheduler;
         this.lifecycleTransformer = lifecycleTransformer;

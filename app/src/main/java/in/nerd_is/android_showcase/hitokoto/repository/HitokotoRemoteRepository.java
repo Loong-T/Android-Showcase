@@ -7,7 +7,7 @@ import rx.Observable;
 /**
  * Created by Xuqiang ZHENG on 2016/9/18.
  */
-public class RemoteHitokotoRepository implements HitokotoDataSource {
+public class HitokotoRemoteRepository implements HitokotoDataSource {
 
     private HitokotoApi api = new HitokotoApi();
 
