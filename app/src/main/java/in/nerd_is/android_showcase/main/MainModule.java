@@ -2,6 +2,7 @@ package in.nerd_is.android_showcase.main;
 
 import dagger.Module;
 import dagger.Provides;
+import in.nerd_is.android_showcase.common.annotation.di.ActivityScope;
 
 /**
  * Created by Xuqiang ZHENG on 2016/9/20.
@@ -15,8 +16,12 @@ public class MainModule {
         this.view = view;
     }
 
-    @Provides
-    public MainContract.View provideVeiw() {
+    @Provides @ActivityScope
+    public MainContract.View provideView() {
         return view;
+    }
+
+    @Provides @ActivityScope MainPresenter providePresenter() {
+        return new MainPresenter(view);
     }
 }

@@ -8,16 +8,20 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.R;
+import in.nerd_is.android_showcase.ThisApplication;
 import in.nerd_is.android_showcase.common.BaseActivity;
+import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 
 public class MainActivity extends BaseActivity
         implements MainContract.View {
 
     private DrawerLayout drawer;
+    private TextView hitokotoTv;
 
     @Inject MainPresenter presenter;
 
@@ -28,7 +32,6 @@ public class MainActivity extends BaseActivity
         initView();
         inject();
 
-        presenter = new MainPresenter(this);
         presenter.loadHitokoto();
     }
 
@@ -48,10 +51,21 @@ public class MainActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
             return true;
         });
+
+        hitokotoTv = find(R.id.hitokoto_tv);
     }
 
     private void inject() {
+        DaggerMainComponent.builder()
+                .applicationComponent(ThisApplication.INSTANCE.appComponent)
+                .mainModule(new MainModule(this))
+                .build()
+                .inject(this);
+    }
 
+    @Override
+    public void showHitokoto(Hitokoto hitokoto) {
+        hitokotoTv.setText(hitokoto.hitokoto);
     }
 
     @Override
