@@ -16,7 +16,7 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
 /**
  * Created by Xuqiang ZHENG on 2016/9/20.
  */
-@Module(subcomponents = MainComponent.class)
+@Module
 public class AppModule {
 
     private ThisApplication thisApplication;

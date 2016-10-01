@@ -17,7 +17,7 @@ public class ThisApplication extends Application {
         INSTANCE = this;
 
         appComponent = DaggerAppComponent.builder()
-                .applicationModule(new AppModule(this))
+                .appModule(new AppModule(this))
                 .build();
     }
 }

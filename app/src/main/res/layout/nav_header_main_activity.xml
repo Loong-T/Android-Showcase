@@ -16,7 +16,7 @@
         android:id="@+id/hitokoto_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Android Studio" />
 
 </LinearLayout>

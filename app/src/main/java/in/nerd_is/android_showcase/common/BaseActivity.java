@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import rx.Observable;
 
 /**
  * Created by Xuqiang ZHENG on 2016/9/18.
@@ -52,5 +55,9 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     @Override
     public void snackbar(@StringRes int resId) {
         Snackbar.make(contentView, resId, Snackbar.LENGTH_SHORT).show();
+    }
+
+    protected Observable.Transformer bindUntilDestory() {
+        return bindUntilEvent(ActivityEvent.DESTROY);
     }
 }
