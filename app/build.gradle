@@ -1,9 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 
 ext {
     supportVersion = '24.2.1'
     rxlifecycleVersion = '0.7.0'
+    retrofitVersion = '2.1.0'
+    daggerVersion = '2.7'
 }
 
 android {
@@ -23,6 +26,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -31,12 +38,24 @@ dependencies {
     // support library
     compile "com.android.support:appcompat-v7:$project.ext.supportVersion"
     compile "com.android.support:design:$project.ext.supportVersion"
+    compile "com.android.support:support-annotations:$project.ext.supportVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
 
     // reactive
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.0'
     compile "com.trello:rxlifecycle:$project.ext.rxlifecycleVersion"
     compile "com.trello:rxlifecycle-android:$project.ext.rxlifecycleVersion"
+    compile "com.trello:rxlifecycle-components:$project.ext.rxlifecycleVersion"
+
+    // IO
+    compile "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-moshi:$project.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$project.ext.retrofitVersion"
+    compile 'com.squareup.moshi:moshi:1.2.0'
+
+    compile "com.google.dagger:dagger:$project.ext.daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$project.ext.daggerVersion"
 
     testCompile 'junit:junit:4.12'
 
