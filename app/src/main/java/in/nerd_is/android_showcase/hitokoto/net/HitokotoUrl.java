@@ -5,4 +5,6 @@ package in.nerd_is.android_showcase.hitokoto.net;
  */
 public interface HitokotoUrl {
     String BASE_URL = "http://api.hitokoto.cn/";
+
+    String ROOT = ".";
 }

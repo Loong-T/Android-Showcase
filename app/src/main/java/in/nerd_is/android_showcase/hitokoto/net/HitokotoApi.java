@@ -16,7 +16,7 @@ public class HitokotoApi {
     }
 
     private interface Api {
-        @GET(".")
+        @GET(HitokotoUrl.ROOT)
         Observable<Hitokoto> getHitokoto();
     }
 }
