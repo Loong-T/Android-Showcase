@@ -11,7 +11,7 @@ ext {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "in.nerd_is.android_showcase"
         minSdkVersion 15
@@ -29,6 +29,14 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        test {
+            java {
+                srcDirs += 'src/integrationTest/java'
+            }
+        }
     }
 }
 
