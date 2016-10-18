@@ -2,6 +2,7 @@ package in.nerd_is.android_showcase.zhihu_daily.net;
 
 import in.nerd_is.android_showcase.common.net.RetrofitUtils;
 import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
+import retrofit2.http.GET;
 import rx.Observable;
 
 /**
@@ -16,6 +17,7 @@ public class ZhihuDailyApi {
     }
 
     private interface Api {
+        @GET(ZhihuDailyUrl.LATEST)
         Observable<LatestNews> getLatestNews();
     }
 }

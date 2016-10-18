@@ -20,12 +20,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class HitokotoRemoteTest {
 
-    private static HitokotoDataSource remoteDataSource;
+    private static HitokotoDataSource dataSource;
     private TestSubscriber<Hitokoto> testSubscriber;
 
     @BeforeClass
-    public static void setUpClass() {
-        remoteDataSource = new HitokotoRemoteRepository();
+    public static void setupDataSource() {
+        dataSource = new HitokotoRemoteRepository();
     }
 
     @Before
@@ -34,8 +34,8 @@ public class HitokotoRemoteTest {
     }
 
     @Test
-    public void getHitokoto_notNullResult() {
-        remoteDataSource.getHitokoto()
+    public void getHitokoto_resultNotNull() {
+        dataSource.getHitokoto()
                 .subscribe(testSubscriber);
 
         testSubscriber.assertCompleted();
