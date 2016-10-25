@@ -13,7 +13,7 @@ import in.nerd_is.android_showcase.hitokoto.repository.HitokotoRemoteRepository;
 @Module
 public class HitokotoModule {
     @Provides @Singleton
-    public HitokotoDataSource provideGetHitokoto() {
+    public static HitokotoDataSource provideGetHitokoto() {
         return new HitokotoRemoteRepository();
     }
 }

@@ -16,7 +16,9 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
 /**
  * Created by Xuqiang ZHENG on 2016/9/20.
  */
-@Module
+@Module(subcomponents = {
+        MainComponent.class,
+})
 public class AppModule {
 
     private ThisApplication thisApplication;
@@ -31,12 +33,12 @@ public class AppModule {
     }
 
     @Provides @Named(TAG_IO) @Singleton
-    public Scheduler provideIoScheduler() {
+    public static Scheduler provideIoScheduler() {
         return Schedulers.io();
     }
 
     @Provides @Named(TAG_MAIN) @Singleton
-    public Scheduler provideMainScheduler() {
+    public static Scheduler provideMainScheduler() {
         return AndroidSchedulers.mainThread();
     }
 }

@@ -6,20 +6,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.R;
-import in.nerd_is.android_showcase.ThisApplication;
 import in.nerd_is.android_showcase.common.BaseActivity;
+import in.nerd_is.android_showcase.common.di.activity.HasActivitySubcomponentBuilders;
 import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 
-public class MainActivity extends BaseActivity
-        implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View {
 
     private DrawerLayout drawer;
     private TextView hitokotoTv;
@@ -31,7 +28,6 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
-        inject();
 
         presenter.loadHitokoto();
     }
@@ -55,12 +51,12 @@ public class MainActivity extends BaseActivity
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
     }
 
-    private void inject() {
-        ThisApplication.INSTANCE.appComponent
-                .mainComponentBuilder()
-                .mainModule(new MainModule(this, this.bindUntilDestory()))
+    @Override
+    protected void inject(HasActivitySubcomponentBuilders builders) {
+        ((MainComponent.Builder) builders.get(getClass()))
+                .activityModule(new MainModule(this, bindUntilDestroy()))
                 .build()
-                .inject(this);
+                .injectMembers(this);
     }
 
     @Override
