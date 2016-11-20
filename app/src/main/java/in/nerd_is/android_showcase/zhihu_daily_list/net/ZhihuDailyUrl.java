@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.zhihu_daily.net;
+package in.nerd_is.android_showcase.zhihu_daily_list.net;
 
 /**
  * Created by Xuqiang ZHENG on 2016/10/7.

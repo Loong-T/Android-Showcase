@@ -1,7 +1,7 @@
-package in.nerd_is.android_showcase.zhihu_daily.net;
+package in.nerd_is.android_showcase.zhihu_daily_list.net;
 
 import in.nerd_is.android_showcase.common.net.RetrofitUtils;
-import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
+import in.nerd_is.android_showcase.zhihu_daily_list.entity.LatestNews;
 import retrofit2.http.GET;
 import rx.Observable;
 

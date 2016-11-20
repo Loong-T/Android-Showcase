@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.zhihu_daily.net;
+package in.nerd_is.android_showcase.zhihu_daily_list.net;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
