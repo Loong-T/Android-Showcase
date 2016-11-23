@@ -10,11 +10,10 @@ import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 public interface MainContract {
 
     interface View extends BaseContract.View {
-
         void showHitokoto(Hitokoto hitokoto);
     }
 
-    interface Presenter extends BaseContract.Presenter {
+    interface Presenter extends BaseContract.Presenter<View> {
         void loadHitokoto();
     }
 }

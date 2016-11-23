@@ -12,14 +12,18 @@ public class MainPresenter implements MainContract.Presenter {
     private MainContract.View view;
     private GetHitokoto getHitokoto;
 
-    public MainPresenter(MainContract.View view, GetHitokoto getHitokoto) {
-        this.view = view;
+    public MainPresenter(GetHitokoto getHitokoto) {
         this.getHitokoto = getHitokoto;
     }
 
     @Override
+    public void setView(MainContract.View view) {
+        this.view = view;
+    }
+
+    @Override
     public void loadHitokoto() {
-        getHitokoto.execute(null, new HitokotoSubscriber());
+        getHitokoto.execute(null, view.lifecycleTransformer(), new HitokotoSubscriber());
     }
 
     private class HitokotoSubscriber extends Subscriber<Hitokoto> {

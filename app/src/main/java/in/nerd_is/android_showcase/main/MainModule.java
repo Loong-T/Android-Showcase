@@ -14,13 +14,10 @@ import rx.Observable;
 public class MainModule extends ActivityModule<MainActivity> {
 
     private MainContract.View view;
-    private Observable.Transformer transformer;
 
-    public MainModule(MainActivity activity,
-                      Observable.Transformer transformer) {
+    public MainModule(MainActivity activity) {
         super(activity);
         this.view = activity;
-        this.transformer = transformer;
     }
 
     @Provides @ActivityScope
@@ -30,11 +27,6 @@ public class MainModule extends ActivityModule<MainActivity> {
 
     @Provides @ActivityScope
     MainPresenter providePresenter(GetHitokoto getHitokoto) {
-        return new MainPresenter(view, getHitokoto);
-    }
-
-    @Provides @ActivityScope
-    Observable.Transformer provideTransformer() {
-        return transformer;
+        return new MainPresenter(getHitokoto);
     }
 }

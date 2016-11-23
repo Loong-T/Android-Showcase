@@ -46,14 +46,14 @@ public class MainPresenterUnitTest {
     @Before
     public void setupPresenter() {
         MockitoAnnotations.initMocks(this);
-        presenter = new MainPresenter(view, getHitokoto);
+        presenter = new MainPresenter(getHitokoto);
     }
 
     @Test
     public void loadHitokoto_showHitokoto() {
         presenter.loadHitokoto();
 
-        verify(getHitokoto).execute(isNull(), subscriberCaptor.capture());
+        verify(getHitokoto).execute(isNull(), view.lifecycleTransformer(), subscriberCaptor.capture());
         subscriberCaptor.getValue().onNext(HITOKOTO);
 
         verify(view).showHitokoto(HITOKOTO);

@@ -16,7 +16,7 @@ import rx.Observable;
  * Created by Xuqiang ZHENG on 2016/10/23.
  */
 
-public class BaseFragment extends RxFragment implements BaseContract.View {
+public abstract class BaseFragment extends RxFragment implements BaseContract.View {
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     protected <T extends View> T find(@IdRes int viewId) {
@@ -45,7 +45,7 @@ public class BaseFragment extends RxFragment implements BaseContract.View {
         Snackbar.make(getView(), resId, Snackbar.LENGTH_SHORT).show();
     }
 
-    protected Observable.Transformer bindUntilDestory() {
+    protected Observable.Transformer bindUntilDestroy() {
         return bindUntilEvent(FragmentEvent.DESTROY);
     }
 }

@@ -55,7 +55,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
         Snackbar.make(contentView, resId, Snackbar.LENGTH_SHORT).show();
     }
 
-    protected Observable.Transformer bindUntilDestroy() {
+    public Observable.Transformer bindUntilDestroy() {
         return bindUntilEvent(ActivityEvent.DESTROY);
     }
 

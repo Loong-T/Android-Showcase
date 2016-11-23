@@ -15,13 +15,16 @@ import in.nerd_is.android_showcase.common.BaseActivity;
 import in.nerd_is.android_showcase.common.di.activity.HasActivitySubcomponentBuilders;
 import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 import in.nerd_is.android_showcase.utils.ViewUtils;
+import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
+import rx.Observable;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
     private DrawerLayout drawer;
     private TextView hitokotoTv;
 
-    @Inject MainPresenter presenter;
+    @Inject
+    MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +33,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         initView();
 
         presenter.loadHitokoto();
+
+        showFragment();
     }
 
-    public void initView() {
+    private void initView() {
         Toolbar toolbar = find(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,10 +56,27 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
     }
 
+    @Inject
+    void setupPresenter() {
+        presenter.setView(this);
+    }
+
+    @Override
+    public Observable.Transformer lifecycleTransformer() {
+        return bindUntilDestroy();
+    }
+
+    private void showFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_main_activity, new ZhihuDailyListFragment())
+                .commit();
+    }
+
     @Override
     protected void inject(HasActivitySubcomponentBuilders builders) {
         ((MainComponent.Builder) builders.get(getClass()))
-                .activityModule(new MainModule(this, bindUntilDestroy()))
+                .activityModule(new MainModule(this))
                 .build()
                 .injectMembers(this);
     }
