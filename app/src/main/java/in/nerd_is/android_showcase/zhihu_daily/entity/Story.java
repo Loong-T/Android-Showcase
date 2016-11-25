@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.zhihu_daily_list.entity;
+package in.nerd_is.android_showcase.zhihu_daily.entity;
 
 import java.util.List;
 

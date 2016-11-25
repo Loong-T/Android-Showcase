@@ -5,12 +5,14 @@ import dagger.Provides;
 import in.nerd_is.android_showcase.common.di.activity.ActivityModule;
 import in.nerd_is.android_showcase.common.di.annotation.ActivityScope;
 import in.nerd_is.android_showcase.hitokoto.usecase.GetHitokoto;
-import rx.Observable;
+import in.nerd_is.android_showcase.zhihu_daily.ZhihuDailyModule;
+import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListPresenter;
+import in.nerd_is.android_showcase.zhihu_daily.usecase.GetZhihuDailyStory;
 
 /**
  * Created by Xuqiang ZHENG on 2016/9/20.
  */
-@Module
+@Module(includes = { ZhihuDailyModule.class })
 public class MainModule extends ActivityModule<MainActivity> {
 
     private MainContract.View view;
@@ -26,7 +28,12 @@ public class MainModule extends ActivityModule<MainActivity> {
     }
 
     @Provides @ActivityScope
-    MainPresenter providePresenter(GetHitokoto getHitokoto) {
+    MainPresenter provideMainPresenter(GetHitokoto getHitokoto) {
         return new MainPresenter(getHitokoto);
+    }
+
+    @Provides @ActivityScope
+    ZhihuDailyListPresenter provideZhihuDailyListPresenter(GetZhihuDailyStory getZhihuDailyStory) {
+        return new ZhihuDailyListPresenter(getZhihuDailyStory);
     }
 }

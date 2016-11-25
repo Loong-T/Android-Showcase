@@ -1,15 +1,24 @@
 package in.nerd_is.android_showcase.zhihu_daily_list;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
+import in.nerd_is.android_showcase.main.MainActivity;
+import in.nerd_is.android_showcase.main.MainComponent;
+import in.nerd_is.android_showcase.zhihu_daily.entity.Story;
 import rx.Observable;
 
 /**
@@ -19,7 +28,17 @@ import rx.Observable;
 public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyListContract.View {
 
     @Inject
-    ZhihuDailyListContract.Presenter presenter;
+    ZhihuDailyListPresenter presenter;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ZhihuDailyListAdapter adapter;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        ((MainActivity) activity).mainComponent.injectMembers(this);
+    }
 
     @Nullable
     @Override
@@ -27,6 +46,36 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.zhihu_daily_list_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        swipeRefreshLayout = find(R.id.swipe_refresh_layout);
+
+        RecyclerView recyclerView = find(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        adapter = new ZhihuDailyListAdapter(getContext());
+        recyclerView.setAdapter(adapter);
+
+        presenter.loadStories();
+    }
+
+    @Override @Inject
+    public void setupPresenter() {
+        presenter.setView(this);
+    }
+
+    @Override
+    public void refreshing(boolean refreshing) {
+        swipeRefreshLayout.setRefreshing(refreshing);
+    }
+
+    @Override
+    public void showStories(List<Story> stories) {
+        adapter.swap(stories);
     }
 
     @Override

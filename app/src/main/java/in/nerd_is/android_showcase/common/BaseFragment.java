@@ -4,6 +4,7 @@ package in.nerd_is.android_showcase.common;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,6 +44,13 @@ public abstract class BaseFragment extends RxFragment implements BaseContract.Vi
     @Override
     public void snackbar(@StringRes int resId) {
         Snackbar.make(getView(), resId, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+        String message = throwable.getLocalizedMessage();
+        Log.d(getClass().getSimpleName(), message, throwable);
+        toast(message);
     }
 
     protected Observable.Transformer bindUntilDestroy() {

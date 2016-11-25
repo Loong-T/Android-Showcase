@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -53,6 +54,23 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     @Override
     public void snackbar(@StringRes int resId) {
         Snackbar.make(contentView, resId, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+        String message = throwable.getLocalizedMessage();
+        Log.d(getClass().getSimpleName(), message, throwable);
+        toast(message);
+    }
+
+    @Override
+    public void setupPresenter() {
+
+    }
+
+    @Override
+    public Observable.Transformer lifecycleTransformer() {
+        return null;
     }
 
     public Observable.Transformer bindUntilDestroy() {

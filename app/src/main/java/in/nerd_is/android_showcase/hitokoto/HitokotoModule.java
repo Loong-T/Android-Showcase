@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import in.nerd_is.android_showcase.hitokoto.net.HitokotoApi;
 import in.nerd_is.android_showcase.hitokoto.repository.HitokotoDataSource;
 import in.nerd_is.android_showcase.hitokoto.repository.HitokotoRemoteRepository;
 
@@ -13,7 +14,7 @@ import in.nerd_is.android_showcase.hitokoto.repository.HitokotoRemoteRepository;
 @Module
 public class HitokotoModule {
     @Provides @Singleton
-    public static HitokotoDataSource provideGetHitokoto() {
-        return new HitokotoRemoteRepository();
+    public static HitokotoDataSource provideGetHitokoto(HitokotoApi hitokotoApi) {
+        return new HitokotoRemoteRepository(hitokotoApi);
     }
 }

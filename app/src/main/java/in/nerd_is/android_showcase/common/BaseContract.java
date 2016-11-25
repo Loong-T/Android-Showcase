@@ -15,6 +15,10 @@ public interface BaseContract {
         void snackbar(CharSequence text);
         void snackbar(@StringRes int resId);
 
+        void showError(Throwable throwable);
+
+        void setupPresenter();
+
         Observable.Transformer lifecycleTransformer();
     }
 

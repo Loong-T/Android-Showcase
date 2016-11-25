@@ -22,7 +22,7 @@ public class ThisApplication extends Application implements HasActivitySubcompon
     @Inject
     Map<Class<? extends Activity>, ActivityComponentBuilder> activityComponentBuilders;
 
-    private AppComponent appComponent;
+    public AppComponent appComponent;
 
     @Override
     public void onCreate() {

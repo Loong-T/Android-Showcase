@@ -6,6 +6,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import in.nerd_is.android_showcase.main.MainComponent;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -30,6 +32,13 @@ public class AppModule {
     @Provides @Singleton
     public ThisApplication provideApplication() {
         return thisApplication;
+    }
+
+    @Provides @Singleton
+    public OkHttpClient provideOkHttpClient() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.None);
+        return new OkHttpClient.Builder().addInterceptor(interceptor).build();
     }
 
     @Provides @Named(TAG_IO) @Singleton

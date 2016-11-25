@@ -9,7 +9,11 @@ import rx.Observable;
  */
 public class HitokotoRemoteRepository implements HitokotoDataSource {
 
-    private HitokotoApi api = new HitokotoApi();
+    private final HitokotoApi api;
+
+    public HitokotoRemoteRepository(HitokotoApi hitokotoApi) {
+        api = hitokotoApi;
+    }
 
     @Override
     public Observable<Hitokoto> getHitokoto() {

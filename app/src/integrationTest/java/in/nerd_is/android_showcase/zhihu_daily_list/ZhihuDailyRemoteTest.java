@@ -5,9 +5,12 @@ import org.junit.Test;
 
 import java.util.List;
 
-import in.nerd_is.android_showcase.zhihu_daily_list.entity.LatestNews;
-import in.nerd_is.android_showcase.zhihu_daily_list.repository.ZhihuDailyDataSource;
-import in.nerd_is.android_showcase.zhihu_daily_list.repository.ZhihuDailyRemoteRepository;
+import in.nerd_is.android_showcase.common.net.RetrofitModule;
+import in.nerd_is.android_showcase.hitokoto.net.HitokotoApi;
+import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
+import in.nerd_is.android_showcase.zhihu_daily.net.ZhihuDailyApi;
+import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyDataSource;
+import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyRemoteRepository;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,7 +26,8 @@ public class ZhihuDailyRemoteTest {
 
     @BeforeClass
     public static void setupDataSource() {
-        dataSource = new ZhihuDailyRemoteRepository();
+        dataSource = new ZhihuDailyRemoteRepository(
+                new ZhihuDailyApi(new RetrofitModule().provideZhihuDailyRetrofit()));
     }
 
     @Test

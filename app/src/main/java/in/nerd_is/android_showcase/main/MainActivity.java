@@ -26,6 +26,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Inject
     MainPresenter presenter;
 
+    public MainComponent mainComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
     }
 
-    @Inject
-    void setupPresenter() {
+    @Override @Inject
+    public void setupPresenter() {
         presenter.setView(this);
     }
 
@@ -75,10 +77,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     protected void inject(HasActivitySubcomponentBuilders builders) {
-        ((MainComponent.Builder) builders.get(getClass()))
+        mainComponent = ((MainComponent.Builder) builders.get(getClass()))
                 .activityModule(new MainModule(this))
-                .build()
-                .injectMembers(this);
+                .build();
+
+        mainComponent.injectMembers(this);
     }
 
     @Override

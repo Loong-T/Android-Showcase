@@ -1,6 +1,6 @@
-package in.nerd_is.android_showcase.zhihu_daily_list.repository;
+package in.nerd_is.android_showcase.zhihu_daily.repository;
 
-import in.nerd_is.android_showcase.zhihu_daily_list.entity.LatestNews;
+import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
 import rx.Observable;
 
 /**

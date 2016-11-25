@@ -6,7 +6,9 @@ import org.junit.Test;
 
 import java.util.List;
 
+import in.nerd_is.android_showcase.common.net.RetrofitModule;
 import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
+import in.nerd_is.android_showcase.hitokoto.net.HitokotoApi;
 import in.nerd_is.android_showcase.hitokoto.repository.HitokotoDataSource;
 import in.nerd_is.android_showcase.hitokoto.repository.HitokotoRemoteRepository;
 import rx.observers.TestSubscriber;
@@ -25,7 +27,8 @@ public class HitokotoRemoteTest {
 
     @BeforeClass
     public static void setupDataSource() {
-        dataSource = new HitokotoRemoteRepository();
+        dataSource = new HitokotoRemoteRepository(
+                new HitokotoApi(new RetrofitModule().provideHitokotoRetrofit()));
     }
 
     @Before
