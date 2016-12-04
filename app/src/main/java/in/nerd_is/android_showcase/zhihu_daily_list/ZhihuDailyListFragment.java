@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
 import in.nerd_is.android_showcase.main.MainActivity;
-import in.nerd_is.android_showcase.main.MainComponent;
+import in.nerd_is.android_showcase.widget.DividerItemDecoration;
 import in.nerd_is.android_showcase.zhihu_daily.entity.Story;
 import rx.Observable;
 
@@ -56,6 +56,11 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
 
         RecyclerView recyclerView = find(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL, R.drawable.divider_8dp_height);
+        divider.setShowFirstDivider(true);
+        divider.setShowLastDivider(true);
+        recyclerView.addItemDecoration(divider);
 
         adapter = new ZhihuDailyListAdapter(getContext());
         recyclerView.setAdapter(adapter);

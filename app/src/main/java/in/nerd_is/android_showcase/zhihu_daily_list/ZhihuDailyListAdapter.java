@@ -48,6 +48,8 @@ public class ZhihuDailyListAdapter extends RecyclerView.Adapter<ZhihuDailyListAd
                     .load(story.images.get(0))
                     .into(holder.image);
         }
+        holder.image.setContentDescription(context.getString(
+                R.string.content_desc_zhihu_daily_list_item_template, story.title));
     }
 
     @Override
