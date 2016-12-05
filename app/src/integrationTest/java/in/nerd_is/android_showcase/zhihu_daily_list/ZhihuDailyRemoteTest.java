@@ -6,7 +6,6 @@ import org.junit.Test;
 import java.util.List;
 
 import in.nerd_is.android_showcase.common.net.RetrofitModule;
-import in.nerd_is.android_showcase.hitokoto.net.HitokotoApi;
 import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
 import in.nerd_is.android_showcase.zhihu_daily.net.ZhihuDailyApi;
 import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyDataSource;
@@ -16,6 +15,7 @@ import rx.observers.TestSubscriber;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 /**
  * Created by Xuqiang ZHENG on 2016/10/9.
@@ -33,8 +33,7 @@ public class ZhihuDailyRemoteTest {
     @Test
     public void getLatestNews_resultNotNull() {
         TestSubscriber<LatestNews> testSubscriber = new TestSubscriber<>();
-        dataSource.getLatestNews()
-                .subscribe(testSubscriber);
+        dataSource.getLatestNews().subscribe(testSubscriber);
 
         testSubscriber.assertCompleted();
         testSubscriber.assertNoErrors();
@@ -45,5 +44,6 @@ public class ZhihuDailyRemoteTest {
         LatestNews latestNews = events.get(0);
         assertThat("has stories", latestNews.stories, not(empty()));
         assertThat("has top stories", latestNews.topStories, not(empty()));
+        assertThat("date converted correctly", latestNews.date, notNullValue());
     }
 }
