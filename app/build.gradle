@@ -1,31 +1,35 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.ben-manes.versions'
 
 ext {
-    supportVersion = '24.2.1'
-    rxlifecycleVersion = '0.7.0'
+    supportVersion = '25.0.1'
+    rxlifecycleVersion = '1.0'
+    okhttpVersion = '3.4.2'
     retrofitVersion = '2.1.0'
     daggerVersion = '2.7'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "in.nerd_is.android_showcase"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -47,26 +51,37 @@ dependencies {
     compile "com.android.support:appcompat-v7:$project.ext.supportVersion"
     compile "com.android.support:design:$project.ext.supportVersion"
     compile "com.android.support:support-annotations:$project.ext.supportVersion"
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
+    compile "com.android.support:cardview-v7:$project.ext.supportVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 
     // reactive
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.2.0'
+    compile 'io.reactivex:rxjava:1.2.2'
     compile "com.trello:rxlifecycle:$project.ext.rxlifecycleVersion"
     compile "com.trello:rxlifecycle-android:$project.ext.rxlifecycleVersion"
     compile "com.trello:rxlifecycle-components:$project.ext.rxlifecycleVersion"
 
     // IO
+    compile "com.squareup.okhttp3:okhttp:$project.ext.okhttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$project.ext.okhttpVersion"
     compile "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$project.ext.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$project.ext.retrofitVersion"
-    compile 'com.squareup.moshi:moshi:1.2.0'
+    compile 'com.squareup.moshi:moshi:1.3.1'
+
+    compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
+    compile 'com.annimon:stream:1.1.4'
+
+    // media
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 
     compile "com.google.dagger:dagger:$project.ext.daggerVersion"
     apt "com.google.dagger:dagger-compiler:$project.ext.daggerVersion"
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.1.0'
+    testCompile 'org.mockito:mockito-core:2.2.21'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+    testCompile 'org.threeten:threetenbp:1.3.1'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

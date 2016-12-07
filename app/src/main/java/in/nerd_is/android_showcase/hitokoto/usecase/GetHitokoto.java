@@ -21,9 +21,8 @@ public class GetHitokoto extends UseCase<Void> {
     @Inject
     public GetHitokoto(HitokotoDataSource dataSource,
                        @Named(TAG_IO) Scheduler backgroundScheduler,
-                       @Named(TAG_MAIN) Scheduler responseScheduler,
-                       Observable.Transformer lifecycleTransformer) {
-        super(backgroundScheduler, responseScheduler, lifecycleTransformer);
+                       @Named(TAG_MAIN) Scheduler responseScheduler) {
+        super(backgroundScheduler, responseScheduler);
         this.dataSource = dataSource;
     }
 

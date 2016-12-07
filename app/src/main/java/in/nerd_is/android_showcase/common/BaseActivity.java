@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
+import in.nerd_is.android_showcase.ThisApplication;
+import in.nerd_is.android_showcase.common.di.activity.HasActivitySubcomponentBuilders;
 import rx.Observable;
 
 /**
@@ -25,11 +28,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentView = find(android.R.id.content);
-    }
-
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+        setupActivityComponent();
     }
 
     @SuppressWarnings("unchecked")
@@ -57,7 +56,30 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
         Snackbar.make(contentView, resId, Snackbar.LENGTH_SHORT).show();
     }
 
-    protected Observable.Transformer bindUntilDestory() {
+    @Override
+    public void showError(Throwable throwable) {
+        String message = throwable.getLocalizedMessage();
+        Log.d(getClass().getSimpleName(), message, throwable);
+        toast(message);
+    }
+
+    @Override
+    public void setupPresenter() {
+
+    }
+
+    @Override
+    public Observable.Transformer lifecycleTransformer() {
+        return null;
+    }
+
+    public Observable.Transformer bindUntilDestroy() {
         return bindUntilEvent(ActivityEvent.DESTROY);
     }
+
+    protected void setupActivityComponent() {
+        inject((HasActivitySubcomponentBuilders) getApplicationContext());
+    }
+
+    protected abstract void inject(HasActivitySubcomponentBuilders builders);
 }

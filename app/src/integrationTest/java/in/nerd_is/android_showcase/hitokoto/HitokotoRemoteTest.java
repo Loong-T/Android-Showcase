@@ -6,7 +6,9 @@ import org.junit.Test;
 
 import java.util.List;
 
+import in.nerd_is.android_showcase.common.net.RetrofitModule;
 import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
+import in.nerd_is.android_showcase.hitokoto.net.HitokotoApi;
 import in.nerd_is.android_showcase.hitokoto.repository.HitokotoDataSource;
 import in.nerd_is.android_showcase.hitokoto.repository.HitokotoRemoteRepository;
 import rx.observers.TestSubscriber;
@@ -20,12 +22,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class HitokotoRemoteTest {
 
-    private static HitokotoDataSource remoteDataSource;
+    private static HitokotoDataSource dataSource;
     private TestSubscriber<Hitokoto> testSubscriber;
 
     @BeforeClass
-    public static void setUpClass() {
-        remoteDataSource = new HitokotoRemoteRepository();
+    public static void setupDataSource() {
+        dataSource = new HitokotoRemoteRepository(
+                new HitokotoApi(new RetrofitModule().provideHitokotoRetrofit()));
     }
 
     @Before
@@ -34,8 +37,8 @@ public class HitokotoRemoteTest {
     }
 
     @Test
-    public void getHitokoto_notNullResult() {
-        remoteDataSource.getHitokoto()
+    public void getHitokoto_resultNotNull() {
+        dataSource.getHitokoto()
                 .subscribe(testSubscriber);
 
         testSubscriber.assertCompleted();

@@ -6,37 +6,40 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.R;
-import in.nerd_is.android_showcase.ThisApplication;
 import in.nerd_is.android_showcase.common.BaseActivity;
+import in.nerd_is.android_showcase.common.di.activity.HasActivitySubcomponentBuilders;
 import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 import in.nerd_is.android_showcase.utils.ViewUtils;
+import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
+import rx.Observable;
 
-public class MainActivity extends BaseActivity
-        implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View {
 
     private DrawerLayout drawer;
     private TextView hitokotoTv;
 
-    @Inject MainPresenter presenter;
+    @Inject
+    MainPresenter presenter;
+
+    public MainComponent mainComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
-        inject();
 
         presenter.loadHitokoto();
+
+        showFragment();
     }
 
-    public void initView() {
+    private void initView() {
         Toolbar toolbar = find(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,12 +58,30 @@ public class MainActivity extends BaseActivity
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
     }
 
-    private void inject() {
-        ThisApplication.INSTANCE.appComponent
-                .mainComponentBuilder()
-                .mainModule(new MainModule(this, this.bindUntilDestory()))
-                .build()
-                .inject(this);
+    @Override @Inject
+    public void setupPresenter() {
+        presenter.setView(this);
+    }
+
+    @Override
+    public Observable.Transformer lifecycleTransformer() {
+        return bindUntilDestroy();
+    }
+
+    private void showFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_main_activity, new ZhihuDailyListFragment())
+                .commit();
+    }
+
+    @Override
+    protected void inject(HasActivitySubcomponentBuilders builders) {
+        mainComponent = ((MainComponent.Builder) builders.get(getClass()))
+                .activityModule(new MainModule(this))
+                .build();
+
+        mainComponent.injectMembers(this);
     }
 
     @Override

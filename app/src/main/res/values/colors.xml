@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#BDC0BA</color>
-    <color name="colorPrimaryDark">#787D7B</color>
+    <color name="colorPrimary">@color/nc_torinoko</color>
+    <color name="colorPrimaryDark">@color/nc_namakabe</color>
     <color name="colorAccent">#2EA9DF</color>
+    
+    <color name="nc_namakabe">#7D6C46</color> <!-- 生壁 -->
+    <color name="nc_torinoko">#DAC9A6</color> <!-- 鳥の子 -->
+    <color name="nc_shironezumi">#BDC0BA</color> <!-- 白鼠 -->
+
 </resources>

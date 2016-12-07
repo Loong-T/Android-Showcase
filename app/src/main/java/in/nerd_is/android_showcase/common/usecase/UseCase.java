@@ -4,37 +4,38 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.subscriptions.Subscriptions;
+import rx.subscriptions.CompositeSubscription;
 
 public abstract class UseCase<T> {
 
     private Scheduler backgroundScheduler;
     private Scheduler responseScheduler;
-    private Observable.Transformer lifecycleTransformer;
-    private Subscription subscription = Subscriptions.empty();
+    private CompositeSubscription subscriptions = new CompositeSubscription();
 
     public UseCase(Scheduler backgroundScheduler,
-                   Scheduler responseScheduler,
-                   Observable.Transformer lifecycleTransformer) {
+                   Scheduler responseScheduler) {
         this.backgroundScheduler = backgroundScheduler;
         this.responseScheduler = responseScheduler;
-        this.lifecycleTransformer = lifecycleTransformer;
     }
 
     protected abstract Observable buildUseCaseObservable(T param);
 
     @SuppressWarnings("unchecked")
-    public void execute(T param, Subscriber subscriber) {
-        subscription = buildUseCaseObservable(param)
+    public void execute(T param,
+                        Observable.Transformer lifecycleTransformer,
+                        Subscriber subscriber) {
+        final Subscription subscription = buildUseCaseObservable(param)
                 .subscribeOn(backgroundScheduler)
                 .observeOn(responseScheduler)
                 .compose(lifecycleTransformer)
                 .subscribe(subscriber);
+
+        subscriptions.add(subscription);
     }
 
     public void  unsubscribe() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (!subscriptions.isUnsubscribed()) {
+            subscriptions.unsubscribe();
         }
     }
 }

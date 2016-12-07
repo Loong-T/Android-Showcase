@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.common.annotation.di;
+package in.nerd_is.android_showcase.common.di.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
