@@ -1,9 +1,15 @@
 package in.nerd_is.android_showcase.zhihu_daily.usecase;
 
+import com.annimon.stream.Stream;
+
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import in.nerd_is.android_showcase.common.entity.RecyclerData;
 import in.nerd_is.android_showcase.common.usecase.UseCase;
+import in.nerd_is.android_showcase.zhihu_daily.entity.Date;
 import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyDataSource;
 import rx.Observable;
 import rx.Scheduler;
@@ -28,6 +34,12 @@ public class GetZhihuDailyStory extends UseCase<Void> {
 
     @Override
     protected Observable buildUseCaseObservable(Void param) {
-        return dataSource.getLatestNews();
+        return dataSource.getLatestNews()
+                .map(news -> {
+                    final ArrayList<RecyclerData> list = new ArrayList<>(news.stories.size() + 1);
+                    list.add(new Date(news.date));
+                    list.addAll(news.stories);
+                    return list;
+                });
     }
 }

@@ -1,6 +1,8 @@
 package in.nerd_is.android_showcase.zhihu_daily_list;
 
-import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
+import java.util.List;
+
+import in.nerd_is.android_showcase.common.entity.RecyclerData;
 import in.nerd_is.android_showcase.zhihu_daily.usecase.GetZhihuDailyStory;
 import rx.Subscriber;
 
@@ -27,7 +29,7 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
         getZhihuDailyStory.execute(null, view.lifecycleTransformer(), new StorySubscriber());
     }
 
-    private class StorySubscriber extends Subscriber<LatestNews> {
+    private class StorySubscriber extends Subscriber<List<RecyclerData>> {
         @Override
         public void onCompleted() {
             view.refreshing(false);
@@ -40,8 +42,8 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
         }
 
         @Override
-        public void onNext(LatestNews latestNews) {
-            view.showStories(latestNews.stories);
+        public void onNext(List<RecyclerData> data) {
+            view.showList(data);
         }
     }
 }

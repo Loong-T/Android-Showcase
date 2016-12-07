@@ -44,6 +44,6 @@ public class ZhihuDailyRemoteTest {
         LatestNews latestNews = events.get(0);
         assertThat("has stories", latestNews.stories, not(empty()));
         assertThat("has top stories", latestNews.topStories, not(empty()));
-        assertThat("date converted correctly", latestNews.date, notNullValue());
+        assertThat("tvDate converted correctly", latestNews.date, notNullValue());
     }
 }

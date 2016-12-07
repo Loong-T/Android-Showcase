@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.jakewharton.threetenabp.AndroidThreeTen;
+
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -36,6 +38,8 @@ public class ThisApplication extends Application implements HasActivitySubcompon
                 .build();
 
         appComponent.inject(this);
+
+        AndroidThreeTen.init(this);
     }
 
     @Override

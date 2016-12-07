@@ -16,9 +16,9 @@ import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
+import in.nerd_is.android_showcase.common.entity.RecyclerData;
 import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
-import in.nerd_is.android_showcase.zhihu_daily.entity.Story;
 import rx.Observable;
 
 /**
@@ -79,8 +79,8 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
     }
 
     @Override
-    public void showStories(List<Story> stories) {
-        adapter.swap(stories);
+    public void showList(List<RecyclerData> data) {
+        adapter.swap(data);
     }
 
     @Override
