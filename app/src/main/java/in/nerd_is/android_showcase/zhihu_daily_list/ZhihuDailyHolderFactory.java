@@ -1,10 +1,8 @@
 package in.nerd_is.android_showcase.zhihu_daily_list;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,12 +11,8 @@ import com.bumptech.glide.Glide;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeFormatterBuilder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import in.nerd_is.android_showcase.R;
-import in.nerd_is.android_showcase.common.entity.RecyclerData;
+import in.nerd_is.android_showcase.common.widget.HolderFactory;
 import in.nerd_is.android_showcase.common.widget.ViewHolder;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily.entity.Date;
@@ -28,35 +22,14 @@ import static in.nerd_is.android_showcase.common.entity.RecyclerData.TYPE_ZHIHU_
 import static in.nerd_is.android_showcase.common.entity.RecyclerData.TYPE_ZHIHU_DAILY_ITEM;
 
 /**
- * Created by Xuqiang ZHENG on 2016/11/23.
+ * Created by Xuqiang ZHENG on 2017/1/14.
  */
-public class ZhihuDailyListAdapter extends RecyclerView.Adapter<ViewHolder> {
-
-    private final Context context;
-    private final LayoutInflater inflater;
-    @SuppressWarnings("unchecked")
-    private List<RecyclerData> data = Collections.EMPTY_LIST;
-
-    ZhihuDailyListAdapter(Context context) {
-        this.context = context;
-        inflater = LayoutInflater.from(context);
-    }
-
+public class ZhihuDailyHolderFactory extends HolderFactory {
     @Override
-    public int getItemCount() {
-        return data.size();
-}
-
-    @Override
-    public int getItemViewType(int position) {
-        return data.get(position).dataType();
-    }
-
-    @Override
-    public ViewHolder<? extends RecyclerData> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public void setupTypeRules(SparseArray<ViewHolder> map) {
         switch (viewType) {
             case TYPE_ZHIHU_DAILY_DATE:
-                return new DateHolder(inflater.inflate(
+                return DateHolder(inflater.inflate(
                         R.layout.zhihu_daily_list_item_date, parent, false));
             case TYPE_ZHIHU_DAILY_ITEM:
                 return new StoryHolder(context,
@@ -64,17 +37,6 @@ public class ZhihuDailyListAdapter extends RecyclerView.Adapter<ViewHolder> {
             default:
                 throw new IllegalArgumentException("unknown view type: " + viewType);
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.render(data.get(position));
-    }
-
-    public void swap(List<RecyclerData> data) {
-        this.data = data;
-        notifyDataSetChanged();
     }
 
     private static class StoryHolder extends ViewHolder<Story> {

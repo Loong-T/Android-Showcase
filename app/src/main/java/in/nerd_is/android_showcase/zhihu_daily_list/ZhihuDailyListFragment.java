@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
 import in.nerd_is.android_showcase.common.entity.RecyclerData;
+import in.nerd_is.android_showcase.common.widget.HeaderFooterAdapter;
 import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
 import rx.Observable;
@@ -32,6 +33,7 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private ZhihuDailyListAdapter adapter;
+    private HeaderFooterAdapter headerFooterAdapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -63,7 +65,10 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
         recyclerView.addItemDecoration(divider);
 
         adapter = new ZhihuDailyListAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        headerFooterAdapter = new HeaderFooterAdapter(adapter);
+        headerFooterAdapter.setFooterView(LayoutInflater.from(getContext()).inflate(
+                R.layout.zhihu_daily_list_footer, recyclerView, false));
+        recyclerView.setAdapter(headerFooterAdapter);
 
         presenter.loadStories();
     }
