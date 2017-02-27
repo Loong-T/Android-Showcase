@@ -14,7 +14,7 @@ public interface ZhihuDailyListContract {
 
         void refreshing(boolean refreshing);
 
-        void showList(List<RecyclerData> data);
+        void showList(List<?> data);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

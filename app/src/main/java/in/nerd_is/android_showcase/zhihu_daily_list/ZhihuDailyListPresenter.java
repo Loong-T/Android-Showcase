@@ -29,7 +29,7 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
         getZhihuDailyStory.execute(null, view.lifecycleTransformer(), new StorySubscriber());
     }
 
-    private class StorySubscriber extends Subscriber<List<RecyclerData>> {
+    private class StorySubscriber extends Subscriber<List<?>> {
         @Override
         public void onCompleted() {
             view.refreshing(false);
@@ -42,7 +42,7 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
         }
 
         @Override
-        public void onNext(List<RecyclerData> data) {
+        public void onNext(List<?> data) {
             view.showList(data);
         }
     }
