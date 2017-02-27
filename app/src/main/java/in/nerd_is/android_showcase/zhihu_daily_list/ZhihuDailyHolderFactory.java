@@ -12,32 +12,15 @@ import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeFormatterBuilder;
 
 import in.nerd_is.android_showcase.R;
-import in.nerd_is.android_showcase.common.widget.HolderFactory;
 import in.nerd_is.android_showcase.common.widget.ViewHolder;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily.entity.Date;
 import in.nerd_is.android_showcase.zhihu_daily.entity.Story;
 
-import static in.nerd_is.android_showcase.common.entity.RecyclerData.TYPE_ZHIHU_DAILY_DATE;
-import static in.nerd_is.android_showcase.common.entity.RecyclerData.TYPE_ZHIHU_DAILY_ITEM;
-
 /**
  * Created by Xuqiang ZHENG on 2017/1/14.
  */
-public class ZhihuDailyHolderFactory extends HolderFactory {
-    @Override
-    public void setupTypeRules(SparseArray<ViewHolder> map) {
-        switch (viewType) {
-            case TYPE_ZHIHU_DAILY_DATE:
-                return DateHolder(inflater.inflate(
-                        R.layout.zhihu_daily_list_item_date, parent, false));
-            case TYPE_ZHIHU_DAILY_ITEM:
-                return new StoryHolder(context,
-                        inflater.inflate(R.layout.zhihu_daily_list_item_story, parent, false));
-            default:
-                throw new IllegalArgumentException("unknown view type: " + viewType);
-        }
-    }
+public class ZhihuDailyHolderFactory {
 
     private static class StoryHolder extends ViewHolder<Story> {
 
