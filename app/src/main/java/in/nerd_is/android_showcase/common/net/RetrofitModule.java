@@ -21,7 +21,7 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_HITOKOTO;
 import static in.nerd_is.android_showcase.common.Constant.TAG_ZHIHU_DAILY;
 
 /**
- * Created by Xuqiang ZHENG on 2016/11/25.
+ * @author Xuqiang ZHENG on 2016/11/25.
  */
 @Module
 public class RetrofitModule {

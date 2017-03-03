@@ -12,7 +12,7 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_IO;
 import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/20.
+ * @author Xuqiang ZHENG on 2016/9/20.
  */
 public class GetHitokoto extends UseCase<Void> {
 

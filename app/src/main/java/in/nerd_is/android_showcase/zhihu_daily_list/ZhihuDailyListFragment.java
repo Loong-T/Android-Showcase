@@ -24,7 +24,6 @@ import rx.Observable;
 /**
  * @author Xuqiang ZHENG on 2016/10/23.
  */
-
 public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyListContract.View {
 
     @Inject
@@ -37,7 +36,7 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        ((MainActivity) activity).mainComponent.injectMembers(this);
+        ((MainActivity) activity).mainComponent.inject(this);
     }
 
     @Override

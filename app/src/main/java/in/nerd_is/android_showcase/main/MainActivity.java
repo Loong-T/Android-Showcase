@@ -10,9 +10,10 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import in.nerd_is.android_showcase.AppComponent;
+import in.nerd_is.android_showcase.DaggerAppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
-import in.nerd_is.android_showcase.common.di.activity.HasActivitySubcomponentBuilders;
 import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
@@ -76,12 +77,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    protected void inject(HasActivitySubcomponentBuilders builders) {
-        mainComponent = ((MainComponent.Builder) builders.get(getClass()))
-                .activityModule(new MainModule(this))
+    protected void setupActivityComponent(AppComponent appComponent) {
+        mainComponent = appComponent.mainComponentBuilder()
+                .mainModule(new MainModule(this))
                 .build();
-
-        mainComponent.injectMembers(this);
+        mainComponent.inject(this);
     }
 
     @Override

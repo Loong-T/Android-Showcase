@@ -1,10 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.ben-manes.versions'
 
 ext {
-    supportVersion = '25.1.0'
+    supportVersion = '25.2.0'
     rxlifecycleVersion = '1.0'
     okhttpVersion = '3.5.0'
     retrofitVersion = '2.1.0'
@@ -14,6 +12,7 @@ ext {
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
     defaultConfig {
         applicationId "in.nerd_is.android_showcase"
         minSdkVersion 15
@@ -21,6 +20,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        jackOptions {
+            enabled true
+        }
     }
 
     buildTypes {
@@ -76,7 +79,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     compile "com.google.dagger:dagger:$project.ext.daggerVersion"
-    apt "com.google.dagger:dagger-compiler:$project.ext.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.ext.daggerVersion"
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.5.3'
