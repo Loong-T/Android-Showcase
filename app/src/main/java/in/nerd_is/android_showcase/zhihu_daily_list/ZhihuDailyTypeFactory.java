@@ -21,7 +21,7 @@ import in.nerd_is.recycler_simplification.TypeFactory;
 import in.nerd_is.recycler_simplification.ViewHolder;
 
 /**
- * Created by Xuqiang ZHENG on 2017/2/26.
+ * @author Xuqiang ZHENG on 2017/2/26.
  */
 public class ZhihuDailyTypeFactory extends TypeFactory {
 
@@ -66,7 +66,7 @@ public class ZhihuDailyTypeFactory extends TypeFactory {
     private static class DateHolder extends ViewHolder<Date> {
 
         private final static DateTimeFormatter FORMATTER =
-                new DateTimeFormatterBuilder().appendPattern("MMMM EEEE").toFormatter();
+                new DateTimeFormatterBuilder().appendPattern("MMMM d EEEE").toFormatter();
 
         private final TextView tvDate;
 

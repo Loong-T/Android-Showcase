@@ -16,16 +16,13 @@ import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
-import in.nerd_is.android_showcase.common.entity.RecyclerData;
-import in.nerd_is.android_showcase.common.widget.HeaderFooterAdapter;
 import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
 import in.nerd_is.recycler_simplification.RecyclerAdapter;
-import in.nerd_is.recycler_simplification.TypeFactory;
 import rx.Observable;
 
 /**
- * Created by Xuqiang ZHENG on 2016/10/23.
+ * @author Xuqiang ZHENG on 2016/10/23.
  */
 
 public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyListContract.View {

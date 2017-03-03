@@ -2,7 +2,6 @@ package in.nerd_is.android_showcase.zhihu_daily_list;
 
 import java.util.List;
 
-import in.nerd_is.android_showcase.common.entity.RecyclerData;
 import in.nerd_is.android_showcase.zhihu_daily.usecase.GetZhihuDailyStory;
 import rx.Subscriber;
 

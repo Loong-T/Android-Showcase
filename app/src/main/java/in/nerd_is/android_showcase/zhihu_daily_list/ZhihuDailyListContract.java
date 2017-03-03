@@ -3,7 +3,6 @@ package in.nerd_is.android_showcase.zhihu_daily_list;
 import java.util.List;
 
 import in.nerd_is.android_showcase.common.BaseContract;
-import in.nerd_is.android_showcase.common.entity.RecyclerData;
 
 /**
  * Created by Xuqiang ZHENG on 2016/10/23.
