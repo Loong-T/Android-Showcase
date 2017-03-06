@@ -12,7 +12,7 @@ import rx.Observable;
 import static in.nerd_is.android_showcase.common.Constant.TAG_HITOKOTO;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/19.
+ * @author Xuqiang ZHENG on 2016/9/19.
  */
 public class HitokotoApi {
 

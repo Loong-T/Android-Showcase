@@ -7,7 +7,7 @@ import in.nerd_is.android_showcase.hitokoto.HitokotoRemoteTest;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyRemoteTest;
 
 /**
- * Created by Xuqiang ZHENG on 2016/10/22.
+ * @author Xuqiang ZHENG on 2016/10/22.
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

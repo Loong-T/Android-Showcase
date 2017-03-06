@@ -1,0 +1,16 @@
+import org.threeten.bp.LocalDateTime;
+
+CREATE TABLE hitokoto (
+    id TEXT PRIMARY KEY,
+    uid TEXT,
+    catname TEXT,
+    text TEXT NOT NULL,
+    author TEXT,
+    source TEXT,
+    date INTEGER AS LocalDateTime
+);
+
+select_by_id:
+SELECT *
+FROM hitokoto
+WHERE hitokoto.id = ?;

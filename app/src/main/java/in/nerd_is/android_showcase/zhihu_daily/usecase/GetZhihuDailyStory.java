@@ -34,7 +34,7 @@ public class GetZhihuDailyStory extends UseCase<Void> {
         return dataSource.getLatestNews()
                 .map(news -> {
                     final ArrayList<Object> list = new ArrayList<>(news.stories.size() + 1);
-                    list.add(new Date(news.date));
+                    list.add(Date.create(news.date));
                     list.addAll(news.stories);
                     return list;
                 });

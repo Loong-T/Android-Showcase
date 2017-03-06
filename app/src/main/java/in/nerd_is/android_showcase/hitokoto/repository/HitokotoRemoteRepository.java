@@ -5,7 +5,7 @@ import in.nerd_is.android_showcase.hitokoto.net.HitokotoApi;
 import rx.Observable;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/18.
+ * @author Xuqiang ZHENG on 2016/9/18.
  */
 public class HitokotoRemoteRepository implements HitokotoDataSource {
 

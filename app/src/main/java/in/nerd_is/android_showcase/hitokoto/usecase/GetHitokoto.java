@@ -28,6 +28,6 @@ public class GetHitokoto extends UseCase<Void> {
 
     @Override
     protected Observable buildUseCaseObservable(Void param) {
-        return dataSource.getHitokoto();
+        return /*dataSource.getHitokoto();*/ null;
     }
 }

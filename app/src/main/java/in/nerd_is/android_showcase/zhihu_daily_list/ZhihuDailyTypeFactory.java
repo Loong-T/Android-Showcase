@@ -82,7 +82,7 @@ public class ZhihuDailyTypeFactory extends TypeFactory {
 
         @Override
         public void render(@NonNull Date date) {
-            tvDate.setText(FORMATTER.format(date.date));
+            tvDate.setText(FORMATTER.format(date.date()));
         }
     }
 }

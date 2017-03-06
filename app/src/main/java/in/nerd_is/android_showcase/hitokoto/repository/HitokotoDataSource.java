@@ -4,7 +4,7 @@ import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 import rx.Observable;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/18.
+ * @author Xuqiang ZHENG on 2016/9/18.
  */
 public interface HitokotoDataSource {
     Observable<Hitokoto> getHitokoto();

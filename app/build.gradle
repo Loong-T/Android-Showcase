@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.squareup.sqldelight'
 apply plugin: 'me.tatarka.retrolambda'
 
 ext {
@@ -46,6 +46,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(path: ':recycler_simplification')
 
     // support library
     compile "com.android.support:appcompat-v7:$project.ext.supportVersion"
@@ -67,18 +68,32 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$project.ext.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$project.ext.retrofitVersion"
-    compile 'com.squareup.moshi:moshi:1.3.1'
+    compile 'com.squareup.moshi:moshi:1.4.0'
 
+    // Java 8 support
     compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
     compile 'com.annimon:stream:1.1.4'
 
     // media
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
+    // di
     compile "com.google.dagger:dagger:$project.ext.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$project.ext.daggerVersion"
 
-    testCompile 'junit:junit:4.12'
+    // module
+    provided "com.google.auto.value:auto-value:1.2"
+    annotationProcessor "com.google.auto.value:auto-value:1.2"
+    provided 'com.ryanharter.auto.value:auto-value-moshi-annotations:0.4.3'
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-moshi:0.4.3'
+
+    // DB
+    compile 'com.squareup.sqlbrite:sqlbrite:1.1.1'
+
+    // test
+    testCompile('junit:junit:4.12', {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    })
     testCompile 'org.mockito:mockito-core:2.5.3'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile 'org.threeten:threetenbp:1.3.3'
@@ -87,5 +102,4 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-    compile project(path: ':recycler_simplification')
 }

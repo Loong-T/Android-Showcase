@@ -11,10 +11,8 @@ import android.widget.TextView;
 import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.AppComponent;
-import in.nerd_is.android_showcase.DaggerAppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
-import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
 import rx.Observable;
@@ -35,7 +33,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         setContentView(R.layout.main_activity);
         initView();
 
-        presenter.loadHitokoto();
+//        presenter.loadHitokoto();
 
         showFragment();
     }
@@ -84,10 +82,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mainComponent.inject(this);
     }
 
-    @Override
-    public void showHitokoto(Hitokoto hitokoto) {
-        hitokotoTv.setText(hitokoto.hitokoto);
-    }
+//    @Override
+//    public void showHitokoto(Hitokoto hitokoto) {
+//        hitokotoTv.setText(hitokoto.getText());
+//    }
 
     @Override
     public void onBackPressed() {

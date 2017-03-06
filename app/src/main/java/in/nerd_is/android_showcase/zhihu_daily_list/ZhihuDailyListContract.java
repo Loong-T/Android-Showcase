@@ -13,11 +13,11 @@ public interface ZhihuDailyListContract {
 
         void refreshing(boolean refreshing);
 
-        void showList(List<?> data);
+        void showLatestStories(List<?> data);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void loadStories();
+        void loadLatestStories();
     }
 }

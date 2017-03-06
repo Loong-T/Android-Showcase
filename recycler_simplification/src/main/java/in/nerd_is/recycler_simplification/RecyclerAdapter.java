@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Xuqiang ZHENG on 2016/11/23.
+ * @author Xuqiang ZHENG on 2016/11/23.
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
@@ -38,6 +38,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         typeFactory.bindViewHolder(holder, data.get(position));
+    }
+
+    public List<?> getData() {
+        return data;
     }
 
     public final void swap(List<?> data) {

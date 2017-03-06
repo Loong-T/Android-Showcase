@@ -7,9 +7,9 @@ import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
 /**
- * Created by Xuqiang ZHENG on 2016/12/4.
+ * @author Xuqiang ZHENG on 2016/12/4.
  */
-public class LocalDateAdapter {
+public class DateAdapter {
     @ToJson String toJson(LocalDate date) {
         return date.format(DateTimeFormatter.BASIC_ISO_DATE);
     }

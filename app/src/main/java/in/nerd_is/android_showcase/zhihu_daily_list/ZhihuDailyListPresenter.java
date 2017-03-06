@@ -6,7 +6,7 @@ import in.nerd_is.android_showcase.zhihu_daily.usecase.GetZhihuDailyStory;
 import rx.Subscriber;
 
 /**
- * Created by Xuqiang ZHENG on 2016/11/20.
+ * @author Xuqiang ZHENG on 2016/11/20.
  */
 public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter {
 
@@ -23,12 +23,20 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
     }
 
     @Override
-    public void loadStories() {
+    public void loadLatestStories() {
         view.refreshing(true);
-        getZhihuDailyStory.execute(null, view.lifecycleTransformer(), new StorySubscriber());
+        getZhihuDailyStory.execute(null,
+                view.lifecycleTransformer(), new StorySubscriber(view));
     }
 
-    private class StorySubscriber extends Subscriber<List<?>> {
+    private static class StorySubscriber extends Subscriber<List<?>> {
+
+        ZhihuDailyListContract.View view;
+
+        StorySubscriber(ZhihuDailyListContract.View view) {
+            this.view = view;
+        }
+
         @Override
         public void onCompleted() {
             view.refreshing(false);
@@ -42,7 +50,7 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
 
         @Override
         public void onNext(List<?> data) {
-            view.showList(data);
+            view.showLatestStories(data);
         }
     }
 }

@@ -57,6 +57,7 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
         super.onViewCreated(view, savedInstanceState);
 
         swipeRefreshLayout = find(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(presenter::loadLatestStories);
 
         RecyclerView recyclerView = find(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -69,7 +70,7 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
         adapter = new RecyclerAdapter(new ZhihuDailyTypeFactory());
         recyclerView.setAdapter(adapter);
 
-        presenter.loadStories();
+        presenter.loadLatestStories();
     }
 
     @Override @Inject
@@ -83,7 +84,7 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
     }
 
     @Override
-    public void showList(List<?> data) {
+    public void showLatestStories(List<?> data) {
         adapter.swap(data);
     }
 

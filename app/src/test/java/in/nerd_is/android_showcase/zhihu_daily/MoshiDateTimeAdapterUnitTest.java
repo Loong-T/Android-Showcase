@@ -10,7 +10,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import java.io.IOException;
 
-import in.nerd_is.android_showcase.zhihu_daily.moshi.LocalDateAdapter;
+import in.nerd_is.android_showcase.zhihu_daily.moshi.DateAdapter;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by Xuqiang ZHENG on 2016/12/5.
  */
-public class MoshiLocalDateAdapterUnitTest {
+public class MoshiDateTimeAdapterUnitTest {
 
     private static Moshi moshi;
 
@@ -33,7 +33,7 @@ public class MoshiLocalDateAdapterUnitTest {
     @BeforeClass
     public static void setupMoshi() {
         moshi = new Moshi.Builder()
-                .add(new LocalDateAdapter())
+                .add(new DateAdapter())
                 .build();
     }
 
