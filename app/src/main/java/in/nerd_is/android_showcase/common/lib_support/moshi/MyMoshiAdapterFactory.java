@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.common.moshi;
+package in.nerd_is.android_showcase.common.lib_support.moshi;
 
 import com.ryanharter.auto.value.moshi.MoshiAdapterFactory;
 import com.squareup.moshi.JsonAdapter;

@@ -2,9 +2,9 @@ package in.nerd_is.android_showcase.zhihu_daily;
 
 import dagger.Module;
 import dagger.Provides;
-import in.nerd_is.android_showcase.zhihu_daily.net.ZhihuDailyApi;
-import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyDataSource;
-import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyRemoteRepository;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.remote.ZhihuDailyApi;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.ZhihuDailyDataSource;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.remote.ZhihuDailyRemoteRepository;
 
 /**
  * Created by Xuqiang ZHENG on 2016/11/24.

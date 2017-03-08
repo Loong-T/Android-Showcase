@@ -3,7 +3,7 @@ package in.nerd_is.android_showcase;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import in.nerd_is.android_showcase.common.net.RetrofitModule;
+import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitModule;
 import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
 import in.nerd_is.android_showcase.main.MainComponent;
 

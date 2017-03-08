@@ -5,11 +5,11 @@ import org.junit.Test;
 
 import java.util.List;
 
-import in.nerd_is.android_showcase.common.net.RetrofitModule;
-import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
-import in.nerd_is.android_showcase.zhihu_daily.net.ZhihuDailyApi;
-import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyDataSource;
-import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyRemoteRepository;
+import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitModule;
+import in.nerd_is.android_showcase.zhihu_daily.model.LatestNews;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.remote.ZhihuDailyApi;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.ZhihuDailyDataSource;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.remote.ZhihuDailyRemoteRepository;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.MatcherAssert.assertThat;

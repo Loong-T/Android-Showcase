@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.common.net;
+package in.nerd_is.android_showcase.common.lib_support.retrofit;
 
 import com.squareup.moshi.Moshi;
 
@@ -7,11 +7,11 @@ import javax.inject.Named;
 import dagger.Module;
 import dagger.Provides;
 import in.nerd_is.android_showcase.BuildConfig;
-import in.nerd_is.android_showcase.common.moshi.MyMoshiAdapterFactory;
+import in.nerd_is.android_showcase.common.lib_support.moshi.MyMoshiAdapterFactory;
 import in.nerd_is.android_showcase.hitokoto.moshi.DateTimeAdapter;
-import in.nerd_is.android_showcase.hitokoto.net.HitokotoUrl;
+import in.nerd_is.android_showcase.hitokoto.model.repository.remote.HitokotoUrl;
 import in.nerd_is.android_showcase.zhihu_daily.moshi.DateAdapter;
-import in.nerd_is.android_showcase.zhihu_daily.net.ZhihuDailyUrl;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.remote.ZhihuDailyUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

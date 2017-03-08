@@ -1,10 +1,10 @@
-package in.nerd_is.android_showcase.zhihu_daily.net;
+package in.nerd_is.android_showcase.zhihu_daily.model.repository.remote;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import in.nerd_is.android_showcase.common.net.RetrofitUtils;
-import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
+import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitUtils;
+import in.nerd_is.android_showcase.zhihu_daily.model.LatestNews;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import rx.Observable;
@@ -12,7 +12,7 @@ import rx.Observable;
 import static in.nerd_is.android_showcase.common.Constant.TAG_ZHIHU_DAILY;
 
 /**
- * Created by loong on 2016/10/7.
+ * @author Xuqiang ZHENG on 2016/10/7.
  */
 public class ZhihuDailyApi {
 

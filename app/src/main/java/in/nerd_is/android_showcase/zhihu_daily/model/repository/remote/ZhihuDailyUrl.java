@@ -1,7 +1,7 @@
-package in.nerd_is.android_showcase.zhihu_daily.net;
+package in.nerd_is.android_showcase.zhihu_daily.model.repository.remote;
 
 /**
- * Created by Xuqiang ZHENG on 2016/10/7.
+ * @author Xuqiang ZHENG on 2016/10/7.
  */
 public interface ZhihuDailyUrl {
     String BASE_URL = "http://news-at.zhihu.com/api/4/news/";

@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.common.sqldelight;
+package in.nerd_is.android_showcase.common.lib_support.sqldelight;
 
 import android.support.annotation.NonNull;
 

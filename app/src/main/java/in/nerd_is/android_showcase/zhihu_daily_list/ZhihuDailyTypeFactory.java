@@ -15,8 +15,8 @@ import org.threeten.bp.format.DateTimeFormatterBuilder;
 
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.utils.ViewUtils;
-import in.nerd_is.android_showcase.zhihu_daily.entity.Date;
-import in.nerd_is.android_showcase.zhihu_daily.entity.Story;
+import in.nerd_is.android_showcase.zhihu_daily.model.Date;
+import in.nerd_is.android_showcase.zhihu_daily.model.Story;
 import in.nerd_is.recycler_simplification.TypeFactory;
 import in.nerd_is.recycler_simplification.ViewHolder;
 

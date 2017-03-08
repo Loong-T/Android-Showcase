@@ -1,11 +1,11 @@
-package in.nerd_is.android_showcase.hitokoto.entity;
+package in.nerd_is.android_showcase.hitokoto.model;
 
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.sqldelight.RowMapper;
 
-import in.nerd_is.android_showcase.common.sqldelight.DateAdapter;
+import in.nerd_is.android_showcase.common.lib_support.sqldelight.DateAdapter;
 
 /**
  * @author Xuqiang ZHENG on 2017/3/5.

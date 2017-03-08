@@ -1,7 +1,8 @@
-package in.nerd_is.android_showcase.hitokoto.repository;
+package in.nerd_is.android_showcase.hitokoto.model.repository.remote;
 
-import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
-import in.nerd_is.android_showcase.hitokoto.net.HitokotoApi;
+import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
+import in.nerd_is.android_showcase.hitokoto.model.repository.HitokotoDataSource;
+import in.nerd_is.android_showcase.hitokoto.model.repository.remote.HitokotoApi;
 import rx.Observable;
 
 /**

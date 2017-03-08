@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import in.nerd_is.android_showcase.common.usecase.UseCase;
-import in.nerd_is.android_showcase.zhihu_daily.entity.Date;
-import in.nerd_is.android_showcase.zhihu_daily.repository.ZhihuDailyDataSource;
+import in.nerd_is.android_showcase.zhihu_daily.model.Date;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.ZhihuDailyDataSource;
 import rx.Observable;
 import rx.Scheduler;
 

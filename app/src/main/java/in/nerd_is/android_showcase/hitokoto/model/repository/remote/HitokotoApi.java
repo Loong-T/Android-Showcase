@@ -1,10 +1,10 @@
-package in.nerd_is.android_showcase.hitokoto.net;
+package in.nerd_is.android_showcase.hitokoto.model.repository.remote;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import in.nerd_is.android_showcase.common.net.RetrofitUtils;
-import in.nerd_is.android_showcase.hitokoto.entity.Hitokoto;
+import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitUtils;
+import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import rx.Observable;

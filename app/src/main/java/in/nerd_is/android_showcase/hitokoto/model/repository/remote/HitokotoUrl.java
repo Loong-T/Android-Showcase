@@ -1,4 +1,4 @@
-package in.nerd_is.android_showcase.hitokoto.net;
+package in.nerd_is.android_showcase.hitokoto.model.repository.remote;
 
 /**
  * @author Xuqiang ZHENG on 2016/9/18.

@@ -8,6 +8,8 @@ import org.threeten.bp.ZoneId;
  * @author Xuqiang ZHENG on 2017/3/5.
  */
 public final class DateUtils {
+    private DateUtils() {}
+
     public static LocalDateTime fromMillis(long millis) {
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault());
     }

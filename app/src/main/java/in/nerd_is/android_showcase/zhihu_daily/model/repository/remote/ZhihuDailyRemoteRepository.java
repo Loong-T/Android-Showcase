@@ -1,11 +1,11 @@
-package in.nerd_is.android_showcase.zhihu_daily.repository;
+package in.nerd_is.android_showcase.zhihu_daily.model.repository.remote;
 
-import in.nerd_is.android_showcase.zhihu_daily.entity.LatestNews;
-import in.nerd_is.android_showcase.zhihu_daily.net.ZhihuDailyApi;
+import in.nerd_is.android_showcase.zhihu_daily.model.LatestNews;
+import in.nerd_is.android_showcase.zhihu_daily.model.repository.ZhihuDailyDataSource;
 import rx.Observable;
 
 /**
- * Created by Xuqiang ZHENG on 2016/10/9.
+ * @author Xuqiang ZHENG on 2016/10/9.
  */
 public class ZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
 

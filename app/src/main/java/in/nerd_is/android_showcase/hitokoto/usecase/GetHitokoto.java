@@ -4,7 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import in.nerd_is.android_showcase.common.usecase.UseCase;
-import in.nerd_is.android_showcase.hitokoto.repository.HitokotoDataSource;
+import in.nerd_is.android_showcase.hitokoto.model.repository.HitokotoDataSource;
 import rx.Observable;
 import rx.Scheduler;
 
