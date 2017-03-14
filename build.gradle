@@ -37,6 +37,6 @@ ext {
     rxlifecycleVersion = '1.0'
     okhttpVersion = '3.5.0'
     retrofitVersion = '2.1.0'
-    daggerVersion = '2.10-rc2'
+    daggerVersion = '2.9'
     stethoVersion = '1.4.2'
 }

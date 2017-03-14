@@ -17,6 +17,7 @@ import in.nerd_is.android_showcase.hitokoto.usecase.GetHitokoto;
 import in.nerd_is.android_showcase.utils.DateUtils;
 import rx.Subscriber;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.verify;
 
@@ -49,8 +50,7 @@ public class MainPresenterTest {
 
         presenter.loadHitokoto();
 
-        verify(getHitokoto).execute(isNull(),
-                view.lifecycleTransformer(), subscriberCaptor.capture());
+        verify(getHitokoto).execute(isNull(), any(), subscriberCaptor.capture());
         subscriberCaptor.getValue().onNext(hitokoto);
 
         verify(view).showHitokoto(hitokoto);
