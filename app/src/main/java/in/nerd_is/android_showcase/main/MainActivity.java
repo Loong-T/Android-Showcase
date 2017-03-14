@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
+import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
+import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
 import rx.Observable;
@@ -25,7 +27,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Inject
     MainPresenter presenter;
 
-    public MainComponent mainComponent;
+    public MainActivityComponent mainComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
 //        presenter.loadHitokoto();
 
-        showFragment();
+//        showFragment();
     }
 
     private void initView() {
@@ -57,7 +59,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
     }
 
-    @Override @Inject
+    @Override
+    @Inject
     public void setupPresenter() {
         presenter.setView(this);
     }
@@ -75,17 +78,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
-        mainComponent = appComponent.mainComponentBuilder()
-                .mainModule(new MainModule(this))
-                .build();
-        mainComponent.inject(this);
+    public void showHitokoto(Hitokoto hitokoto) {
+        hitokotoTv.setText(hitokoto.text());
     }
-
-//    @Override
-//    public void showHitokoto(Hitokoto hitokoto) {
-//        hitokotoTv.setText(hitokoto.getText());
-//    }
 
     @Override
     public void onBackPressed() {
@@ -94,5 +89,13 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         } else {
             super.onBackPressed();
         }
+    }
+
+    protected void setupActivityComponent(AppComponent appComponent) {
+        mainComponent = appComponent.mainComponentBuilder()
+                .mainModule(new MainActivityModule(this))
+                .hitokotoModule(new HitokotoModule())
+                .build();
+        mainComponent.inject(this);
     }
 }

@@ -10,7 +10,15 @@ CREATE TABLE hitokoto (
     date INTEGER AS LocalDateTime
 );
 
-select_by_id:
+insert_hitokoto:
+INSERT INTO hitokoto (id, uid, catname, text, author, source, date)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+select_random:
 SELECT *
 FROM hitokoto
-WHERE hitokoto.id = ?;
+ORDER BY RANDOM() LIMIT 1;
+
+count:
+SELECT COUNT(*)
+FROM hitokoto;

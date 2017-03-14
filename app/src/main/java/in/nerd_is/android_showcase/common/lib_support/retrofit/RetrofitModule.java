@@ -6,14 +6,13 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
-import in.nerd_is.android_showcase.BuildConfig;
+import in.nerd_is.android_showcase.DebugOnly;
 import in.nerd_is.android_showcase.common.lib_support.moshi.MyMoshiAdapterFactory;
-import in.nerd_is.android_showcase.hitokoto.moshi.DateTimeAdapter;
 import in.nerd_is.android_showcase.hitokoto.model.repository.remote.HitokotoUrl;
-import in.nerd_is.android_showcase.zhihu_daily.moshi.DateAdapter;
+import in.nerd_is.android_showcase.hitokoto.moshi.DateTimeAdapter;
 import in.nerd_is.android_showcase.zhihu_daily.model.repository.remote.ZhihuDailyUrl;
+import in.nerd_is.android_showcase.zhihu_daily.moshi.DateAdapter;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
@@ -32,13 +31,8 @@ public class RetrofitModule {
     private final Moshi.Builder moshiBuilder;
 
     public RetrofitModule() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        if (BuildConfig.DEBUG) {
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        } else {
-            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-        }
-        okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
+        okHttpClient = DebugOnly.addStethoInterceptor(okHttpBuilder).build();
 
         rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 

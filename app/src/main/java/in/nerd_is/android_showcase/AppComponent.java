@@ -4,8 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitModule;
-import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
-import in.nerd_is.android_showcase.main.MainComponent;
+import in.nerd_is.android_showcase.common.lib_support.sqlbrite.BriteModule;
+import in.nerd_is.android_showcase.main.MainActivityComponent;
 
 /**
  * @author Xuqiang ZHENG on 2016/9/20.
@@ -14,10 +14,10 @@ import in.nerd_is.android_showcase.main.MainComponent;
 @Component(modules = {
         AppModule.class,
         RetrofitModule.class,
-        HitokotoModule.class
+        BriteModule.class,
 })
 public interface AppComponent {
-    MainComponent.Builder mainComponentBuilder();
+    MainActivityComponent.Builder mainComponentBuilder();
 
     void inject(ThisApplication application);
 }

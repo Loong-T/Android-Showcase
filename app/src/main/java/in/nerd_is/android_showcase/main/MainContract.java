@@ -1,6 +1,7 @@
 package in.nerd_is.android_showcase.main;
 
 import in.nerd_is.android_showcase.common.BaseContract;
+import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 
 /**
  * @author Xuqiang ZHENG on 2016/9/20.
@@ -8,10 +9,10 @@ import in.nerd_is.android_showcase.common.BaseContract;
 public interface MainContract {
 
     interface View extends BaseContract.View {
-//        void showHitokoto(Hitokoto hitokoto);
+        void showHitokoto(Hitokoto hitokoto);
     }
 
-    interface Presenter extends BaseContract.Presenter<View> {
-//        void loadHitokoto();
+    interface UserActionListener extends BaseContract.Presenter<View> {
+        void loadHitokoto();
     }
 }

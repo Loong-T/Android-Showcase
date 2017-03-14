@@ -8,4 +8,6 @@ import rx.Observable;
  */
 public interface HitokotoDataSource {
     Observable<Hitokoto> getHitokoto();
+
+    Observable<Long> saveHitokoto(Hitokoto hitokoto);
 }

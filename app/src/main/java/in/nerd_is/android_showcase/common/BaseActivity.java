@@ -28,7 +28,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentView = find(android.R.id.content);
-        setupActivityComponent(ThisApplication.INSTANCE.appComponent);
+        setupActivityComponent(((ThisApplication) getApplication()).appComponent);
     }
 
     protected abstract void setupActivityComponent(AppComponent appComponent);

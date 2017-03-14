@@ -9,25 +9,31 @@ import rx.Observable;
 import rx.Scheduler;
 
 import static in.nerd_is.android_showcase.common.Constant.TAG_IO;
+import static in.nerd_is.android_showcase.common.Constant.TAG_LOCAL;
 import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
+import static in.nerd_is.android_showcase.common.Constant.TAG_REMOTE;
 
 /**
  * @author Xuqiang ZHENG on 2016/9/20.
  */
 public class GetHitokoto extends UseCase<Void> {
 
-    private HitokotoDataSource dataSource;
+    private HitokotoDataSource localDataSource;
+    private HitokotoDataSource remoteDataSource;
 
     @Inject
-    public GetHitokoto(HitokotoDataSource dataSource,
+    public GetHitokoto(@Named(TAG_LOCAL) HitokotoDataSource localSource,
+                       @Named(TAG_REMOTE) HitokotoDataSource remoteSource,
                        @Named(TAG_IO) Scheduler backgroundScheduler,
                        @Named(TAG_MAIN) Scheduler responseScheduler) {
         super(backgroundScheduler, responseScheduler);
-        this.dataSource = dataSource;
+        localDataSource = localSource;
+        remoteDataSource = remoteSource;
     }
 
     @Override
     protected Observable buildUseCaseObservable(Void param) {
-        return /*dataSource.getHitokoto();*/ null;
+        return remoteDataSource.getHitokoto()
+                .doOnNext(hitokoto -> localDataSource.saveHitokoto(hitokoto));
     }
 }

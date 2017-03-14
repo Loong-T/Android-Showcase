@@ -2,7 +2,6 @@ package in.nerd_is.android_showcase.hitokoto.model.repository.remote;
 
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 import in.nerd_is.android_showcase.hitokoto.model.repository.HitokotoDataSource;
-import in.nerd_is.android_showcase.hitokoto.model.repository.remote.HitokotoApi;
 import rx.Observable;
 
 /**
@@ -19,5 +18,10 @@ public class HitokotoRemoteRepository implements HitokotoDataSource {
     @Override
     public Observable<Hitokoto> getHitokoto() {
         return api.getHitokoto();
+    }
+
+    @Override
+    public Observable<Long> saveHitokoto(Hitokoto hitokoto) {
+        throw new UnsupportedOperationException("save function is not support on remote");
     }
 }

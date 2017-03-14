@@ -5,7 +5,7 @@ import android.support.annotation.StringRes;
 import rx.Observable;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/18.
+ * @author Xuqiang ZHENG on 2016/9/18.
  */
 public interface BaseContract {
     interface View {

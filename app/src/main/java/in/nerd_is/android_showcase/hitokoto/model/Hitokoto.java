@@ -13,12 +13,14 @@ import in.nerd_is.android_showcase.common.lib_support.sqldelight.DateAdapter;
 @AutoValue
 public abstract class Hitokoto implements HitokotoModel {
 
-    private static final DateAdapter DATE_ADAPTER = new DateAdapter();
+    public static final DateAdapter DATE_ADAPTER = new DateAdapter();
 
     public static final Factory<Hitokoto> FACTORY = new Factory<>(
             AutoValue_Hitokoto::new, DATE_ADAPTER);
 
-    public static final RowMapper<Hitokoto> SELECT_BY_ID_MAPPER = FACTORY.select_by_idMapper();
+    public static final RowMapper<Hitokoto> SELECT_RANDOM_MAPPER = FACTORY.select_randomMapper();
+    public static final RowMapper<Long> COUNT_MAPPER = FACTORY.countMapper();
+
 
     public static JsonAdapter<Hitokoto> jsonAdapter(Moshi moshi) {
         return new AutoValue_Hitokoto.MoshiJsonAdapter(moshi);
