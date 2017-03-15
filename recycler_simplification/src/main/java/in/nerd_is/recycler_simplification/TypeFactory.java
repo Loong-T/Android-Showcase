@@ -30,11 +30,16 @@ public abstract class TypeFactory {
 
     public final int getType(Class<?> clazz) {
         int idx = classes.indexOf(clazz);
-        if (idx != -1) {
+        if (idx >= 0) {
             return idx;
-        } else {
-            throw new IllegalArgumentException("unknown class: " + clazz.getCanonicalName());
         }
+        
+        for (int i = 0, classesSize = classes.size(); i < classesSize; i++) {
+            if (classes.get(i).isAssignableFrom(clazz)) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("unknown class: " + clazz.getCanonicalName());
     }
 
     public final ViewHolder createViewHolder(ViewGroup parent, int type) {
