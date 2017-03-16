@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    private final TypeFactory typeFactory;
+    protected final TypeFactory typeFactory;
     @SuppressWarnings("unchecked")
     private List<?> data = Collections.EMPTY_LIST;
 

@@ -33,7 +33,7 @@ public abstract class TypeFactory {
         if (idx >= 0) {
             return idx;
         }
-        
+
         for (int i = 0, classesSize = classes.size(); i < classesSize; i++) {
             if (classes.get(i).isAssignableFrom(clazz)) {
                 return i;
