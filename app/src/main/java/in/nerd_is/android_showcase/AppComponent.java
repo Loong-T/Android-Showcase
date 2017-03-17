@@ -3,20 +3,21 @@ package in.nerd_is.android_showcase;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import in.nerd_is.android_showcase.common.di.activity.ActivityBindingModule;
-import in.nerd_is.android_showcase.common.net.RetrofitModule;
-import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
+import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitModule;
+import in.nerd_is.android_showcase.common.lib_support.sqlbrite.BriteModule;
+import in.nerd_is.android_showcase.main.MainActivityComponent;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/20.
+ * @author Xuqiang ZHENG on 2016/9/20.
  */
 @Singleton
 @Component(modules = {
         AppModule.class,
-        ActivityBindingModule.class,
         RetrofitModule.class,
-        HitokotoModule.class
+        BriteModule.class,
 })
 public interface AppComponent {
+    MainActivityComponent.Builder mainComponentBuilder();
+
     void inject(ThisApplication application);
 }

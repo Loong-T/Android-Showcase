@@ -13,12 +13,12 @@ import android.widget.Toast;
 import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
+import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.ThisApplication;
-import in.nerd_is.android_showcase.common.di.activity.HasActivitySubcomponentBuilders;
 import rx.Observable;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/18.
+ * @author Xuqiang ZHENG on 2016/9/18.
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements BaseContract.View {
 
@@ -28,8 +28,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentView = find(android.R.id.content);
-        setupActivityComponent();
+        setupActivityComponent(((ThisApplication) getApplication()).appComponent);
     }
+
+    protected abstract void setupActivityComponent(AppComponent appComponent);
 
     @SuppressWarnings("unchecked")
     protected <T extends View> T find(@IdRes int viewId) {
@@ -64,11 +66,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     }
 
     @Override
-    public void setupPresenter() {
-
-    }
-
-    @Override
     public Observable.Transformer lifecycleTransformer() {
         return null;
     }
@@ -76,10 +73,4 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     public Observable.Transformer bindUntilDestroy() {
         return bindUntilEvent(ActivityEvent.DESTROY);
     }
-
-    protected void setupActivityComponent() {
-        inject((HasActivitySubcomponentBuilders) getApplicationContext());
-    }
-
-    protected abstract void inject(HasActivitySubcomponentBuilders builders);
 }

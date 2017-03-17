@@ -1,28 +1,18 @@
 package in.nerd_is.android_showcase;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
-import java.util.Map;
-
-import javax.inject.Inject;
-
-import in.nerd_is.android_showcase.common.di.activity.ActivityComponentBuilder;
-import in.nerd_is.android_showcase.common.di.activity.HasActivitySubcomponentBuilders;
-import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
+import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitModule;
+import in.nerd_is.android_showcase.common.lib_support.sqlbrite.BriteModule;
 
 /**
- * Created by Xuqiang ZHENG on 2016/9/20.
+ * @author Xuqiang ZHENG on 2016/9/20.
  */
-public class ThisApplication extends Application implements HasActivitySubcomponentBuilders {
+public class ThisApplication extends Application {
 
     public static ThisApplication INSTANCE;
-
-    @Inject
-    Map<Class<? extends Activity>, ActivityComponentBuilder> activityComponentBuilders;
 
     public AppComponent appComponent;
 
@@ -32,18 +22,15 @@ public class ThisApplication extends Application implements HasActivitySubcompon
 
         INSTANCE = this;
 
+        DebugOnly.initStetho(this);
+
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .hitokotoModule(new HitokotoModule())
+                .retrofitModule(new RetrofitModule())
+                .briteModule(new BriteModule())
                 .build();
-
         appComponent.inject(this);
 
         AndroidThreeTen.init(this);
-    }
-
-    @Override
-    public ActivityComponentBuilder get(Class<? extends Activity> activityClass) {
-        return activityComponentBuilders.get(activityClass);
     }
 }

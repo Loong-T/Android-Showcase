@@ -16,28 +16,28 @@ import javax.inject.Inject;
 
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
-import in.nerd_is.android_showcase.common.entity.RecyclerData;
 import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
+import in.nerd_is.recycler_simplification.LoadMoreRecyclerAdapter;
 import rx.Observable;
 
 /**
- * Created by Xuqiang ZHENG on 2016/10/23.
+ * @author Xuqiang ZHENG on 2016/10/23.
  */
-
-public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyListContract.View {
+public class ZhihuDailyListFragment extends BaseFragment
+        implements ZhihuDailyListContract.View {
 
     @Inject
     ZhihuDailyListPresenter presenter;
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ZhihuDailyListAdapter adapter;
+    private LoadMoreRecyclerAdapter adapter;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        ((MainActivity) activity).mainComponent.injectMembers(this);
+        ((MainActivity) activity).mainComponent.inject(this);
     }
 
     @Nullable
@@ -53,6 +53,7 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
         super.onViewCreated(view, savedInstanceState);
 
         swipeRefreshLayout = find(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(presenter::loadLatestStories);
 
         RecyclerView recyclerView = find(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -62,10 +63,14 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
         divider.setShowLastDivider(true);
         recyclerView.addItemDecoration(divider);
 
-        adapter = new ZhihuDailyListAdapter(getContext());
+        adapter = new LoadMoreRecyclerAdapter(
+                new ZhihuDailyTypeFactory(),
+                R.layout.zhihu_daily_list_footer,
+                data -> presenter.loadMoreStories(data)
+        );
         recyclerView.setAdapter(adapter);
 
-        presenter.loadStories();
+        presenter.loadLatestStories();
     }
 
     @Override @Inject
@@ -75,12 +80,19 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
 
     @Override
     public void refreshing(boolean refreshing) {
-        swipeRefreshLayout.setRefreshing(refreshing);
+        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(refreshing));
     }
 
     @Override
-    public void showList(List<RecyclerData> data) {
+    public void showLatestStories(List<Object> data) {
         adapter.swap(data);
+        adapter.startEndlessLoadMore();
+    }
+
+    @Override
+    public void appendStories(List<Object> data) {
+        adapter.append(data);
+        adapter.setLoading(false);
     }
 
     @Override

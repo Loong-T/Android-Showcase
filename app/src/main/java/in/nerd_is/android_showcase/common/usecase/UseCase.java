@@ -1,11 +1,16 @@
 package in.nerd_is.android_showcase.common.usecase;
 
+import android.support.annotation.Nullable;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
+/**
+ * @author Xuqiang ZHENG on 2016/9/20.
+ */
 public abstract class UseCase<T> {
 
     private Scheduler backgroundScheduler;
@@ -21,7 +26,7 @@ public abstract class UseCase<T> {
     protected abstract Observable buildUseCaseObservable(T param);
 
     @SuppressWarnings("unchecked")
-    public void execute(T param,
+    public void execute(@Nullable T param,
                         Observable.Transformer lifecycleTransformer,
                         Subscriber subscriber) {
         final Subscription subscription = buildUseCaseObservable(param)

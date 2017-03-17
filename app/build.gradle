@@ -1,32 +1,46 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.ben-manes.versions'
-
-ext {
-    supportVersion = '25.0.1'
-    rxlifecycleVersion = '1.0'
-    okhttpVersion = '3.4.2'
-    retrofitVersion = '2.1.0'
-    daggerVersion = '2.7'
-}
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.squareup.sqldelight'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
         applicationId "in.nerd_is.android_showcase"
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+
+        debug {
+
+        }
+
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+        }
+        prod {
+
+        }
+    }
+
+    variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true);
         }
     }
 
@@ -46,45 +60,85 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(path: ':recycler_simplification')
 
     // support library
-    compile "com.android.support:appcompat-v7:$project.ext.supportVersion"
-    compile "com.android.support:design:$project.ext.supportVersion"
-    compile "com.android.support:support-annotations:$project.ext.supportVersion"
-    compile "com.android.support:cardview-v7:$project.ext.supportVersion"
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibaryVersion"
+    compile "com.android.support:design:$rootProject.ext.supportLibaryVersion"
+    compile "com.android.support:support-annotations:$rootProject.ext.supportLibaryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.ext.supportLibaryVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // reactive
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.2.2'
-    compile "com.trello:rxlifecycle:$project.ext.rxlifecycleVersion"
-    compile "com.trello:rxlifecycle-android:$project.ext.rxlifecycleVersion"
-    compile "com.trello:rxlifecycle-components:$project.ext.rxlifecycleVersion"
+    compile 'io.reactivex:rxjava:1.2.7'
+    compile "com.trello:rxlifecycle:$rootProject.ext.rxlifecycleVersion"
+    compile "com.trello:rxlifecycle-android:$rootProject.ext.rxlifecycleVersion"
+    compile "com.trello:rxlifecycle-components:$rootProject.ext.rxlifecycleVersion"
 
     // IO
-    compile "com.squareup.okhttp3:okhttp:$project.ext.okhttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$project.ext.okhttpVersion"
-    compile "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-moshi:$project.ext.retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava:$project.ext.retrofitVersion"
-    compile 'com.squareup.moshi:moshi:1.3.1'
+    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpVersion"
+    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-moshi:$rootProject.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.retrofitVersion"
+    compile 'com.squareup.moshi:moshi:1.4.0'
 
-    compile 'com.jakewharton.threetenabp:threetenabp:1.0.4'
-    compile 'com.annimon:stream:1.1.4'
+    // Java 8 support
+    compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    compile 'com.annimon:stream:1.1.6'
 
     // media
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
-    compile "com.google.dagger:dagger:$project.ext.daggerVersion"
-    apt "com.google.dagger:dagger-compiler:$project.ext.daggerVersion"
+    // di
+    compile "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+    compile "com.google.dagger:dagger-android:$rootProject.ext.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.2.21'
+    // module
+    provided "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
+    annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
+    provided "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
+
+    // DB
+    compile 'com.squareup.sqlbrite:sqlbrite:1.1.1'
+
+    // debug
+    debugCompile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stethoVersion"
+
+    // test
+    testCompile('junit:junit:4.12', {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    })
+    testCompile 'org.mockito:mockito-core:2.7.17'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile 'org.threeten:threetenbp:1.3.1'
+    testCompile 'org.threeten:threetenbp:1.3.3'
+    testCompile 'com.github.javafaker:javafaker:0.13'
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+//    androidTestCompile 'com.android.support.test:runner:0.5'
+//    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion", {
+        exclude group: 'com.android.support'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+}
+
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
 }
