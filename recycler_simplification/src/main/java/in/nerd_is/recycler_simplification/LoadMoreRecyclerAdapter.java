@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * @author Xuqiang ZHENG on 2017/3/16.
  */
@@ -49,8 +51,8 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
         int count = getOriginCount();
         if (position == count) {
             if (!isLoading) {
-                listener.loadMore(getData().get(count - 1));
                 isLoading = true;
+                listener.loadMore(getData());
             }
 
             typeFactory.bindViewHolder(holder, loadMore);
@@ -74,12 +76,27 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
         }
     }
 
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+    }
+
+    @Override
+    public void append(List<Object> list) {
+        int startPos = data.size() - 1;
+        data.addAll(list);
+        notifyItemRangeInserted(startPos, list.size());
+    }
+
     private int getOriginCount() {
         return super.getItemCount();
     }
 
     public interface OnLoadMoreListener {
-        void loadMore(Object lastData);
+        void loadMore(List<?> data);
     }
 
     private static final class LoadMore { }

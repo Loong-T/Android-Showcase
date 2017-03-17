@@ -1,6 +1,6 @@
 package in.nerd_is.android_showcase.zhihu_daily.usecase;
 
-import java.util.ArrayList;
+import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,26 +17,24 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
 /**
  * @author Xuqiang ZHENG on 2016/11/24.
  */
-public class GetZhihuDailyStory extends UseCase<Void> {
+public class GetZhihuDailyList extends UseCase<Date> {
 
     private ZhihuDailyDataSource dataSource;
 
     @Inject
-    public GetZhihuDailyStory(ZhihuDailyDataSource dataSource,
-                              @Named(TAG_IO) Scheduler backgroundScheduler,
-                              @Named(TAG_MAIN) Scheduler responseScheduler) {
+    public GetZhihuDailyList(ZhihuDailyDataSource dataSource,
+                             @Named(TAG_IO) Scheduler backgroundScheduler,
+                             @Named(TAG_MAIN) Scheduler responseScheduler) {
         super(backgroundScheduler, responseScheduler);
         this.dataSource = dataSource;
     }
 
     @Override
-    protected Observable buildUseCaseObservable(Void param) {
-        return dataSource.getLatestNews()
-                .map(news -> {
-                    final ArrayList<Object> list = new ArrayList<>(news.stories.size() + 1);
-                    list.add(Date.create(news.date));
-                    list.addAll(news.stories);
-                    return list;
-                });
+    protected Observable buildUseCaseObservable(@Nullable Date param) {
+        if (param == null) {
+            return dataSource.getLatestNews();
+        }
+
+        return dataSource.getNewsBefore(param);
     }
 }

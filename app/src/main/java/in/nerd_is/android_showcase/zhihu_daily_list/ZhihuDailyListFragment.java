@@ -18,30 +18,26 @@ import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
 import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
-import in.nerd_is.recycler_simplification.RecyclerAdapter;
+import in.nerd_is.recycler_simplification.LoadMoreRecyclerAdapter;
 import rx.Observable;
 
 /**
  * @author Xuqiang ZHENG on 2016/10/23.
  */
-public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyListContract.View {
+public class ZhihuDailyListFragment extends BaseFragment
+        implements ZhihuDailyListContract.View {
 
     @Inject
     ZhihuDailyListPresenter presenter;
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private RecyclerAdapter adapter;
+    private LoadMoreRecyclerAdapter adapter;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         ((MainActivity) activity).mainComponent.inject(this);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -67,7 +63,11 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
         divider.setShowLastDivider(true);
         recyclerView.addItemDecoration(divider);
 
-        adapter = new RecyclerAdapter(new ZhihuDailyTypeFactory());
+        adapter = new LoadMoreRecyclerAdapter(
+                new ZhihuDailyTypeFactory(),
+                R.layout.zhihu_daily_list_footer,
+                data -> presenter.loadMoreStories(data)
+        );
         recyclerView.setAdapter(adapter);
 
         presenter.loadLatestStories();
@@ -80,12 +80,19 @@ public class ZhihuDailyListFragment extends BaseFragment implements ZhihuDailyLi
 
     @Override
     public void refreshing(boolean refreshing) {
-        swipeRefreshLayout.setRefreshing(refreshing);
+        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(refreshing));
     }
 
     @Override
-    public void showLatestStories(List<?> data) {
+    public void showLatestStories(List<Object> data) {
         adapter.swap(data);
+        adapter.startEndlessLoadMore();
+    }
+
+    @Override
+    public void appendStories(List<Object> data) {
+        adapter.append(data);
+        adapter.setLoading(false);
     }
 
     @Override

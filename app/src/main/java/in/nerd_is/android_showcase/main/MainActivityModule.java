@@ -4,7 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import in.nerd_is.android_showcase.common.di.annotation.ActivityScope;
 import in.nerd_is.android_showcase.hitokoto.usecase.GetHitokoto;
-import in.nerd_is.android_showcase.zhihu_daily.usecase.GetZhihuDailyStory;
+import in.nerd_is.android_showcase.zhihu_daily.usecase.GetZhihuDailyList;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListPresenter;
 
 /**
@@ -33,7 +33,7 @@ public class MainActivityModule {
 
     @Provides
     @ActivityScope
-    ZhihuDailyListPresenter provideZhihuDailyListPresenter(GetZhihuDailyStory getZhihuDailyStory) {
-        return new ZhihuDailyListPresenter(getZhihuDailyStory);
+    ZhihuDailyListPresenter provideZhihuDailyListPresenter(GetZhihuDailyList getZhihuDailyList) {
+        return new ZhihuDailyListPresenter(getZhihuDailyList);
     }
 }

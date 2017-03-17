@@ -35,9 +35,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         setContentView(R.layout.main_activity);
         initView();
 
-//        presenter.loadHitokoto();
+        presenter.loadHitokoto();
 
-//        showFragment();
+        showDefaultFragment();
     }
 
     private void initView() {
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         return bindUntilDestroy();
     }
 
-    private void showFragment() {
+    private void showDefaultFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_main_activity, new ZhihuDailyListFragment())

@@ -66,11 +66,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     }
 
     @Override
-    public void setupPresenter() {
-
-    }
-
-    @Override
     public Observable.Transformer lifecycleTransformer() {
         return null;
     }

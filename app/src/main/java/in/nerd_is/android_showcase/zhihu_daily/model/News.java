@@ -5,7 +5,7 @@ import org.threeten.bp.LocalDate;
 import java.util.List;
 
 /**
- * Created by loong on 2016/10/7.
+ * @author Xuqiang ZHENG on 2016/10/7.
  */
 public class News {
     public LocalDate date;
