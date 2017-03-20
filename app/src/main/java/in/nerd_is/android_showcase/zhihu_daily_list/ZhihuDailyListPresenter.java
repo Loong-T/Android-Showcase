@@ -63,4 +63,9 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
             }
         });
     }
+
+    @Override
+    public void cancelTask() {
+        getZhihuDailyList.cancel();
+    }
 }

@@ -35,4 +35,9 @@ public class MainPresenter implements MainContract.UserActionListener {
             }
         });
     }
+
+    @Override
+    public void cancelTask() {
+        getHitokoto.cancel();
+    }
 }

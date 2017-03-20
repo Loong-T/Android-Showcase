@@ -72,6 +72,12 @@ public class ZhihuDailyListFragment extends BaseFragment
         presenter.loadLatestStories();
     }
 
+    @Override
+    public void onDestroy() {
+        presenter.cancelTask();
+        super.onDestroy();
+    }
+
     @Override @Inject
     public void setupPresenter() {
         presenter.setView(this);

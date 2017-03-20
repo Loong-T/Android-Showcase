@@ -20,5 +20,7 @@ public interface BaseContract {
 
     interface Presenter<T> {
         void setView(T view);
+
+        void cancelTask();
     }
 }

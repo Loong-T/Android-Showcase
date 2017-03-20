@@ -39,6 +39,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         showDefaultFragment();
     }
 
+    @Override
+    protected void onDestroy() {
+        presenter.cancelTask();
+        super.onDestroy();
+    }
+
     private void initView() {
         Toolbar toolbar = find(R.id.toolbar);
         setSupportActionBar(toolbar);
