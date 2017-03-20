@@ -40,16 +40,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         typeFactory.bindViewHolder(holder, data.get(position));
     }
 
-    public List<Object> getData() {
+    public List<?> getData() {
         return data;
     }
 
-    public final void swap(List<Object> list) {
-        this.data = list;
+    public final void swap(List<?> list) {
+        //noinspection unchecked
+        this.data = (List<Object> ) list;
         notifyDataSetChanged();
     }
 
-    public void append(List<Object> list) {
+    public void append(List<?> list) {
         int startPos = data.size();
         data.addAll(list);
         notifyItemRangeInserted(startPos, list.size());

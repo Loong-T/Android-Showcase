@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
- * Created by Xuqiang ZHENG on 2016/12/5.
+ * @author Xuqiang ZHENG on 2016/12/5.
  */
 public class MoshiDateTimeAdapterUnitTest {
 

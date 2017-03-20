@@ -1,15 +1,15 @@
 package in.nerd_is.android_showcase.zhihu_daily.usecase;
 
-import android.support.annotation.Nullable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import in.nerd_is.android_showcase.common.usecase.UseCase;
+import in.nerd_is.android_showcase.common.usecase.SingleUseCase;
 import in.nerd_is.android_showcase.zhihu_daily.model.Date;
 import in.nerd_is.android_showcase.zhihu_daily.model.repository.ZhihuDailyDataSource;
-import rx.Observable;
-import rx.Scheduler;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
 
 import static in.nerd_is.android_showcase.common.Constant.TAG_IO;
 import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
@@ -17,7 +17,7 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
 /**
  * @author Xuqiang ZHENG on 2016/11/24.
  */
-public class GetZhihuDailyList extends UseCase<Date> {
+public class GetZhihuDailyList extends SingleUseCase<Date, List<?>> {
 
     private ZhihuDailyDataSource dataSource;
 
@@ -30,7 +30,7 @@ public class GetZhihuDailyList extends UseCase<Date> {
     }
 
     @Override
-    protected Observable buildUseCaseObservable(@Nullable Date param) {
+    protected Single<List<?>> buildPublisher(Date param) {
         if (param == null) {
             return dataSource.getLatestNews();
         }
