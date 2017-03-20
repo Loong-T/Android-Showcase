@@ -5,22 +5,19 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.trello.rxlifecycle.android.ActivityEvent;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-
 import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.ThisApplication;
-import rx.Observable;
 
 /**
  * @author Xuqiang ZHENG on 2016/9/18.
  */
-public abstract class BaseActivity extends RxAppCompatActivity implements BaseContract.View {
+public abstract class BaseActivity extends AppCompatActivity implements BaseContract.View {
 
     protected ViewGroup contentView;
 
@@ -63,14 +60,5 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
         String message = throwable.getLocalizedMessage();
         Log.d(getClass().getSimpleName(), message, throwable);
         toast(message);
-    }
-
-    @Override
-    public Observable.Transformer lifecycleTransformer() {
-        return null;
-    }
-
-    public Observable.Transformer bindUntilDestroy() {
-        return bindUntilEvent(ActivityEvent.DESTROY);
     }
 }

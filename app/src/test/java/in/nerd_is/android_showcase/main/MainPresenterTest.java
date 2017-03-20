@@ -15,11 +15,8 @@ import java.util.concurrent.TimeUnit;
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 import in.nerd_is.android_showcase.hitokoto.usecase.GetHitokoto;
 import in.nerd_is.android_showcase.utils.DateUtils;
-import rx.Observable;
-import rx.Subscriber;
+import io.reactivex.observers.DisposableSingleObserver;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.verify;
 
@@ -37,10 +34,7 @@ public class MainPresenterTest {
     private GetHitokoto getHitokoto;
 
     @Captor
-    private ArgumentCaptor<Subscriber<Hitokoto>> subscriberCaptor;
-
-    @Captor
-    private ArgumentCaptor<Observable.Transformer> transformerCaptor;
+    private ArgumentCaptor<DisposableSingleObserver<Hitokoto>> observerCaptor;
 
     private static Faker FAKER = new Faker(Locale.getDefault());
 
@@ -57,14 +51,10 @@ public class MainPresenterTest {
 
         presenter.loadHitokoto();
 
-        verify(getHitokoto).execute(isNull(),
-                transformerCaptor.capture(), subscriberCaptor.capture());
-        subscriberCaptor.getValue().onNext(hitokoto);
+        verify(getHitokoto).execute(isNull(), observerCaptor.capture());
+        observerCaptor.getValue().onSuccess(hitokoto);
 
         verify(view).showHitokoto(hitokoto);
-
-        assertThat("transformer equals",
-                view.lifecycleTransformer(), equalTo(transformerCaptor.getValue()));
     }
 
     private static Hitokoto createFakerHitokoto() {

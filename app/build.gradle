@@ -103,7 +103,6 @@ dependencies {
     annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
 
     // DB
-    compile 'com.squareup.sqlbrite:sqlbrite:1.1.1'
 
     // debug
     debugCompile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"

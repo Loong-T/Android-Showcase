@@ -2,8 +2,6 @@ package in.nerd_is.android_showcase.common;
 
 import android.support.annotation.StringRes;
 
-import rx.Observable;
-
 /**
  * @author Xuqiang ZHENG on 2016/9/18.
  */
@@ -18,8 +16,6 @@ public interface BaseContract {
         void showError(Throwable throwable);
 
         void setupPresenter();
-
-        Observable.Transformer lifecycleTransformer();
     }
 
     interface Presenter<T> {
