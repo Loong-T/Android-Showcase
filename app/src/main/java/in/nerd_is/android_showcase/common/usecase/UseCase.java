@@ -2,45 +2,31 @@ package in.nerd_is.android_showcase.common.usecase;
 
 import android.support.annotation.Nullable;
 
-import rx.Observable;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
+
 
 /**
  * @author Xuqiang ZHENG on 2016/9/20.
  */
-public abstract class UseCase<T> {
+public abstract class UseCase<R, P, O> {
 
-    private Scheduler backgroundScheduler;
-    private Scheduler responseScheduler;
-    private CompositeSubscription subscriptions = new CompositeSubscription();
+    protected Scheduler workerScheduler;
+    protected Scheduler responseScheduler;
 
-    public UseCase(Scheduler backgroundScheduler,
-                   Scheduler responseScheduler) {
-        this.backgroundScheduler = backgroundScheduler;
+    protected CompositeDisposable disposables = new CompositeDisposable();
+
+    public UseCase(Scheduler workerScheduler,
+                             Scheduler responseScheduler) {
+        this.workerScheduler = workerScheduler;
         this.responseScheduler = responseScheduler;
     }
 
-    protected abstract Observable buildUseCaseObservable(T param);
+    protected abstract P buildPublisher(R param);
 
-    @SuppressWarnings("unchecked")
-    public void execute(@Nullable T param,
-                        Observable.Transformer lifecycleTransformer,
-                        Subscriber subscriber) {
-        final Subscription subscription = buildUseCaseObservable(param)
-                .subscribeOn(backgroundScheduler)
-                .observeOn(responseScheduler)
-                .compose(lifecycleTransformer)
-                .subscribe(subscriber);
+    public abstract void execute(@Nullable R param, O observer);
 
-        subscriptions.add(subscription);
-    }
-
-    public void  unsubscribe() {
-        if (!subscriptions.isUnsubscribed()) {
-            subscriptions.unsubscribe();
-        }
+    public void cancel() {
+        disposables.clear();
     }
 }

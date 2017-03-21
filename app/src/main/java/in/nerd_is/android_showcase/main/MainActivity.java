@@ -17,7 +17,6 @@ import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
-import rx.Observable;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
@@ -38,6 +37,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         presenter.loadHitokoto();
 
         showDefaultFragment();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.cancelTask();
+        super.onDestroy();
     }
 
     private void initView() {
@@ -63,11 +68,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Inject
     public void setupPresenter() {
         presenter.setView(this);
-    }
-
-    @Override
-    public Observable.Transformer lifecycleTransformer() {
-        return bindUntilDestroy();
     }
 
     private void showDefaultFragment() {

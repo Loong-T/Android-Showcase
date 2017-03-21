@@ -14,7 +14,7 @@ import in.nerd_is.android_showcase.zhihu_daily.model.repository.remote.ZhihuDail
 import in.nerd_is.android_showcase.zhihu_daily.moshi.DateAdapter;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 import static in.nerd_is.android_showcase.common.Constant.TAG_HITOKOTO;
@@ -27,14 +27,14 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_ZHIHU_DAILY;
 public class RetrofitModule {
 
     private final OkHttpClient okHttpClient;
-    private final RxJavaCallAdapterFactory rxJavaCallAdapterFactory;
+    private final RxJava2CallAdapterFactory rxJavaCallAdapterFactory;
     private final Moshi.Builder moshiBuilder;
 
     public RetrofitModule() {
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
         okHttpClient = DebugOnly.addStethoInterceptor(okHttpBuilder).build();
 
-        rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
+        rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
 
         moshiBuilder = new Moshi.Builder().add(MyMoshiAdapterFactory.create());
     }

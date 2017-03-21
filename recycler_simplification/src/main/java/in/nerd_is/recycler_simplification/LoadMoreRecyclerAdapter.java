@@ -28,7 +28,8 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
         typeFactory.add(LoadMore.class, new ViewHolderCreator() {
             @Override
             public ViewHolder create(LayoutInflater inflater, ViewGroup parent) {
-                return new LoadMoreHolder(inflater.inflate(loadMoreLayoutResId, parent, false));
+                return new LoadMoreHolder(inflater.inflate(
+                        loadMoreLayoutResId, parent, false));
             }
         });
     }
@@ -85,8 +86,8 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
     }
 
     @Override
-    public void append(List<Object> list) {
-        int startPos = data.size() - 1;
+    public void append(List<?> list) {
+        int startPos = data.size();
         data.addAll(list);
         notifyItemRangeInserted(startPos, list.size());
     }
@@ -103,7 +104,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
 
     private static final class LoadMoreHolder extends ViewHolder<LoadMore> {
 
-        public LoadMoreHolder(View itemView) {
+        LoadMoreHolder(View itemView) {
             super(itemView);
         }
 

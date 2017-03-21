@@ -19,7 +19,6 @@ android {
     buildTypes {
 
         debug {
-
         }
 
         release {
@@ -70,18 +69,18 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // reactive
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.2.7'
-    compile "com.trello:rxlifecycle:$rootProject.ext.rxlifecycleVersion"
-    compile "com.trello:rxlifecycle-android:$rootProject.ext.rxlifecycleVersion"
-    compile "com.trello:rxlifecycle-components:$rootProject.ext.rxlifecycleVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
+    compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifecycleVersion"
+    compile "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.ext.rxlifecycleVersion"
+    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycleVersion"
 
     // IO
     compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpVersion"
     compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     compile "com.squareup.retrofit2:converter-moshi:$rootProject.ext.retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
     compile 'com.squareup.moshi:moshi:1.4.0'
 
     // Java 8 support
@@ -93,7 +92,6 @@ dependencies {
 
     // di
     compile "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
-    compile "com.google.dagger:dagger-android:$rootProject.ext.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
     // module
@@ -101,9 +99,6 @@ dependencies {
     annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
     provided "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
-
-    // DB
-    compile 'com.squareup.sqlbrite:sqlbrite:1.1.1'
 
     // debug
     debugCompile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"

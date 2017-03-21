@@ -12,9 +12,9 @@ public interface ZhihuDailyListContract {
 
         void refreshing(boolean refreshing);
 
-        void showLatestStories(List<Object> data);
+        void showLatestStories(List<?> data);
 
-        void appendStories(List<Object> data);
+        void appendStories(List<?> data);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

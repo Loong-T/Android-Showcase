@@ -3,13 +3,13 @@ package in.nerd_is.android_showcase.zhihu_daily.model.repository;
 import java.util.List;
 
 import in.nerd_is.android_showcase.zhihu_daily.model.Date;
-import rx.Observable;
+import io.reactivex.Single;
 
 /**
  * @author Xuqiang ZHENG on 2016/10/9.
  */
 public interface ZhihuDailyDataSource {
-    Observable<List<?>> getLatestNews();
+    Single<List<?>> getLatestNews();
 
-    Observable<List<?>> getNewsBefore(Date date);
+    Single<List<?>> getNewsBefore(Date date);
 }

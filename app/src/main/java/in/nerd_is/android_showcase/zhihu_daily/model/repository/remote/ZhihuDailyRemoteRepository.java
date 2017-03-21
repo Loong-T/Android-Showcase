@@ -12,10 +12,10 @@ import in.nerd_is.android_showcase.zhihu_daily.model.Date;
 import in.nerd_is.android_showcase.zhihu_daily.model.LatestNews;
 import in.nerd_is.android_showcase.zhihu_daily.model.News;
 import in.nerd_is.android_showcase.zhihu_daily.model.repository.ZhihuDailyDataSource;
+import io.reactivex.Single;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
 import static in.nerd_is.android_showcase.common.Constant.TAG_ZHIHU_DAILY;
 import static in.nerd_is.android_showcase.zhihu_daily.Constant.NEWS_DATE_FORMATTER;
@@ -35,7 +35,7 @@ public class ZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
     }
 
     @Override
-    public Observable<List<?>> getLatestNews() {
+    public Single<List<?>> getLatestNews() {
         return api.getLatestNews()
                 .map(latestNews -> {
                     List<Object> list = new ArrayList<>(latestNews.stories.size() + 1);
@@ -46,7 +46,7 @@ public class ZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
     }
 
     @Override
-    public Observable<List<?>> getNewsBefore(Date date) {
+    public Single<List<?>> getNewsBefore(Date date) {
         return api.getNewsBefore(NEWS_DATE_FORMATTER.format(date.date()))
                 .map(news -> {
                     List<Object> list = new ArrayList<>(news.stories.size() + 1);
@@ -58,9 +58,9 @@ public class ZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
 
     private interface Api {
         @GET(LATEST)
-        Observable<LatestNews> getLatestNews();
+        Single<LatestNews> getLatestNews();
 
         @GET(BEFORE)
-        Observable<News> getNewsBefore(@Path(DATE_PLACE_HOLDER) String date);
+        Single<News> getNewsBefore(@Path(DATE_PLACE_HOLDER) String date);
     }
 }

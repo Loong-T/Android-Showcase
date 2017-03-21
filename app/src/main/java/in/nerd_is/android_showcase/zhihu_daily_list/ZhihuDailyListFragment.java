@@ -1,6 +1,6 @@
 package in.nerd_is.android_showcase.zhihu_daily_list;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,7 +19,6 @@ import in.nerd_is.android_showcase.common.BaseFragment;
 import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
 import in.nerd_is.recycler_simplification.LoadMoreRecyclerAdapter;
-import rx.Observable;
 
 /**
  * @author Xuqiang ZHENG on 2016/10/23.
@@ -34,10 +33,10 @@ public class ZhihuDailyListFragment extends BaseFragment
     private LoadMoreRecyclerAdapter adapter;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        ((MainActivity) activity).mainComponent.inject(this);
+        ((MainActivity) context).mainComponent.inject(this);
     }
 
     @Nullable
@@ -73,6 +72,12 @@ public class ZhihuDailyListFragment extends BaseFragment
         presenter.loadLatestStories();
     }
 
+    @Override
+    public void onDestroy() {
+        presenter.cancelTask();
+        super.onDestroy();
+    }
+
     @Override @Inject
     public void setupPresenter() {
         presenter.setView(this);
@@ -84,19 +89,14 @@ public class ZhihuDailyListFragment extends BaseFragment
     }
 
     @Override
-    public void showLatestStories(List<Object> data) {
+    public void showLatestStories(List<?> data) {
         adapter.swap(data);
         adapter.startEndlessLoadMore();
     }
 
     @Override
-    public void appendStories(List<Object> data) {
+    public void appendStories(List<?> data) {
         adapter.append(data);
         adapter.setLoading(false);
-    }
-
-    @Override
-    public Observable.Transformer lifecycleTransformer() {
-        return bindUntilDestroy();
     }
 }

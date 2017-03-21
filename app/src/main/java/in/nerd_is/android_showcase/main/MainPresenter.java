@@ -2,7 +2,7 @@ package in.nerd_is.android_showcase.main;
 
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 import in.nerd_is.android_showcase.hitokoto.usecase.GetHitokoto;
-import rx.Subscriber;
+import io.reactivex.observers.DisposableSingleObserver;
 
 /**
  * @author Xuqiang ZHENG on 2016/9/20.
@@ -23,23 +23,21 @@ public class MainPresenter implements MainContract.UserActionListener {
 
     @Override
     public void loadHitokoto() {
-        getHitokoto.execute(null, view.lifecycleTransformer(), new HitokotoSubscriber());
+        getHitokoto.execute(null, new DisposableSingleObserver<Hitokoto>() {
+            @Override
+            public void onSuccess(Hitokoto hitokoto) {
+                view.showHitokoto(hitokoto);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                view.snackbar(e.getLocalizedMessage());
+            }
+        });
     }
 
-    private class HitokotoSubscriber extends Subscriber<Hitokoto> {
-        @Override
-        public void onCompleted() {
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            view.snackbar(e.getLocalizedMessage());
-        }
-
-        @Override
-        public void onNext(Hitokoto hitokoto) {
-            view.showHitokoto(hitokoto);
-        }
+    @Override
+    public void cancelTask() {
+        getHitokoto.cancel();
     }
 }
