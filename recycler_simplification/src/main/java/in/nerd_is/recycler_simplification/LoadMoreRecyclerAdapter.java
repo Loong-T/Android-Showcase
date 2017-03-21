@@ -87,7 +87,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
 
     @Override
     public void append(List<?> list) {
-        int startPos = data.size() - 1;
+        int startPos = data.size();
         data.addAll(list);
         notifyItemRangeInserted(startPos, list.size());
     }
@@ -104,7 +104,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
 
     private static final class LoadMoreHolder extends ViewHolder<LoadMore> {
 
-        public LoadMoreHolder(View itemView) {
+        LoadMoreHolder(View itemView) {
             super(itemView);
         }
 

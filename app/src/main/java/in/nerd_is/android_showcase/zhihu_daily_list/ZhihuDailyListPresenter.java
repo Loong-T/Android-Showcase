@@ -53,7 +53,7 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
         getZhihuDailyList.execute(date, new DisposableSingleObserver<List<?>>() {
 
             @Override
-            public void onSuccess(List<?> objects) {
+            public void onSuccess(List<?> data) {
                 view.appendStories(data);
             }
 

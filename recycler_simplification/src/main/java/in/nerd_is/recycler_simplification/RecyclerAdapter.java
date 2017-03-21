@@ -46,7 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     public final void swap(List<?> list) {
         //noinspection unchecked
-        this.data = (List<Object> ) list;
+        this.data = (List<Object>) list;
         notifyDataSetChanged();
     }
 
