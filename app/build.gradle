@@ -19,7 +19,6 @@ android {
     buildTypes {
 
         debug {
-
         }
 
         release {
@@ -75,7 +74,6 @@ dependencies {
     compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifecycleVersion"
     compile "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.ext.rxlifecycleVersion"
     compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycleVersion"
-    compile "com.github.akarnokd:rxjava2-interop:0.9.3"
 
     // IO
     compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
@@ -101,8 +99,6 @@ dependencies {
     annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
     provided "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
-
-    // DB
 
     // debug
     debugCompile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
