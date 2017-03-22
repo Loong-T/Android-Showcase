@@ -23,43 +23,57 @@ import in.nerd_is.recycler_simplification.ViewHolder;
 /**
  * @author Xuqiang ZHENG on 2017/2/26.
  */
-public class ZhihuDailyTypeFactory extends TypeFactory {
+public class ZhihuDailyListTypeFactory extends TypeFactory {
+
+    private final OnClickListener listener;
+
+    public ZhihuDailyListTypeFactory(OnClickListener itemClickedListener) {
+        listener = itemClickedListener;
+    }
 
     @Override
     protected void addTypeRules() {
         add(Date.class, DateHolder::newInstance);
-        add(Story.class, StoryHolder::newInstance);
+        add(Story.class, (inflater, parent) -> StoryHolder.newInstance(inflater, parent, listener));
     }
 
     private static class StoryHolder extends ViewHolder<Story> {
 
-        private Context context;
+        private final Context context;
+        private final OnClickListener listener;
         private final TextView tvTitle;
         private final ImageView ivImage;
 
-        StoryHolder(Context context, View itemView) {
+        StoryHolder(Context context, View itemView, OnClickListener listener) {
             super(itemView);
             this.context = context;
+            this.listener = listener;
             tvTitle = ViewUtils.find(itemView, R.id.text_view);
             ivImage = ViewUtils.find(itemView, R.id.image_view);
         }
 
-        public static StoryHolder newInstance(LayoutInflater inflater, ViewGroup parent) {
+        public static StoryHolder newInstance(LayoutInflater inflater,
+                                              ViewGroup parent,
+                                              OnClickListener listener) {
             return new StoryHolder(parent.getContext(),
-                    inflater.inflate(R.layout.zhihu_daily_list_item_story, parent, false));
+                    inflater.inflate(R.layout.zhihu_daily_list_item_story,
+                            parent, false), listener);
         }
 
         @Override
         public void render(@NonNull Story story) {
-            tvTitle.setText(story.title);
+            tvTitle.setText(story.title());
 
-            if (!story.images.isEmpty()) {
+            if (!story.images().isEmpty()) {
                 Glide.with(context)
-                        .load(story.images.get(0))
+                        .load(story.images().get(0))
                         .into(ivImage);
             }
             ivImage.setContentDescription(context.getString(
-                    R.string.content_desc_zhihu_daily_list_item_template, story.title));
+                    R.string.content_desc_zhihu_daily_list_item_template,
+                    story.title()));
+
+            itemView.setOnClickListener(v -> listener.onItemClicked(story));
         }
     }
 
@@ -84,5 +98,9 @@ public class ZhihuDailyTypeFactory extends TypeFactory {
         public void render(@NonNull Date date) {
             tvDate.setText(FORMATTER.format(date.date()));
         }
+    }
+
+    public interface OnClickListener {
+        void onItemClicked(Story story);
     }
 }

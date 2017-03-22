@@ -18,6 +18,8 @@ import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseFragment;
 import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
+import in.nerd_is.android_showcase.zhihu_daily.model.Story;
+import in.nerd_is.android_showcase.zhihu_daily_detail.ZhihuDailyDetailActivity;
 import in.nerd_is.recycler_simplification.LoadMoreRecyclerAdapter;
 
 /**
@@ -63,13 +65,17 @@ public class ZhihuDailyListFragment extends BaseFragment
         recyclerView.addItemDecoration(divider);
 
         adapter = new LoadMoreRecyclerAdapter(
-                new ZhihuDailyTypeFactory(),
+                new ZhihuDailyListTypeFactory(this::openDetail),
                 R.layout.zhihu_daily_list_footer,
                 data -> presenter.loadMoreStories(data)
         );
         recyclerView.setAdapter(adapter);
 
         presenter.loadLatestStories();
+    }
+
+    private void openDetail(Story story) {
+        ZhihuDailyDetailActivity.start(getContext(), story);
     }
 
     @Override

@@ -22,11 +22,11 @@ public interface MainActivityComponent {
     void inject(ZhihuDailyListFragment zhihuDailyListFragment);
 
     @Subcomponent.Builder
-    abstract class Builder {
-        public abstract Builder mainModule(MainActivityModule mainModule);
+    interface Builder {
+        Builder mainModule(MainActivityModule mainModule);
 
-        public abstract Builder hitokotoModule(HitokotoModule hitokotoModule);
+        Builder hitokotoModule(HitokotoModule hitokotoModule);
 
-        public abstract MainActivityComponent build();
+        MainActivityComponent build();
     }
 }

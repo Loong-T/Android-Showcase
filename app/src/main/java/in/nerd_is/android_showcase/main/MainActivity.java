@@ -64,8 +64,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
     }
 
-    @Override
     @Inject
+    @Override
     public void setupPresenter() {
         presenter.setView(this);
     }

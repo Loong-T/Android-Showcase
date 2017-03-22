@@ -2,6 +2,8 @@ package in.nerd_is.android_showcase.zhihu_daily.model.repository.remote;
 
 import com.annimon.stream.Stream;
 
+import org.threeten.bp.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import in.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitUtils;
 import in.nerd_is.android_showcase.zhihu_daily.model.Date;
 import in.nerd_is.android_showcase.zhihu_daily.model.LatestNews;
 import in.nerd_is.android_showcase.zhihu_daily.model.News;
+import in.nerd_is.android_showcase.zhihu_daily.model.Story;
 import in.nerd_is.android_showcase.zhihu_daily.model.repository.ZhihuDailyDataSource;
 import io.reactivex.Single;
 import retrofit2.Retrofit;
@@ -39,8 +42,13 @@ public class ZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
         return api.getLatestNews()
                 .map(latestNews -> {
                     List<Object> list = new ArrayList<>(latestNews.stories.size() + 1);
-                    list.add(Date.create(latestNews.date));
-                    Stream.of(latestNews.stories).forEach(list::add);
+                    LocalDate date = latestNews.date;
+
+                    list.add(Date.create(date));
+                    for (Story story : latestNews.stories) {
+                        story.setDate(date);
+                        list.add(story);
+                    }
                     return list;
                 });
     }
