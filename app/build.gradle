@@ -95,6 +95,8 @@ dependencies {
     annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
     provided "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
+    compile "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autoValueParcelVersion"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autoValueParcelVersion"
 
     // debug
     debugCompile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
