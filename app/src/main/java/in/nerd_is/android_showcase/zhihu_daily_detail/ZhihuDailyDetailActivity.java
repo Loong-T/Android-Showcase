@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 import android.webkit.WebView;
 
 import javax.inject.Inject;
@@ -22,7 +23,6 @@ public class ZhihuDailyDetailActivity extends BaseActivity
     @Inject
     ZhihuDailyDetailPresenter presenter;
 
-    private Toolbar toolbar;
     private WebView webView;
 
     @Override
@@ -30,11 +30,34 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhihu_daily_detail_activity);
 
-        toolbar = find(R.id.toolbar);
+        setSupportActionBar(find(R.id.toolbar));
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         webView = find(R.id.web_view);
 
         Story story = getIntent().getParcelableExtra(EXTRA_STORY);
-        toolbar.setTitle(story.title());
+        actionBar.setTitle(story.title());
+
+        presenter.loadDetail(story.id());
+    }
+
+    @Override
+    public void showDetail(String detailHtml) {
+        webView.loadDataWithBaseURL(null, detailHtml,
+                "text/html", "utf-8", null);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Inject

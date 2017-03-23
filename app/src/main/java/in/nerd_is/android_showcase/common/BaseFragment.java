@@ -44,7 +44,7 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
     @Override
     public void showError(Throwable throwable) {
         String message = throwable.getLocalizedMessage();
-        Log.d(getClass().getSimpleName(), message, throwable);
+        Log.e(getClass().getSimpleName(), message, throwable);
         toast(message);
     }
 }

@@ -5,5 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
     
     <dimen name="md_card_resting_elevation">2dp</dimen>
+    <dimen name="md_toolbar_elevation">4dp</dimen>
 
 </resources>

@@ -19,7 +19,7 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_MAIN;
  */
 public class GetZhihuDailyList extends SingleUseCase<Date, List<?>> {
 
-    private ZhihuDailyDataSource dataSource;
+    private final ZhihuDailyDataSource dataSource;
 
     @Inject
     public GetZhihuDailyList(ZhihuDailyDataSource dataSource,
