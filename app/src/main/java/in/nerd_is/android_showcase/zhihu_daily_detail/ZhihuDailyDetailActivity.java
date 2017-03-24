@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import javax.inject.Inject;
 
@@ -14,6 +18,7 @@ import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
 import in.nerd_is.android_showcase.zhihu_daily.model.Story;
+import in.nerd_is.android_showcase.zhihu_daily.model.StoryDetail;
 
 public class ZhihuDailyDetailActivity extends BaseActivity
         implements ZhihuDailyDetailContract.View {
@@ -24,6 +29,7 @@ public class ZhihuDailyDetailActivity extends BaseActivity
     ZhihuDailyDetailPresenter presenter;
 
     private WebView webView;
+    private ImageView headImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +42,22 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         webView = find(R.id.web_view);
+        headImage = find(R.id.app_bar_image);
 
         Story story = getIntent().getParcelableExtra(EXTRA_STORY);
-        actionBar.setTitle(story.title());
+        CollapsingToolbarLayout collapsingToolbarLayout = find(R.id.collapsing_toolbar_layout);
+        collapsingToolbarLayout.setTitle(story.title());
 
         presenter.loadDetail(story.id());
     }
 
     @Override
-    public void showDetail(String detailHtml) {
-        webView.loadDataWithBaseURL(null, detailHtml,
+    public void showDetail(StoryDetail storyDetail) {
+        webView.loadDataWithBaseURL(null, storyDetail.toHtml(),
                 "text/html", "utf-8", null);
+        Glide.with(this)
+                .load(storyDetail.image())
+                .into(headImage);
     }
 
     @Override

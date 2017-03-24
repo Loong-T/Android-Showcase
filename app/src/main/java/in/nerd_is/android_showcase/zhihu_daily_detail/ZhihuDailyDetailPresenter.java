@@ -30,7 +30,7 @@ public class ZhihuDailyDetailPresenter implements ZhihuDailyDetailContract.Prese
         getZhihuDailyDetail.execute(id, new DisposableSingleObserver<StoryDetail>() {
             @Override
             public void onSuccess(StoryDetail storyDetail) {
-                view.showDetail(storyDetail.toHtml());
+                view.showDetail(storyDetail);
             }
 
             @Override

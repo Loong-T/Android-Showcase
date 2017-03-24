@@ -9,7 +9,7 @@ import in.nerd_is.android_showcase.zhihu_daily.model.StoryDetail;
 public interface ZhihuDailyDetailContract {
     interface View extends BaseContract.View {
 
-        void showDetail(String detailHtml);
+        void showDetail(StoryDetail storyDetail);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

@@ -1,5 +1,4 @@
 <resources>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:elevation">@dimen/md_toolbar_elevation</item>
     </style>
 </resources>
