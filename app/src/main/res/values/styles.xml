@@ -17,4 +17,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTextAppearance" parent="TextAppearance.AppCompat" />
+
+    <style name="AppTextAppearance.CollapsedTitle" parent="TextAppearance.AppCompat.Title">
+
+    </style>
+
+    <style name="AppTextAppearance.ExpandedTitle" parent="TextAppearance.AppCompat.Headline">
+
+    </style>
+
 </resources>

@@ -4,22 +4,22 @@ import android.support.annotation.NonNull;
 
 import com.squareup.sqldelight.ColumnAdapter;
 
-import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalDate;
 
 import in.nerd_is.android_showcase.utils.DateUtils;
 
 /**
  * @author Xuqiang ZHENG on 2017/3/5.
  */
-public class DateAdapter implements ColumnAdapter<LocalDateTime, Long> {
+public class LocalDateAdapter implements ColumnAdapter<LocalDate, Long> {
     @NonNull
     @Override
-    public LocalDateTime decode(Long millis) {
-        return DateUtils.fromMillis(millis);
+    public LocalDate decode(Long millis) {
+        return DateUtils.fromMillis(millis).toLocalDate();
     }
 
     @Override
-    public Long encode(@NonNull LocalDateTime dateTime) {
+    public Long encode(@NonNull LocalDate dateTime) {
         return DateUtils.toMillis(dateTime);
     }
 }

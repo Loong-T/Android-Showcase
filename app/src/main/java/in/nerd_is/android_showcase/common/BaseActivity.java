@@ -58,7 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     @Override
     public void showError(Throwable throwable) {
         String message = throwable.getLocalizedMessage();
-        Log.d(getClass().getSimpleName(), message, throwable);
+        Log.e(getClass().getSimpleName(), message, throwable);
         toast(message);
     }
 }

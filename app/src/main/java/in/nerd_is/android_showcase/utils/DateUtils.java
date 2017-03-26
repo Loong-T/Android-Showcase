@@ -1,6 +1,7 @@
 package in.nerd_is.android_showcase.utils;
 
 import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneId;
 
@@ -18,6 +19,10 @@ public final class DateUtils {
 
     public static long toMillis(LocalDateTime dateTime) {
         return dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    public static long toMillis(LocalDate date) {
+        return date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     public static LocalDateTime fromDate(Date date) {

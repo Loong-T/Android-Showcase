@@ -12,7 +12,7 @@ public interface MainContract {
         void showHitokoto(Hitokoto hitokoto);
     }
 
-    interface UserActionListener extends BaseContract.Presenter<View> {
+    interface Presenter extends BaseContract.Presenter<View> {
         void loadHitokoto();
     }
 }

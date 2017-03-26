@@ -1,0 +1,17 @@
+import java.lang.Boolean;
+import java.util.List;
+import org.threeten.bp.LocalDate;
+
+CREATE TABLE story (
+    id INTEGER PRIMARY KEY NOT NULL,
+    type INTEGER DEFAULT 0 NOT NULL,
+    title TEXT NOT NULL,
+    image TEXT,
+    images TEXT AS List<String>,
+    read INTEGER AS Boolean DEFAULT 0 NOT NULL,
+    date INTEGER AS LocalDate
+);
+
+insert_story:
+INSERT INTO story (id, type, title, image, images, date)
+VALUES (?, ?, ?, ?, ?, ?);

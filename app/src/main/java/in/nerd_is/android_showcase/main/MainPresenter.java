@@ -7,7 +7,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 /**
  * @author Xuqiang ZHENG on 2016/9/20.
  */
-public class MainPresenter implements MainContract.UserActionListener {
+public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View view;
     private GetHitokoto getHitokoto;
