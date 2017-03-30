@@ -20,12 +20,16 @@ import in.nerd_is.android_showcase.ThisApplication;
 public abstract class BaseActivity extends AppCompatActivity implements BaseContract.View {
 
     protected ViewGroup contentView;
+    protected ThisApplication thisApplication;
+    protected Configuration configuration;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentView = find(android.R.id.content);
-        setupActivityComponent(((ThisApplication) getApplication()).appComponent);
+        thisApplication = (ThisApplication) getApplication();
+        configuration = thisApplication.configuration;
+        setupActivityComponent(thisApplication.appComponent);
     }
 
     protected abstract void setupActivityComponent(AppComponent appComponent);
@@ -60,5 +64,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         String message = throwable.getLocalizedMessage();
         Log.e(getClass().getSimpleName(), message, throwable);
         toast(message);
+    }
+
+    protected void changeMode() {
+        configuration.setNightMode(!configuration.isNightMode());
+        thisApplication.setNightModeFromConfiguration();
+        recreate();
     }
 }

@@ -8,4 +8,6 @@
 
     <string name="content_desc_zhihu_daily_list_item_image">Content description of Zhihu Daily item image</string>
     <string name="content_desc_zhihu_daily_list_item_template">Image of %1$s</string>
+    <string name="content_desc_switch_to_day_mode">Switch to day mode</string>
+    <string name="content_desc_switch_to_night_mode">Switch to night mode</string>
 </resources>
