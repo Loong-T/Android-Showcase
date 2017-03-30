@@ -2,10 +2,12 @@ package in.nerd_is.android_showcase.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private DrawerLayout drawer;
     private TextView hitokotoTv;
+    private ImageButton dayNightIb;
 
     @Inject
     MainPresenter presenter;
@@ -62,6 +65,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         });
 
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
+
+        dayNightIb = ViewUtils.find(navigationView.getHeaderView(0), R.id.day_night_mode_ib);
+        dayNightIb.setOnClickListener(v -> changeMode());
     }
 
     @Inject
@@ -71,9 +77,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     private void showDefaultFragment() {
+        Fragment fragment = new ZhihuDailyListFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_main_activity, new ZhihuDailyListFragment())
+                .replace(R.id.content_main_activity, fragment)
                 .commit();
     }
 

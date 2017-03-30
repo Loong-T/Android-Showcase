@@ -1,6 +1,5 @@
 package in.nerd_is.android_showcase.zhihu_daily_list;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,13 +31,24 @@ public class ZhihuDailyListFragment extends BaseFragment
     ZhihuDailyListPresenter presenter;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView recyclerView;
     private LoadMoreRecyclerAdapter adapter;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((MainActivity) getActivity()).mainComponent.inject(this);
 
-        ((MainActivity) context).mainComponent.inject(this);
+        swipeRefreshLayout.setOnRefreshListener(presenter::loadLatestStories);
+
+        adapter = new LoadMoreRecyclerAdapter(
+                new ZhihuDailyListTypeFactory(this::openDetail),
+                R.layout.zhihu_daily_list_footer,
+                data -> presenter.loadMoreStories(data)
+        );
+        recyclerView.setAdapter(adapter);
+
+        presenter.loadLatestStories();
     }
 
     @Nullable
@@ -54,24 +64,14 @@ public class ZhihuDailyListFragment extends BaseFragment
         super.onViewCreated(view, savedInstanceState);
 
         swipeRefreshLayout = find(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(presenter::loadLatestStories);
 
-        RecyclerView recyclerView = find(R.id.recycler_view);
+        recyclerView = find(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration divider = new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL, R.drawable.divider_8dp_height);
         divider.setShowFirstDivider(true);
         divider.setShowLastDivider(true);
         recyclerView.addItemDecoration(divider);
-
-        adapter = new LoadMoreRecyclerAdapter(
-                new ZhihuDailyListTypeFactory(this::openDetail),
-                R.layout.zhihu_daily_list_footer,
-                data -> presenter.loadMoreStories(data)
-        );
-        recyclerView.setAdapter(adapter);
-
-        presenter.loadLatestStories();
     }
 
     private void openDetail(Story story) {
