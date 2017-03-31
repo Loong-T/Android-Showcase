@@ -1,5 +1,6 @@
 package in.nerd_is.android_showcase.main;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -68,6 +70,28 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         dayNightIb = ViewUtils.find(navigationView.getHeaderView(0), R.id.day_night_mode_ib);
         dayNightIb.setOnClickListener(v -> changeMode());
+
+        // drawer layout treats fitsSystemWindows specially so we have to handle insets ourselves
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            drawer.setOnApplyWindowInsetsListener((v, insets) -> {
+                ViewGroup.MarginLayoutParams lpToolbar =
+                        (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
+                lpToolbar.topMargin += insets.getSystemWindowInsetTop();
+                lpToolbar.leftMargin += insets.getSystemWindowInsetLeft();
+                lpToolbar.rightMargin += insets.getSystemWindowInsetRight();
+                toolbar.setLayoutParams(lpToolbar);
+
+                ViewGroup.MarginLayoutParams lpIb =
+                        (ViewGroup.MarginLayoutParams) dayNightIb.getLayoutParams();
+                lpIb.topMargin += insets.getSystemWindowInsetTop();
+                dayNightIb.setLayoutParams(lpIb);
+
+                // clear this listener so insets aren't re-applied
+                drawer.setOnApplyWindowInsetsListener(null);
+
+                return insets.consumeSystemWindowInsets();
+            });
+        }
     }
 
     @Inject
