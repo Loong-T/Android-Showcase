@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         dayNightIb = ViewUtils.find(navigationView.getHeaderView(0), R.id.day_night_mode_ib);
         dayNightIb.setOnClickListener(v -> changeMode());
 
-        AndroidUtils.adjustViewAccordingToStatusBar(drawer, toolbar);
+        AndroidUtils.adjustViewAccordingToStatusBar(drawer, toolbar, dayNightIb);
     }
 
     @Inject

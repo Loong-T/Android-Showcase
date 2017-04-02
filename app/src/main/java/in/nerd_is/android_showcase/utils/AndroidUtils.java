@@ -21,14 +21,14 @@ public class AndroidUtils {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
-    public static void adjustViewAccordingToStatusBar(View container, View target) {
+    public static void adjustViewAccordingToStatusBar(View container, View... targets) {
         container.setOnApplyWindowInsetsListener((v, insets) -> {
-            ViewGroup.MarginLayoutParams lpToolbar =
-                    (ViewGroup.MarginLayoutParams) target.getLayoutParams();
-            lpToolbar.topMargin += insets.getSystemWindowInsetTop();
-            lpToolbar.leftMargin += insets.getSystemWindowInsetLeft();
-            lpToolbar.rightMargin += insets.getSystemWindowInsetRight();
-            target.setLayoutParams(lpToolbar);
+            for (View view : targets) {
+                ViewGroup.MarginLayoutParams lpToolbar =
+                        (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+                lpToolbar.topMargin += insets.getSystemWindowInsetTop();
+                view.setLayoutParams(lpToolbar);
+            }
 
             // clear this listener so insets aren't re-applied
             container.setOnApplyWindowInsetsListener(null);
