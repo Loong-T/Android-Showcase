@@ -33,6 +33,11 @@
                     android:contentDescription="@null"
                     app:layout_collapseMode="parallax"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_zhihu_header"/>
+
                 <TextView
                     android:id="@+id/source_tv"
                     android:layout_width="wrap_content"
@@ -40,7 +45,7 @@
                     android:textColor="@color/md_secondary_text_dark"
                     android:layout_marginRight="@dimen/md_horizontal_spacing"
                     android:layout_marginLeft="@dimen/md_horizontal_spacing"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/md_small_spacing"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     tools:text="from Source"/>

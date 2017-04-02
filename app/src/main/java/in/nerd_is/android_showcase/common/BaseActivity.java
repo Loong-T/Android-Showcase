@@ -79,10 +79,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         recreate();
     }
 
-    protected void changeThemeColor(int actionBarColor, int statusBarBackgroundColor) {
+    protected void changeThemeColor(int toolbarColor, int statusBarBackgroundColor) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(actionBarColor));
+            actionBar.setBackgroundDrawable(new ColorDrawable(toolbarColor));
         }
         AppBarLayout abl = find(R.id.app_bar_layout);
         if (abl != null) {
