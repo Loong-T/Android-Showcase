@@ -7,11 +7,11 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_height="192dp"
+        android:layout_height="218dp"
         android:layout_width="match_parent"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,24 +19,41 @@
             app:contentScrim="?attr/colorPrimary"
             app:statusBarScrim="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:collapsedTitleTextAppearance="@style/AppTextAppearance.CollapsedTitle"
-            app:expandedTitleTextAppearance="@style/AppTextAppearance.ExpandedTitle">
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline">
 
-            <ImageView
-                android:id="@+id/app_bar_image"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="@null"
-                app:layout_collapseMode="parallax"
-                tools:src="@android:drawable/sym_def_app_icon"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/app_bar_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@null"
+                    app:layout_collapseMode="parallax"/>
+
+                <TextView
+                    android:id="@+id/source_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_secondary_text_dark"
+                    android:layout_marginRight="@dimen/md_horizontal_spacing"
+                    android:layout_marginLeft="@dimen/md_horizontal_spacing"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:text="from Source"/>
+
+            </android.support.constraint.ConstraintLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
+                android:paddingRight="@dimen/md_horizontal_spacing"
                 app:layout_collapseMode="pin"/>
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView

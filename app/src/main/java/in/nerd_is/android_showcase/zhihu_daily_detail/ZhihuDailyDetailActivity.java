@@ -4,14 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
 import javax.inject.Inject;
 
@@ -48,6 +50,8 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         headImage = find(R.id.app_bar_image);
 
         Story story = getIntent().getParcelableExtra(EXTRA_STORY);
+        actionBar.setTitle(story.title());
+
         CollapsingToolbarLayout ctl = find(R.id.collapsing_toolbar_layout);
 
         AndroidUtils.adjustViewAccordingToStatusBar(ctl, toolbar);
@@ -57,8 +61,12 @@ public class ZhihuDailyDetailActivity extends BaseActivity
 
     @Override
     public void showDetail(StoryDetail storyDetail) {
+        TextView sourceTv = find(R.id.source_tv);
+        sourceTv.setText(storyDetail.imageSource());
+
         webView.loadDataWithBaseURL(null, storyDetail.toHtml(),
                 "text/html", "utf-8", null);
+
         Glide.with(this)
                 .load(storyDetail.image())
                 .into(headImage);
