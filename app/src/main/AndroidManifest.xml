@@ -23,7 +23,8 @@
         </activity>
 
         <activity
-            android:name=".zhihu_daily_detail.ZhihuDailyDetailActivity" />
+            android:name=".zhihu_daily_detail.ZhihuDailyDetailActivity"
+            android:theme="@style/AppTheme.ZhihuDetail" />
     </application>
 
 </manifest>

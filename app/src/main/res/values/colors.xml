@@ -4,13 +4,8 @@
     <color name="colorPrimaryDark">@color/nc_namakabe</color>
     <color name="colorAccent">#2EA9DF</color>
 
+    <color name="zhihu_primary">@color/nc_sora</color>
+    <color name="zhihu_primary_dark">@color/nc_shinbashi</color>
+
     <color name="android_immersive_bars">#99000000</color>
-
-    <color name="md_ripple_dark">#4dffffff</color>
-    <color name="md_ripple_light">#1f000000</color>
-    
-    <color name="nc_namakabe">#7D6C46</color> <!-- 生壁 -->
-    <color name="nc_torinoko">#DAC9A6</color> <!-- 鳥の子 -->
-    <color name="nc_shironezumi">#BDC0BA</color> <!-- 白鼠 -->
-
 </resources>

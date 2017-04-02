@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
+import in.nerd_is.android_showcase.utils.AndroidUtils;
 import in.nerd_is.android_showcase.zhihu_daily.model.Story;
 import in.nerd_is.android_showcase.zhihu_daily.model.StoryDetail;
 
@@ -36,7 +38,8 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhihu_daily_detail_activity);
 
-        setSupportActionBar(find(R.id.toolbar));
+        Toolbar toolbar = find(R.id.toolbar);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -45,8 +48,9 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         headImage = find(R.id.app_bar_image);
 
         Story story = getIntent().getParcelableExtra(EXTRA_STORY);
-        CollapsingToolbarLayout collapsingToolbarLayout = find(R.id.collapsing_toolbar_layout);
-        collapsingToolbarLayout.setTitle(story.title());
+        CollapsingToolbarLayout ctl = find(R.id.collapsing_toolbar_layout);
+
+        AndroidUtils.adjustViewAccordingToStatusBar(ctl, toolbar);
 
         presenter.loadDetail(story.id());
     }

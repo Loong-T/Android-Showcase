@@ -1,10 +1,16 @@
 package in.nerd_is.android_showcase.common;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import in.nerd_is.android_showcase.AppComponent;
+import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.ThisApplication;
 
 /**
@@ -70,5 +77,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         configuration.setNightMode(!configuration.isNightMode());
         thisApplication.setNightModeFromConfiguration();
         recreate();
+    }
+
+    protected void changeThemeColor(int actionBarColor, int statusBarBackgroundColor) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(actionBarColor));
+        }
+        AppBarLayout abl = find(R.id.app_bar_layout);
+        if (abl != null) {
+            abl.setBackgroundDrawable(new ColorDrawable(statusBarBackgroundColor));
+        }
+    }
+
+    public @ColorInt int getCompatColor(@ColorRes int resId) {
+        return ContextCompat.getColor(this, resId);
     }
 }

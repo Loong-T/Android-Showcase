@@ -14,6 +14,7 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
@@ -41,6 +42,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/main_activity_nav_header"
-        app:menu="@menu/main_activity_drawer" />
+        app:menu="@menu/menu_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

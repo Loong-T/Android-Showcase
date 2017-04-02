@@ -4,14 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="192dp"
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:fitsSystemWindows="true">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
@@ -19,6 +17,7 @@
             android:layout_height="match_parent"
             app:toolbarId="@+id/toolbar"
             app:contentScrim="?attr/colorPrimary"
+            app:statusBarScrim="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:collapsedTitleTextAppearance="@style/AppTextAppearance.CollapsedTitle"
             app:expandedTitleTextAppearance="@style/AppTextAppearance.ExpandedTitle">

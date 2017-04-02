@@ -1,6 +1,5 @@
 package in.nerd_is.android_showcase.main;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -8,6 +7,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -17,14 +17,17 @@ import javax.inject.Inject;
 import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
+import in.nerd_is.android_showcase.common.Configuration;
 import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
+import in.nerd_is.android_showcase.utils.AndroidUtils;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
     private DrawerLayout drawer;
+    private NavigationView navigationView;
     private TextView hitokotoTv;
     private ImageButton dayNightIb;
 
@@ -45,6 +48,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ViewGroup decorView = (ViewGroup) getWindow().getDecorView();
+        View view = decorView.getChildAt(1);
+//        Log.d("MainActivity", view.getBackground().toString());
+    }
+
+    @Override
     protected void onDestroy() {
         presenter.cancelTask();
         super.onDestroy();
@@ -60,7 +71,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = find(R.id.nav_view);
+        navigationView = find(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             drawer.closeDrawer(GravityCompat.START);
             return true;
@@ -71,27 +82,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         dayNightIb = ViewUtils.find(navigationView.getHeaderView(0), R.id.day_night_mode_ib);
         dayNightIb.setOnClickListener(v -> changeMode());
 
-        // drawer layout treats fitsSystemWindows specially so we have to handle insets ourselves
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            drawer.setOnApplyWindowInsetsListener((v, insets) -> {
-                ViewGroup.MarginLayoutParams lpToolbar =
-                        (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
-                lpToolbar.topMargin += insets.getSystemWindowInsetTop();
-                lpToolbar.leftMargin += insets.getSystemWindowInsetLeft();
-                lpToolbar.rightMargin += insets.getSystemWindowInsetRight();
-                toolbar.setLayoutParams(lpToolbar);
-
-                ViewGroup.MarginLayoutParams lpIb =
-                        (ViewGroup.MarginLayoutParams) dayNightIb.getLayoutParams();
-                lpIb.topMargin += insets.getSystemWindowInsetTop();
-                dayNightIb.setLayoutParams(lpIb);
-
-                // clear this listener so insets aren't re-applied
-                drawer.setOnApplyWindowInsetsListener(null);
-
-                return insets.consumeSystemWindowInsets();
-            });
-        }
+        AndroidUtils.adjustViewAccordingToStatusBar(drawer, toolbar);
     }
 
     @Inject
@@ -101,7 +92,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     private void showDefaultFragment() {
-        Fragment fragment = new ZhihuDailyListFragment();
+        Fragment fragment;
+        switch (configuration.getDefaultMainPage()) {
+            case Configuration.PAGE_ZHIHU:
+                fragment = new ZhihuDailyListFragment();
+                navigationView.setCheckedItem(R.id.zhihu_menu_nav);
+                changeThemeColor(getCompatColor(R.color.zhihu_primary),
+                        getCompatColor(R.color.zhihu_primary));
+                break;
+            default:
+                throw new IllegalStateException("Unknown page");
+        }
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_main_activity, fragment)

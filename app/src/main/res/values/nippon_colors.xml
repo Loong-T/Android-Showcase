@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nc_namakabe">#7D6C46</color> <!-- 生壁 -->
+    <color name="nc_torinoko">#DAC9A6</color> <!-- 鳥の子 -->
+    <color name="nc_shironezumi">#BDC0BA</color> <!-- 白鼠 -->
+    <color name="nc_sora">#58B2DC</color> <!-- 空 -->
+    <color name="nc_shinbashi">#0089A7</color> <!-- 新橋 -->
+</resources>
