@@ -31,7 +31,7 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                view.snackbar(e.getLocalizedMessage());
+                view.showError(e);
             }
         });
     }

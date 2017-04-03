@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="zhihu_primary">@color/nc_hanada</color>
+    <color name="zhihu_divider_background">@color/nc_sumi</color>
+</resources>

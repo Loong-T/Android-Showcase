@@ -5,4 +5,7 @@
     <color name="nc_shironezumi">#BDC0BA</color> <!-- 白鼠 -->
     <color name="nc_sora">#58B2DC</color> <!-- 空 -->
     <color name="nc_shinbashi">#0089A7</color> <!-- 新橋 -->
+    <color name="nc_hanada">#006284</color> <!-- 縹 -->
+    <color name="nc_aisumicha">#373C38</color> <!-- 藍墨茶 -->
+    <color name="nc_sumi">#1C1C1C</color> <!-- 墨 -->
 </resources>

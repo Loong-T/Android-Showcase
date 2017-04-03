@@ -38,7 +38,6 @@ public class ZhihuDailyDetailActivity extends BaseActivity
 
     private WebView webView;
     private ImageView headImage;
-    private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
@@ -46,18 +45,17 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhihu_daily_detail_activity);
 
-        toolbar = find(R.id.toolbar);
+        Story story = getIntent().getParcelableExtra(EXTRA_STORY);
+
+        Toolbar toolbar = find(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(story.title());
 
         webView = find(R.id.web_view);
         headImage = find(R.id.app_bar_image);
-
-        Story story = getIntent().getParcelableExtra(EXTRA_STORY);
-        actionBar.setTitle(story.title());
-
         collapsingToolbarLayout = find(R.id.collapsing_toolbar_layout);
 
         AndroidUtils.adjustViewAccordingToStatusBar(collapsingToolbarLayout, toolbar);
