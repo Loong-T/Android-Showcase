@@ -2,6 +2,7 @@ package in.nerd_is.android_showcase.zhihu_daily_detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -42,6 +43,12 @@ public class ZhihuDailyDetailActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // WebView has a bug with night mode, it will change ui mode while first creation
+        // see https://code.google.com/p/android/issues/detail?id=226208 for more detail
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            new WebView(this);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhihu_daily_detail_activity);
 
