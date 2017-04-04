@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.squareup.sqldelight'
 
 android {
@@ -41,7 +40,7 @@ android {
     variantFilter { variant ->
         if (variant.buildType.name == 'release'
                 && variant.getFlavors().get(0).name == 'mock') {
-            variant.setIgnore(true);
+            variant.setIgnore(true)
         }
     }
 
