@@ -75,7 +75,7 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         TextView sourceTv = find(R.id.source_tv);
         sourceTv.setText(storyDetail.imageSource());
 
-        webView.loadDataWithBaseURL(null, storyDetail.toHtml(),
+        webView.loadDataWithBaseURL(null, storyDetail.toHtml(configuration.isNightMode()),
                 "text/html", "utf-8", null);
 
         Glide.with(this)

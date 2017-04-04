@@ -32,13 +32,15 @@ public abstract class StoryDetail {
 
     public abstract List<String> js();
 
-    @Nullable public abstract List<Recommender> recommenders();
+    @Nullable
+    public abstract List<Recommender> recommenders();
 
-    @Nullable public abstract Section section();
+    @Nullable
+    public abstract Section section();
 
     public abstract List<String> css();
 
-    public String toHtml() {
+    public String toHtml(boolean nightMode) {
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE>")
                 .append("<html>")
@@ -64,7 +66,7 @@ public abstract class StoryDetail {
         }
 
         builder.append("</head>")
-                .append("<body>")
+                .append(nightMode ? "<body class=\"night\">" : "<body>")
                 .append(body())
                 .append("</body>")
                 .append("</html>");
