@@ -1,9 +1,14 @@
 <resources>
+    <style name="AppTheme.Main">
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@color/android_immersive_bars</item>
+    </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="AppTheme.ZhihuDetail">
+        <item name="colorPrimary">@color/zhihu_primary</item>
+        <!-- because of translucent status bar, status bar color is darker than toolbar,
+             so it's fine to use the same color -->
+        <item name="colorPrimaryDark">@color/zhihu_primary</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

@@ -4,14 +4,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.TranslucentNavigationBar" parent="AppTheme.NoActionBar">
+    <style name="AppTheme.Main" />
+
+    <style name="AppTheme.ZhihuDetail">
+        <item name="colorPrimary">@color/zhihu_primary</item>
+        <item name="colorPrimaryDark">@color/zhihu_primary</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -19,13 +20,5 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTextAppearance" parent="TextAppearance.AppCompat" />
-
-    <style name="AppTextAppearance.CollapsedTitle" parent="TextAppearance.AppCompat.Title">
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="AppTextAppearance.ExpandedTitle" parent="TextAppearance.AppCompat.Headline">
-        <item name="android:ellipsize">none</item>
-    </style>
 
 </resources>

@@ -15,16 +15,18 @@ import javax.inject.Inject;
 import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
+import in.nerd_is.android_showcase.common.Configuration;
 import in.nerd_is.android_showcase.hitokoto.HitokotoModule;
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
+import in.nerd_is.android_showcase.utils.AndroidUtils;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyListFragment;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
     private DrawerLayout drawer;
+    private NavigationView navigationView;
     private TextView hitokotoTv;
-    private ImageButton dayNightIb;
 
     @Inject
     MainPresenter presenter;
@@ -43,6 +45,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
         presenter.cancelTask();
         super.onDestroy();
@@ -58,7 +65,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = find(R.id.nav_view);
+        navigationView = find(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(item -> {
             drawer.closeDrawer(GravityCompat.START);
             return true;
@@ -66,8 +73,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         hitokotoTv = ViewUtils.find(navigationView.getHeaderView(0), R.id.hitokoto_tv);
 
-        dayNightIb = ViewUtils.find(navigationView.getHeaderView(0), R.id.day_night_mode_ib);
+        ImageButton dayNightIb = ViewUtils.find(
+                navigationView.getHeaderView(0), R.id.day_night_mode_ib);
         dayNightIb.setOnClickListener(v -> changeMode());
+
+        AndroidUtils.adjustViewAccordingToStatusBar(drawer, toolbar, dayNightIb);
     }
 
     @Inject
@@ -77,7 +87,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     private void showDefaultFragment() {
-        Fragment fragment = new ZhihuDailyListFragment();
+        Fragment fragment;
+        switch (configuration.getDefaultMainPage()) {
+            case Configuration.PAGE_ZHIHU:
+                fragment = new ZhihuDailyListFragment();
+                navigationView.setCheckedItem(R.id.zhihu_menu_nav);
+
+                int primaryColor = getCompatColor(R.color.zhihu_primary);
+                changeThemeColor(primaryColor, primaryColor);
+                break;
+            default:
+                throw new IllegalStateException("Unknown page");
+        }
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_main_activity, fragment)

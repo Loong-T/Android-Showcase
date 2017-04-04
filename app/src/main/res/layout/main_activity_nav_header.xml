@@ -21,8 +21,9 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_night_mode"
-        android:layout_marginTop="@dimen/md_vertical_spacing"
-        android:contentDescription="@string/content_desc_switch_to_night_mode" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/content_desc_switch_to_night_mode"/>
 
     <TextView
         android:id="@+id/hitokoto_tv"

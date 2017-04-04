@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <size android:height="@dimen/md_small_spacing"
-        android:width="0dp"/>
-    <solid android:color="@color/nc_shironezumi" />
+    <size android:height="@dimen/md_small_spacing" android:width="0dp"/>
+    <solid android:color="@color/zhihu_divider_background" />
 </shape>

@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/md_small_spacing"
-    android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
-    android:background="@color/nc_shironezumi"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    android:background="@color/zhihu_divider_background"
     tools:text="2016-12-6"/>
