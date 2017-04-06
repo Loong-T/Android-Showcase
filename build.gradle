@@ -43,4 +43,5 @@ ext {
     autoValueMoshiVersion = '0.4.3'
     autoValueParcelVersion = '0.2.5'
     espressoVersion = '2.2.2'
+    bigImageViewVersion = '1.2.8'
 }

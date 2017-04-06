@@ -25,6 +25,8 @@
         <activity
             android:name=".zhihu_daily_detail.ZhihuDailyDetailActivity"
             android:theme="@style/AppTheme.ZhihuDetail" />
+
+        <activity android:name=".image_view.ImageViewerActivity" />
     </application>
 
 </manifest>

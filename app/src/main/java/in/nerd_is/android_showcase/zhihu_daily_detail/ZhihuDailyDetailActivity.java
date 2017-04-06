@@ -1,5 +1,6 @@
 package in.nerd_is.android_showcase.zhihu_daily_detail;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
 import in.nerd_is.android_showcase.common.lib_support.glide.PaletteBitmap;
 import in.nerd_is.android_showcase.common.lib_support.glide.PaletteBitmapTranscoder;
+import in.nerd_is.android_showcase.image_view.ImageViewerActivity;
 import in.nerd_is.android_showcase.utils.AndroidUtils;
 import in.nerd_is.android_showcase.zhihu_daily.model.Story;
 import in.nerd_is.android_showcase.zhihu_daily.model.StoryDetail;
@@ -70,11 +73,14 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         presenter.loadDetail(story.id());
     }
 
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     public void showDetail(StoryDetail storyDetail) {
         TextView sourceTv = find(R.id.source_tv);
         sourceTv.setText(storyDetail.imageSource());
 
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new JsProxy(this), "activity");
         webView.loadDataWithBaseURL(null, storyDetail.toHtml(configuration.isNightMode()),
                 "text/html", "utf-8", null);
 
@@ -139,5 +145,18 @@ public class ZhihuDailyDetailActivity extends BaseActivity
 
         collapsingToolbarLayout.setContentScrimColor(toolbarColor);
         collapsingToolbarLayout.setStatusBarScrimColor(statusBarColor);
+    }
+
+    private static class JsProxy {
+        private ZhihuDailyDetailActivity activity;
+
+        JsProxy(ZhihuDailyDetailActivity activity) {
+            this.activity = activity;
+        }
+
+        @JavascriptInterface
+        public void startImageViewer(String url) {
+            ImageViewerActivity.start(activity, url);
+        }
     }
 }

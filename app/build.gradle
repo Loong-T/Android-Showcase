@@ -58,6 +58,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "http://dl.bintray.com/piasy/maven"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':recycler_simplification')
@@ -71,6 +77,8 @@ dependencies {
 
     // UI
     compile 'net.opacapp:multiline-collapsingtoolbar:1.3.1'
+    compile "com.github.piasy:BigImageViewer:$rootProject.ext.bigImageViewVersion"
+    compile "com.github.piasy:GlideImageLoader:$rootProject.ext.bigImageViewVersion"
 
     // reactive
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
