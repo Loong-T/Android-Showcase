@@ -1,1 +1,1 @@
-include ':app', ':recycler_simplification'
+include ':app', ':recycler_simplification', ':dragtodismisslayout'
