@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">@color/nc_namakabe</color>
     <color name="colorAccent">#2EA9DF</color>
 
+    <color name="background">@color/nc_shironezumi</color>
+    <color name="translucent_background">#99000000</color>
+
     <color name="zhihu_primary">@color/nc_sora</color>
     <color name="zhihu_primary_dark">@color/nc_shinbashi</color>
     <color name="zhihu_divider_background">@color/nc_shironezumi</color>

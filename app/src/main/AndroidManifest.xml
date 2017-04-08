@@ -13,8 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/AppTheme.Main"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,9 @@
             android:name=".zhihu_daily_detail.ZhihuDailyDetailActivity"
             android:theme="@style/AppTheme.ZhihuDetail" />
 
-        <activity android:name=".image_view.ImageViewerActivity" />
+        <activity
+            android:name=".image_view.ImageViewerActivity"
+            android:theme="@style/AppTheme.Translucent.ImageViewer" />
     </application>
 
 </manifest>

@@ -67,6 +67,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':recycler_simplification')
+    compile project(path: ':dragtodismisslayout')
 
     // support library
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibaryVersion"
