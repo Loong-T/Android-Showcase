@@ -26,7 +26,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.github.piasy.biv.view.BigImageView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
+import java.io.File;
 
 import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
@@ -40,14 +46,14 @@ public class ImageViewerActivity extends BaseActivity {
 
     public static final String EXTRA_URL = "extra_url";
 
-    private BigImageView bigImageView;
+    private SubsamplingScaleImageView imageView;
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_viewer_activity);
-        bigImageView = find(R.id.big_image_view);
+        imageView = find(R.id.image_view);
 
         toolbar = find(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,7 +64,14 @@ public class ImageViewerActivity extends BaseActivity {
         AndroidUtils.adjustViewAccordingToStatusBar(contentView, toolbar);
 
         String url = getIntent().getStringExtra(EXTRA_URL);
-        bigImageView.showImage(Uri.parse(url));
+        Glide.with(this)
+                .load(url)
+                .downloadOnly(new SimpleTarget<File>() {
+                    @Override
+                    public void onResourceReady(File resource, GlideAnimation<? super File> glideAnimation) {
+                        imageView.setImage(ImageSource.uri(Uri.fromFile(resource)));
+                    }
+                });
     }
 
     @Override

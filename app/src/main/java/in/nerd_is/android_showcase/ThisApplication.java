@@ -3,8 +3,6 @@ package in.nerd_is.android_showcase;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.github.piasy.biv.BigImageViewer;
-import com.github.piasy.biv.loader.glide.GlideImageLoader;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import in.nerd_is.android_showcase.common.Configuration;
@@ -28,7 +26,6 @@ public class ThisApplication extends Application {
 
         DebugOnly.initStetho(this);
         AndroidThreeTen.init(this);
-        BigImageViewer.initialize(GlideImageLoader.with(this));
 
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))

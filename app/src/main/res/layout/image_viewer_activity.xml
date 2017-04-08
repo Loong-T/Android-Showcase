@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~    Copyright 2017 Xuqiang ZHENG
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +19,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.github.piasy.biv.view.BigImageView
-        android:id="@+id/big_image_view"
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

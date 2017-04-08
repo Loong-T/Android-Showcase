@@ -11,16 +11,19 @@
     <style name="AppTheme.Translucent">
     </style>
 
-    <style name="AppTheme.Main" />
-
-    <style name="AppTheme.ZhihuDetail">
-        <item name="colorPrimary">@color/zhihu_primary</item>
-        <item name="colorPrimaryDark">@color/zhihu_primary</item>
+    <style name="AppTheme.TranslucentBackground">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/translucent_background</item>
     </style>
 
-    <style name="AppTheme.Translucent.ImageViewer">
+    <style name="AppTheme.Main" />
+
+    <style name="AppTheme.TranslucentBackground.ZhihuDetail">
+        <item name="colorPrimary">@color/zhihu_primary</item>
+        <item name="colorPrimaryDark">@color/zhihu_primary_dark</item>
+    </style>
+
+    <style name="AppTheme.ImageViewer">
         <item name="colorPrimary">@color/android_immersive_bars</item>
         <item name="colorPrimaryDark">@color/android_immersive_bars</item>
     </style>
