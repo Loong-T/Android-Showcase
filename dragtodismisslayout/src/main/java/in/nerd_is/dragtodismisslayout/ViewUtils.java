@@ -26,6 +26,9 @@ import android.util.DisplayMetrics;
  * @author Xuqiang ZHENG on 2017/4/7.
  */
 public class ViewUtils {
+    private ViewUtils() {
+    }
+
     /**
      * Determine if the navigation bar will be on the bottom of the screen, based on logic in
      * PhoneWindowManager.

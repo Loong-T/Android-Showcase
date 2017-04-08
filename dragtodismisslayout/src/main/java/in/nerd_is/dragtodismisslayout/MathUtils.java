@@ -16,24 +16,14 @@
 
 package in.nerd_is.dragtodismisslayout;
 
-import android.support.annotation.CheckResult;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
-
 /**
- * @author Xuqiang ZHENG on 2017/4/7.
+ * @author Xuqiang ZHENG on 2017/4/8.
  */
-public class ColorUtils {
-    private ColorUtils() {
+public class MathUtils {
+    private MathUtils() {
     }
 
-    /**
-     * Set the alpha component of {@code color} to be {@code alpha}.
-     */
-    public static @CheckResult
-    @ColorInt
-    int modifyAlpha(@ColorInt int color,
-                    @IntRange(from = 0, to = 255) int alpha) {
-        return (color & 0x00ffffff) | (alpha << 24);
+    public static double log2(double x) {
+        return Math.log(x) / Math.log(2);
     }
 }

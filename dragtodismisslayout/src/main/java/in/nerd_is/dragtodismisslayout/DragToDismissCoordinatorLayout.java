@@ -16,7 +16,6 @@
 
 package in.nerd_is.dragtodismisslayout;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -26,6 +25,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +33,13 @@ import java.util.List;
 /**
  * @author Xuqiang ZHENG on 2017/4/7.
  */
-public class DragToDismissLayout extends CoordinatorLayout {
+public class DragToDismissCoordinatorLayout extends CoordinatorLayout {
 
-    private static final String TAG = DragToDismissLayout.class.getCanonicalName();
-
-    // configurable attribs
     private float dragDismissDistance = Float.MAX_VALUE;
     private float dragDismissFraction = -1f;
     private float dragDismissScale = 1f;
     private boolean shouldScale = false;
-    private float dragElasticity = 0.8f;
+    private float dragElasticity = 0.618f;
 
     private float totalDrag;
     private boolean draggingDown = false;
@@ -50,29 +47,29 @@ public class DragToDismissLayout extends CoordinatorLayout {
 
     private List<DragToDismissCallback> callbacks;
 
-    public DragToDismissLayout(Context context) {
+    public DragToDismissCoordinatorLayout(Context context) {
         this(context, null, 0);
     }
 
-    public DragToDismissLayout(Context context, AttributeSet attrs) {
+    public DragToDismissCoordinatorLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DragToDismissLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DragToDismissCoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.DragToDismissLayout, 0, 0);
+                attrs, R.styleable.DragToDismissCoordinatorLayout, 0, 0);
 
         dragDismissDistance = a.getDimension(
-                R.styleable.DragToDismissLayout_dragDismissDistance, dragDismissDistance);
+                R.styleable.DragToDismissCoordinatorLayout_dragDismissDistance, dragDismissDistance);
         dragDismissFraction = a.getFloat(
-                R.styleable.DragToDismissLayout_dragDismissFraction, dragDismissFraction);
+                R.styleable.DragToDismissCoordinatorLayout_dragDismissFraction, dragDismissFraction);
         dragDismissScale = a.getFloat(
-                R.styleable.DragToDismissLayout_dragDismissScale, dragDismissScale);
+                R.styleable.DragToDismissCoordinatorLayout_dragDismissScale, dragDismissScale);
         shouldScale = dragDismissScale != 1f;
         dragElasticity = a.getFloat(
-                R.styleable.DragToDismissLayout_dragElasticity, dragElasticity);
+                R.styleable.DragToDismissCoordinatorLayout_dragElasticity, dragElasticity);
 
         a.recycle();
     }
@@ -102,18 +99,18 @@ public class DragToDismissLayout extends CoordinatorLayout {
     @Override
     public void onStopNestedScroll(View child) {
         super.onStopNestedScroll(child);
+
         if (Math.abs(totalDrag) >= dragDismissDistance) {
             dispatchDismissCallback();
         } else { // settle back to natural position
-            animate()
-                    .translationY(0f)
+            animate().translationY(0f)
                     .scaleX(1f)
                     .scaleY(1f)
                     .setDuration(200L)
-                    .setListener(null)
                     .start();
             totalDrag = 0;
-            draggingDown = draggingUp = false;
+            draggingUp = false;
+            draggingDown = false;
             dispatchDragCallback(0f, 0f, 0f, 0f);
         }
     }
@@ -140,23 +137,32 @@ public class DragToDismissLayout extends CoordinatorLayout {
     }
 
     private void dragScale(int scroll) {
-        if (scroll == 0) return;
+        if (scroll == 0) {
+            return;
+        }
 
         totalDrag += scroll;
+        float absTotalDrag = Math.abs(totalDrag);
 
         // track the direction & set the pivot point for scaling
         // don't double track i.e. if start dragging down and then reverse, keep tracking as
         // dragging down until they reach the 'natural' position
-        if (scroll < 0 && !draggingUp && !draggingDown) {
-            draggingDown = true;
-            if (shouldScale) setPivotY(getHeight());
-        } else if (scroll > 0 && !draggingDown && !draggingUp) {
-            draggingUp = true;
-            if (shouldScale) setPivotY(0f);
+        if (!draggingUp && !draggingDown) {
+            if (scroll < 0) {
+                draggingDown = true;
+                if (shouldScale) {
+                    setPivotY(getHeight());
+                }
+            } else {
+                draggingUp = true;
+                if (shouldScale) {
+                    setPivotY(0f);
+                }
+            }
         }
         // how far have we dragged relative to the distance to perform a dismiss
         // (0–1 where 1 = dismiss distance). Decreasing logarithmically as we approach the limit
-        float dragFraction = (float) Math.log10(1 + (Math.abs(totalDrag) / dragDismissDistance));
+        float dragFraction = (float) MathUtils.log2(1 + (absTotalDrag / dragDismissDistance));
 
         // calculate the desired translation given the drag fraction
         float dragTo = dragFraction * dragDismissDistance * dragElasticity;
@@ -168,8 +174,9 @@ public class DragToDismissLayout extends CoordinatorLayout {
         }
         setTranslationY(dragTo);
 
-        if (shouldScale) {
-            final float scale = 1 - ((1 - dragDismissScale) * dragFraction);
+        if (shouldScale && absTotalDrag > dragDismissDistance) {
+            // 1 = log2(1 + dragDismissDistance / dragDismissDistance)
+            final float scale = 1 - ((1 - dragDismissScale) * (dragFraction - 1));
             setScaleX(scale);
             setScaleY(scale);
         }
@@ -178,12 +185,16 @@ public class DragToDismissLayout extends CoordinatorLayout {
         // allow the list to get the scroll events & reset any transforms
         if ((draggingDown && totalDrag >= 0)
                 || (draggingUp && totalDrag <= 0)) {
-            totalDrag = dragTo = dragFraction = 0;
-            draggingDown = draggingUp = false;
+            totalDrag = 0;
+            dragTo = 0;
+            dragFraction = 0;
+            draggingDown = false;
+            draggingUp = false;
             setTranslationY(0f);
             setScaleX(1f);
             setScaleY(1f);
         }
+
         dispatchDragCallback(dragFraction, dragTo,
                 Math.min(1f, Math.abs(totalDrag) / dragDismissDistance), totalDrag);
     }
@@ -220,12 +231,14 @@ public class DragToDismissLayout extends CoordinatorLayout {
          * @param rawOffsetPixels     The raw distance the user has dragged
          */
         void onDrag(float elasticOffset, float elasticOffsetPixels,
-                    float rawOffset, float rawOffsetPixels) { }
+                    float rawOffset, float rawOffsetPixels) {
+        }
 
         /**
          * Called when dragging is released and has exceeded the threshold dismiss distance.
          */
-        void onDragDismissed() { }
+        void onDragDismissed() {
+        }
 
     }
 
@@ -234,43 +247,54 @@ public class DragToDismissLayout extends CoordinatorLayout {
      * navigation bar) whilst elastic drags are performed and
      * {@link Activity#finishAfterTransition() finishes} the activity when drag dismissed.
      */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static class SystemChromeFader extends DragToDismissCallback {
+    public static class DefaultDismissAnimator extends DragToDismissCallback {
 
         private final Activity activity;
-        private final int statusBarAlpha;
-        private final int navBarAlpha;
-        private final boolean fadeNavBar;
-        public SystemChromeFader(Activity activity) {
+        private final boolean hasNavBar;
+        private int statusBarAlpha;
+        private int navBarAlpha;
+
+        public DefaultDismissAnimator(Activity activity) {
             this.activity = activity;
-            statusBarAlpha = Color.alpha(activity.getWindow().getStatusBarColor());
-            navBarAlpha = Color.alpha(activity.getWindow().getNavigationBarColor());
-            fadeNavBar = ViewUtils.isNavBarOnBottom(activity);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                statusBarAlpha = Color.alpha(activity.getWindow().getStatusBarColor());
+                navBarAlpha = Color.alpha(activity.getWindow().getNavigationBarColor());
+            }
+            hasNavBar = ViewUtils.isNavBarOnBottom(activity);
         }
 
         @Override
-        public void onDrag(float elasticOffset, float elasticOffsetPixels,
-                           float rawOffset, float rawOffsetPixels) {
-            if (elasticOffsetPixels > 0) {
-                // dragging downward, fade the status bar in proportion
-                activity.getWindow().setStatusBarColor(ColorUtils.modifyAlpha(activity.getWindow()
-                        .getStatusBarColor(), (int) ((1f - rawOffset) * statusBarAlpha)));
-            } else if (elasticOffsetPixels == 0) {
-                // reset
-                activity.getWindow().setStatusBarColor(ColorUtils.modifyAlpha(
-                        activity.getWindow().getStatusBarColor(), statusBarAlpha));
-                activity.getWindow().setNavigationBarColor(ColorUtils.modifyAlpha(
-                        activity.getWindow().getNavigationBarColor(), navBarAlpha));
-            } else if (fadeNavBar) {
-                // dragging upward, fade the navigation bar in proportion
-                activity.getWindow().setNavigationBarColor(
-                        ColorUtils.modifyAlpha(activity.getWindow().getNavigationBarColor(),
-                                (int) ((1f - rawOffset) * navBarAlpha)));
+        void onDrag(float elasticOffset, float elasticOffsetPixels,
+                    float rawOffset, float rawOffsetPixels) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = activity.getWindow();
+                if (elasticOffsetPixels > 0) {
+                    // dragging downward, fade the status bar in proportion
+                    int statusBarColor = ColorUtils.modifyAlpha(
+                            window.getStatusBarColor(), (int) ((1f - rawOffset) * statusBarAlpha));
+                    window.setStatusBarColor(statusBarColor);
+                } else if (elasticOffsetPixels == 0) {
+                    // reset
+                    window.setStatusBarColor(ColorUtils.modifyAlpha(
+                            window.getStatusBarColor(), statusBarAlpha));
+                    window.setNavigationBarColor(ColorUtils.modifyAlpha(
+                            window.getNavigationBarColor(), navBarAlpha));
+                } else if (hasNavBar) {
+                    // dragging upward, fade the navigation bar in proportion
+                    int navigationBarColor = ColorUtils.modifyAlpha(
+                            window.getNavigationBarColor(), (int) ((1f - rawOffset) * navBarAlpha));
+                    window.setNavigationBarColor(navigationBarColor);
+                }
             }
         }
 
-        public void onDragDismissed() {
-            activity.finishAfterTransition();
+        @Override
+        void onDragDismissed() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                activity.finishAfterTransition();
+            } else {
+                activity.finish();
+            }
         }
     }
 }
