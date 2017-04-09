@@ -45,6 +45,12 @@ public class ZhihuDailyDetailActivity extends BaseActivity
     private ImageView headImage;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
+    public static void start(Context context, @NonNull Story story) {
+        Intent intent = new Intent(context, ZhihuDailyDetailActivity.class);
+        intent.putExtra(EXTRA_STORY, story);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // WebView has a bug with night mode, it will change ui mode while first creation
@@ -124,12 +130,6 @@ public class ZhihuDailyDetailActivity extends BaseActivity
                 .detailActivityModule(new ZhihuDailyDetailActivityModule())
                 .build()
                 .inject(this);
-    }
-
-    public static void start(Context context, @NonNull Story story) {
-        Intent intent = new Intent(context, ZhihuDailyDetailActivity.class);
-        intent.putExtra(EXTRA_STORY, story);
-        context.startActivity(intent);
     }
 
     private void changeThemeByPalette(Palette palette) {
