@@ -18,7 +18,6 @@ package in.nerd_is.android_showcase.image_view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,12 +26,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
-
-import java.io.File;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
@@ -46,7 +40,7 @@ public class ImageViewerActivity extends BaseActivity {
 
     public static final String EXTRA_URL = "extra_url";
 
-    private SubsamplingScaleImageView imageView;
+    private PhotoView imageView;
     private Toolbar toolbar;
 
     @Override
@@ -66,12 +60,7 @@ public class ImageViewerActivity extends BaseActivity {
         String url = getIntent().getStringExtra(EXTRA_URL);
         Glide.with(this)
                 .load(url)
-                .downloadOnly(new SimpleTarget<File>() {
-                    @Override
-                    public void onResourceReady(File resource, GlideAnimation<? super File> glideAnimation) {
-                        imageView.setImage(ImageSource.uri(Uri.fromFile(resource)));
-                    }
-                });
+                .into(imageView);
     }
 
     @Override
