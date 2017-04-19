@@ -18,97 +18,127 @@ package in.nerd_is.dragtodismisslayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.ViewCompat;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
+import android.view.MotionEvent;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Xuqiang ZHENG on 2017/4/7.
+ * @author Xuqiang ZHENG on 2017/4/9.
  */
-public class DragToDismissCoordinatorLayout extends CoordinatorLayout {
+public class DragToDismissLayout extends FrameLayout {
 
+    private static int STATE_IDLE = 0;
+    private static int STATE_DRAGGING = 1;
+
+    private int dragState = STATE_IDLE;
     private float dragDismissDistance = Float.MAX_VALUE;
     private float dragDismissFraction = -1f;
     private float dragDismissScale = 1f;
     private boolean shouldScale = false;
     private float dragElasticity = 0.618f;
 
+    private float lastMotionY;
     private float totalDrag;
     private boolean draggingDown = false;
     private boolean draggingUp = false;
 
     private List<DragToDismissCallback> callbacks;
 
-    public DragToDismissCoordinatorLayout(Context context) {
+    public DragToDismissLayout(@NonNull Context context) {
         this(context, null, 0);
     }
 
-    public DragToDismissCoordinatorLayout(Context context, AttributeSet attrs) {
+    public DragToDismissLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DragToDismissCoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DragToDismissLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.DragToDismissLayout, 0, 0);
 
-        dragDismissDistance = a.getDimension(R.styleable
-                .DragToDismissLayout_dragDismissDistance, dragDismissDistance);
-        dragDismissFraction = a.getFloat(R.styleable
-                .DragToDismissLayout_dragDismissFraction, dragDismissFraction);
-        dragDismissScale = a.getFloat(R.styleable
-                .DragToDismissLayout_dragDismissScale, dragDismissScale);
+        dragDismissDistance = a.getDimension(
+                R.styleable.DragToDismissLayout_dragDismissDistance, dragDismissDistance);
+        dragDismissFraction = a.getFloat(
+                R.styleable.DragToDismissLayout_dragDismissFraction, dragDismissFraction);
+        dragDismissScale = a.getFloat(
+                R.styleable.DragToDismissLayout_dragDismissScale, dragDismissScale);
         shouldScale = dragDismissScale != 1f;
-        dragElasticity = a.getFloat(R.styleable
-                .DragToDismissLayout_dragElasticity, dragElasticity);
+        dragElasticity = a.getFloat(
+                R.styleable.DragToDismissLayout_dragElasticity, dragElasticity);
 
         a.recycle();
     }
 
     @Override
-    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        super.onStartNestedScroll(child, target, nestedScrollAxes);
-        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
-    }
-
-    @Override
-    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
-        super.onNestedPreScroll(target, dx, dy, consumed);
-        if (draggingDown && dy > 0 || draggingUp && dy < 0) {
-            dragScale(dy);
-            consumed[1] = dy;
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (dragDismissFraction > 0f) {
+            dragDismissDistance = h * dragDismissFraction;
         }
     }
 
     @Override
-    public void onNestedScroll(View target, int dxConsumed, int dyConsumed,
-                               int dxUnconsumed, int dyUnconsumed) {
-        super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-        dragScale(dyUnconsumed);
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        int actionMasked = ev.getActionMasked();
+        switch (actionMasked) {
+            case MotionEvent.ACTION_DOWN:
+                dragState = STATE_IDLE;
+                lastMotionY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                dragState = STATE_DRAGGING;
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                dragState = STATE_IDLE;
+                break;
+            default:
+                return false;
+        }
+        return dragState == STATE_DRAGGING;
     }
 
     @Override
-    public void onStopNestedScroll(View child) {
-        super.onStopNestedScroll(child);
+    public boolean onTouchEvent(MotionEvent ev) {
+        int actionMasked = ev.getActionMasked();
 
-        if (Math.abs(totalDrag) >= dragDismissDistance) {
-            dispatchDismissCallback();
-        } else { // settle back to natural position
-            animate().translationY(0f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setDuration(200L)
-                    .start();
-            totalDrag = 0;
-            draggingUp = false;
-            draggingDown = false;
-            dispatchDragCallback(0f, 0f, 0f, 0f);
+        if (actionMasked == MotionEvent.ACTION_MOVE) {
+            int scroll = (int) (lastMotionY - ev.getY());
+            lastMotionY = ev.getY();
+
+            dragScale(scroll);
+
+            return true;
         }
+
+        if (actionMasked == MotionEvent.ACTION_UP && dragState == STATE_DRAGGING) {
+            if (Math.abs(totalDrag) >= dragDismissDistance) {
+                dispatchDismissCallback();
+            } else { // settle back to natural position
+                animate().translationY(0f)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(200L)
+                        .start();
+                totalDrag = 0;
+                draggingUp = false;
+                draggingDown = false;
+                dispatchDragCallback(0f, 0f, 0f, 0f);
+            }
+
+            dragState = STATE_IDLE;
+
+            return true;
+        }
+
+        return super.onTouchEvent(ev);
     }
 
     public void addListener(DragToDismissCallback listener) {
@@ -121,14 +151,6 @@ public class DragToDismissCoordinatorLayout extends CoordinatorLayout {
     public void removeListener(DragToDismissCallback listener) {
         if (callbacks != null && callbacks.size() > 0) {
             callbacks.remove(listener);
-        }
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        if (dragDismissFraction > 0f) {
-            dragDismissDistance = h * dragDismissFraction;
         }
     }
 
@@ -212,5 +234,4 @@ public class DragToDismissCoordinatorLayout extends CoordinatorLayout {
             }
         }
     }
-
 }

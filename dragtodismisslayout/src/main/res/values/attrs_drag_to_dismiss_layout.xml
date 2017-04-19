@@ -17,7 +17,7 @@
 
 <resources>
 
-    <declare-styleable name="DragToDismissCoordinatorLayout">
+    <declare-styleable name="DragToDismissLayout">
         <attr name="dragDismissDistance" format="dimension" />
         <attr name="dragDismissFraction" format="float" />
         <attr name="dragDismissScale" format="float" />
