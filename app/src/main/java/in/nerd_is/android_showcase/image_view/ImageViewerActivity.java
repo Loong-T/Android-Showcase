@@ -41,6 +41,8 @@ import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
 import in.nerd_is.android_showcase.utils.AndroidUtils;
+import in.nerd_is.dragtodismisslayout.DefaultDismissAnimator;
+import in.nerd_is.dragtodismisslayout.DragToDismissLayout;
 
 import static in.nerd_is.android_showcase.utils.CommonUtils.nullOrEmpty;
 
@@ -113,6 +115,9 @@ public class ImageViewerActivity extends BaseActivity {
         actionBar.setTitle(adapter.getPageTitle(0));
         AndroidUtils.adjustViewAccordingToStatusBar(contentView, toolbar);
 
+        DragToDismissLayout dismissLayout = find(R.id.drag_to_dismiss_layout);
+        dismissLayout.addListener(new DefaultDismissAnimator(this));
+
         ViewPager viewPager = find(R.id.view_pager);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -135,6 +140,7 @@ public class ImageViewerActivity extends BaseActivity {
             String url = urls.get(position);
             PhotoView photoView = (PhotoView) getLayoutInflater().inflate(
                     R.layout.image_viewer_item, container, false);
+            photoView.setAllowParentInterceptOnEdge(true);
 
             container.addView(photoView);
 

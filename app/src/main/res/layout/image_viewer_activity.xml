@@ -14,10 +14,15 @@
   ~    limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<in.nerd_is.dragtodismisslayout.DragToDismissLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drag_to_dismiss_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    app:dragDismissDistance="148dp"
+    app:dragDismissScale="0.9">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
@@ -39,4 +44,4 @@
 
     </android.support.design.widget.AppBarLayout>
 
-</FrameLayout>
+</in.nerd_is.dragtodismisslayout.DragToDismissLayout>

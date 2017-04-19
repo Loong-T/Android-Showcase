@@ -28,7 +28,7 @@
 
         <activity
             android:name=".image_view.ImageViewerActivity"
-            android:theme="@style/AppTheme.ImageViewer" />
+            android:theme="@style/AppTheme.TranslucentBackground.ImageViewer" />
     </application>
 
 </manifest>

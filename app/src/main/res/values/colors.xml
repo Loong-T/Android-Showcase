@@ -5,6 +5,7 @@
     <color name="colorAccent">#2EA9DF</color>
 
     <color name="background">@color/nc_shironezumi</color>
+    <color name="background_dark">@color/nc_sumi</color>
     <color name="translucent_background">#99000000</color>
 
     <color name="zhihu_primary">@color/nc_sora</color>

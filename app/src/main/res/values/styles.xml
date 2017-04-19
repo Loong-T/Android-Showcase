@@ -23,7 +23,7 @@
         <item name="colorPrimaryDark">@color/zhihu_primary_dark</item>
     </style>
 
-    <style name="AppTheme.ImageViewer">
+    <style name="AppTheme.TranslucentBackground.ImageViewer">
         <item name="colorPrimary">@color/android_immersive_bars</item>
         <item name="colorPrimaryDark">@color/android_immersive_bars</item>
     </style>

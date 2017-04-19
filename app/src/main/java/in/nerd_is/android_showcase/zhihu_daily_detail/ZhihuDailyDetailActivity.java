@@ -31,6 +31,7 @@ import in.nerd_is.android_showcase.image_view.ImageViewerActivity;
 import in.nerd_is.android_showcase.utils.AndroidUtils;
 import in.nerd_is.android_showcase.zhihu_daily.model.Story;
 import in.nerd_is.android_showcase.zhihu_daily.model.StoryDetail;
+import in.nerd_is.dragtodismisslayout.DefaultDismissAnimator;
 import in.nerd_is.dragtodismisslayout.DragToDismissCoordinatorLayout;
 
 public class ZhihuDailyDetailActivity extends BaseActivity
@@ -77,7 +78,7 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         collapsingToolbarLayout = find(R.id.collapsing_toolbar_layout);
 
         DragToDismissCoordinatorLayout dismissLayout = find(R.id.drag_to_dismiss_layout);
-        dismissLayout.addListener(new DragToDismissCoordinatorLayout.DefaultDismissAnimator(this));
+        dismissLayout.addListener(new DefaultDismissAnimator(this));
 
         presenter.loadDetail(story.id());
     }
