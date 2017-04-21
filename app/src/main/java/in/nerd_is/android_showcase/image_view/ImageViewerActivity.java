@@ -30,9 +30,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +43,7 @@ import in.nerd_is.android_showcase.common.BaseActivity;
 import in.nerd_is.android_showcase.utils.AndroidUtils;
 import in.nerd_is.dragtodismisslayout.DefaultDismissAnimator;
 import in.nerd_is.dragtodismisslayout.DragToDismissLayout;
+import me.zhanghai.android.systemuihelper.SystemUiHelper;
 
 import static in.nerd_is.android_showcase.utils.CommonUtils.nullOrEmpty;
 
@@ -53,6 +54,8 @@ public class ImageViewerActivity extends BaseActivity {
 
     public static final String EXTRA_URL_ARRAY = "extra_url_array";
 
+    private ActionBar actionBar;
+    private SystemUiHelper systemUiHelper;
     private List<String> urls;
 
     public static void start(Context context, @NonNull String url) {
@@ -72,8 +75,25 @@ public class ImageViewerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_viewer_activity);
 
+        systemUiHelper = new SystemUiHelper(this,
+                SystemUiHelper.LEVEL_IMMERSIVE,
+                SystemUiHelper.FLAG_IMMERSIVE_STICKY,
+                visible -> {
+                    if (visible) {
+                        showActionBar();
+                    } else {
+                        hideActionBar();
+                    }
+                });
+
+        setupPresenter();
         handleIntent();
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -109,7 +129,7 @@ public class ImageViewerActivity extends BaseActivity {
     private void initView() {
         Toolbar toolbar = find(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(adapter.getPageTitle(0));
@@ -128,6 +148,14 @@ public class ImageViewerActivity extends BaseActivity {
         });
     }
 
+    private void hideActionBar() {
+        actionBar.hide();
+    }
+
+    private void showActionBar() {
+        actionBar.show();
+    }
+
     private final PagerAdapter adapter = new PagerAdapter() {
 
         @Override
@@ -140,7 +168,8 @@ public class ImageViewerActivity extends BaseActivity {
             String url = urls.get(position);
             PhotoView photoView = (PhotoView) getLayoutInflater().inflate(
                     R.layout.image_viewer_item, container, false);
-            photoView.setAllowParentInterceptOnEdge(true);
+            photoView.setOnClickListener(view -> systemUiHelper.toggle());
+            photoView.enable();
 
             container.addView(photoView);
 

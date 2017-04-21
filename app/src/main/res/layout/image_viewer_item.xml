@@ -13,8 +13,9 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
-<com.github.chrisbanes.photoview.PhotoView
+<com.bm.library.PhotoView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/image_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:scaleType="fitCenter" />
