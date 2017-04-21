@@ -4,11 +4,18 @@
         <item name="android:statusBarColor">@color/android_immersive_bars</item>
     </style>
 
-    <style name="AppTheme.ZhihuDetail">
+    <style name="AppTheme.TranslucentBackground.ZhihuDetail">
         <item name="colorPrimary">@color/zhihu_primary</item>
         <!-- because of translucent status bar, status bar color is darker than toolbar,
              so it's fine to use the same color -->
         <item name="colorPrimaryDark">@color/zhihu_primary</item>
         <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.TranslucentBackground.ImageViewer">
+        <item name="colorPrimary">@color/android_immersive_bars</item>
+        <item name="colorPrimaryDark">@color/android_immersive_bars</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

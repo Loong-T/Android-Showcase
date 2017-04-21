@@ -65,11 +65,23 @@ public abstract class StoryDetail {
                     .append("\"/>");
         }
 
-        builder.append("</head>")
-                .append(nightMode ? "<body class=\"night\">" : "<body>")
+        builder.append("</head>");
+
+        builder.append(nightMode ? "<body class=\"night\">" : "<body>")
                 .append(body())
-                .append("</body>")
-                .append("</html>");
+                .append("</body>");
+
+        // add click listener for images
+        builder.append("<script type=\"text/javascript\">")
+                .append("    var imgs = document.getElementsByClassName('content-image');")
+                .append("    for (var i = 0; i< imgs.length; ++i) {")
+                .append("        imgs[i].addEventListener('click', function (e) {")
+                .append("            activity.startImageViewer(e.srcElement.src);")
+                .append("        });")
+                .append("    }")
+                .append("</script>");
+
+        builder.append("</html>");
 
         return builder.toString();
     }

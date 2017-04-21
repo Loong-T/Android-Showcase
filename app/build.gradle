@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.squareup.sqldelight'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -61,6 +62,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':recycler_simplification')
+    compile project(path: ':dragtodismisslayout')
 
     // support library
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibaryVersion"
@@ -71,6 +73,8 @@ dependencies {
 
     // UI
     compile 'net.opacapp:multiline-collapsingtoolbar:1.3.1'
+    compile 'me.zhanghai.android.systemuihelper:library:1.0.0'
+    compile 'com.bm.photoview:library:1.4.1'
 
     // reactive
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
@@ -96,7 +100,7 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
     // module
-    provided "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
+    provided "com.jakewharton.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
     annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
     provided "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<in.nerd_is.dragtodismisslayout.DragToDismissCoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drag_to_dismiss_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    app:dragDismissDistance="168dp"
+    app:dragDismissScale="0.9">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="218dp"
@@ -70,4 +74,4 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</in.nerd_is.dragtodismisslayout.DragToDismissCoordinatorLayout>

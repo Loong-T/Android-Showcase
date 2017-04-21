@@ -1,5 +1,6 @@
 package in.nerd_is.android_showcase.zhihu_daily_detail;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,9 +27,12 @@ import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
 import in.nerd_is.android_showcase.common.lib_support.glide.PaletteBitmap;
 import in.nerd_is.android_showcase.common.lib_support.glide.PaletteBitmapTranscoder;
+import in.nerd_is.android_showcase.image_view.ImageViewerActivity;
 import in.nerd_is.android_showcase.utils.AndroidUtils;
 import in.nerd_is.android_showcase.zhihu_daily.model.Story;
 import in.nerd_is.android_showcase.zhihu_daily.model.StoryDetail;
+import in.nerd_is.dragtodismisslayout.DefaultDismissAnimator;
+import in.nerd_is.dragtodismisslayout.DragToDismissCoordinatorLayout;
 
 public class ZhihuDailyDetailActivity extends BaseActivity
         implements ZhihuDailyDetailContract.View {
@@ -40,6 +45,12 @@ public class ZhihuDailyDetailActivity extends BaseActivity
     private WebView webView;
     private ImageView headImage;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+
+    public static void start(Context context, @NonNull Story story) {
+        Intent intent = new Intent(context, ZhihuDailyDetailActivity.class);
+        intent.putExtra(EXTRA_STORY, story);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +71,26 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(story.title());
+        AndroidUtils.adjustViewAccordingToStatusBar(contentView, toolbar);
 
         webView = find(R.id.web_view);
         headImage = find(R.id.app_bar_image);
         collapsingToolbarLayout = find(R.id.collapsing_toolbar_layout);
 
-        AndroidUtils.adjustViewAccordingToStatusBar(collapsingToolbarLayout, toolbar);
+        DragToDismissCoordinatorLayout dismissLayout = find(R.id.drag_to_dismiss_layout);
+        dismissLayout.addListener(new DefaultDismissAnimator(this));
 
         presenter.loadDetail(story.id());
     }
 
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     public void showDetail(StoryDetail storyDetail) {
         TextView sourceTv = find(R.id.source_tv);
         sourceTv.setText(storyDetail.imageSource());
 
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new JsProxy(this), "activity");
         webView.loadDataWithBaseURL(null, storyDetail.toHtml(configuration.isNightMode()),
                 "text/html", "utf-8", null);
 
@@ -117,12 +133,6 @@ public class ZhihuDailyDetailActivity extends BaseActivity
                 .inject(this);
     }
 
-    public static void start(Context context, @NonNull Story story) {
-        Intent intent = new Intent(context, ZhihuDailyDetailActivity.class);
-        intent.putExtra(EXTRA_STORY, story);
-        context.startActivity(intent);
-    }
-
     private void changeThemeByPalette(Palette palette) {
         boolean isNight = configuration.isNightMode();
 
@@ -139,5 +149,18 @@ public class ZhihuDailyDetailActivity extends BaseActivity
 
         collapsingToolbarLayout.setContentScrimColor(toolbarColor);
         collapsingToolbarLayout.setStatusBarScrimColor(statusBarColor);
+    }
+
+    private static class JsProxy {
+        private ZhihuDailyDetailActivity activity;
+
+        JsProxy(ZhihuDailyDetailActivity activity) {
+            this.activity = activity;
+        }
+
+        @JavascriptInterface
+        public void startImageViewer(String url) {
+            ImageViewerActivity.start(activity, url);
+        }
     }
 }

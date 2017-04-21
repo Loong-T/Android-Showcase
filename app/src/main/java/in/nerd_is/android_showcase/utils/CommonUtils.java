@@ -49,4 +49,8 @@ public class CommonUtils {
     public static String mkString(Iterable<?> values, String sep) {
         return mkString(values, "", sep, "");
     }
+
+    public static <T> boolean nullOrEmpty(T[] array) {
+        return array == null || array.length == 0;
+    }
 }
