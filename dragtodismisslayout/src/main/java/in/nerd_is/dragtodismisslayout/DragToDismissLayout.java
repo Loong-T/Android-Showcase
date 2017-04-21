@@ -32,7 +32,10 @@ public class DragToDismissLayout extends FrameLayout {
     private static int STATE_DRAGGING = 1;
 
     private int dragState = STATE_IDLE;
-    private float lastMotionY;
+    private float initX;
+    private float initY;
+    private float lastY;
+    private float minDragDistance;
 
     private DragToDismissHelper helper;
 
@@ -47,6 +50,7 @@ public class DragToDismissLayout extends FrameLayout {
     public DragToDismissLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         helper = DragToDismissHelper.create(context, attrs, this);
+        minDragDistance = dp2Px(4);
     }
 
     @Override
@@ -60,10 +64,16 @@ public class DragToDismissLayout extends FrameLayout {
         switch (ev.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 dragState = STATE_IDLE;
-                lastMotionY = ev.getY();
+                initX = ev.getX();
+                initY = ev.getY();
+                lastY = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                dragState = STATE_DRAGGING;
+                if (ev.getPointerCount() == 1 &&
+                        dragState != STATE_DRAGGING &&
+                        distance(initX, initY, ev.getX(), ev.getY()) > minDragDistance) {
+                    dragState = STATE_DRAGGING;
+                }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -80,8 +90,8 @@ public class DragToDismissLayout extends FrameLayout {
         int actionMasked = ev.getActionMasked();
 
         if (actionMasked == MotionEvent.ACTION_MOVE) {
-            int scroll = (int) (lastMotionY - ev.getY());
-            lastMotionY = ev.getY();
+            int scroll = (int) (lastY - ev.getY());
+            lastY = ev.getY();
             helper.dragScale(scroll);
 
             return true;
@@ -103,5 +113,15 @@ public class DragToDismissLayout extends FrameLayout {
 
     public void removeListener(DragToDismissCallback listener) {
         helper.removeListener(listener);
+    }
+
+    private float distance(float x1, float y1, float x2, float y2) {
+        float dx = x1 - x2;
+        float dy = y1 - y2;
+        return (float) Math.sqrt(dx * dx + dy * dy);
+    }
+
+    private float dp2Px(float dp) {
+        return dp / getResources().getDisplayMetrics().density;
     }
 }
