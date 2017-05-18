@@ -1,5 +1,6 @@
 package in.nerd_is.android_showcase.zhihu_daily.model;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.auto.value.AutoValue;
@@ -92,15 +93,15 @@ public abstract class StoryDetail {
 
     public static StoryDetail create(long id,
                                      int type,
-                                     String body,
-                                     String imageSource,
-                                     String title,
-                                     String image,
-                                     String shareUrl,
-                                     List<String> js,
-                                     List<Recommender> recommenders,
-                                     Section section,
-                                     List<String> css) {
+                                     @NonNull String body,
+                                     @NonNull String imageSource,
+                                     @NonNull String title,
+                                     @NonNull String image,
+                                     @NonNull String shareUrl,
+                                     @NonNull List<String> js,
+                                     @Nullable List<Recommender> recommenders,
+                                     @Nullable Section section,
+                                     @NonNull List<String> css) {
         return new AutoValue_StoryDetail(id, type, body, imageSource, title,
                 image, shareUrl, js, recommenders, section, css);
     }

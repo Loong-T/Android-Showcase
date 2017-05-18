@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeFormatterBuilder;
 
+import java.util.List;
+
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.utils.ViewUtils;
 import in.nerd_is.android_showcase.zhihu_daily.model.Date;
@@ -64,9 +66,10 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
         public void render(@NonNull Story story) {
             tvTitle.setText(story.title());
 
-            if (!story.images().isEmpty()) {
+            List<String> images = story.images();
+            if (images != null && !images.isEmpty()) {
                 Glide.with(context)
-                        .load(story.images().get(0))
+                        .load(images.get(0))
                         .into(ivImage);
             }
             ivImage.setContentDescription(context.getString(

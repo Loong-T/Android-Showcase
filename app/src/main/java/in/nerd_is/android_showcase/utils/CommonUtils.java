@@ -1,6 +1,9 @@
 package in.nerd_is.android_showcase.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,5 +55,15 @@ public class CommonUtils {
 
     public static <T> boolean nullOrEmpty(T[] array) {
         return array == null || array.length == 0;
+    }
+
+    public static boolean nullOrEmpty(Collection collection) {
+        return collection == null || collection.isEmpty();
+    }
+
+    public static <T> List<T> listOf(T... args) {
+        List<T> list = new ArrayList<>(args.length);
+        Collections.addAll(list, args);
+        return list;
     }
 }
