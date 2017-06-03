@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.squareup.sqldelight'
 
@@ -53,8 +54,14 @@ android {
     }
 
     sourceSets {
+        main {
+            java {
+                srcDirs += 'src/main/kotlin'
+            }
+        }
         test {
             java {
+                srcDirs += 'src/test/kotlin'
                 srcDirs += 'src/integrationTest/java'
             }
         }
@@ -65,6 +72,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':recycler_simplification')
     implementation project(path: ':dragtodismisslayout')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     // support library
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibaryVersion"
@@ -102,9 +110,9 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
     // module
-    provided "com.jakewharton.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
+    compileOnly "com.jakewharton.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
     annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
-    provided "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
+    compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
     implementation "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autoValueParcelVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autoValueParcelVersion"
@@ -144,4 +152,20 @@ dependencyUpdates.resolutionStrategy = {
             }
         }
     }
+}
+
+repositories {
+    mavenCentral()
+}
+
+task copyTestClasses(type: Copy) {
+    String flavorName = 'mock'
+    from "build/tmp/kotlin-classes/${flavorName}DebugUnitTest"
+    into "build/intermediates/classes/test/${flavorName}/debug"
+}
+
+task copySdkClasses(type: Copy) {
+    String flavorName = 'mock'
+    from "build/tmp/kotlin-classes/${flavorName}Debug"
+    into "build/intermediates/classes/${flavorName}/debug"
 }
