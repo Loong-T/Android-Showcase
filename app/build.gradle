@@ -157,15 +157,3 @@ dependencyUpdates.resolutionStrategy = {
 repositories {
     mavenCentral()
 }
-
-task copyTestClasses(type: Copy) {
-    String flavorName = 'mock'
-    from "build/tmp/kotlin-classes/${flavorName}DebugUnitTest"
-    into "build/intermediates/classes/test/${flavorName}/debug"
-}
-
-task copySdkClasses(type: Copy) {
-    String flavorName = 'mock'
-    from "build/tmp/kotlin-classes/${flavorName}Debug"
-    into "build/intermediates/classes/${flavorName}/debug"
-}
