@@ -10,7 +10,7 @@ import static in.nerd_is.android_showcase.zhihu_daily.Constant.NEWS_DATE_FORMATT
 /**
  * @author Xuqiang ZHENG on 2016/12/4.
  */
-public class DateAdapter {
+public class ZhihuDailyDateAdapter {
     @ToJson String toJson(LocalDate date) {
         return date.format(NEWS_DATE_FORMATTER);
     }

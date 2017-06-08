@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Random;
 
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
-import in.nerd_is.android_showcase.hitokoto.moshi.DateTimeAdapter;
+import in.nerd_is.android_showcase.hitokoto.moshi.HitokotoDateTimeAdapter;
 import io.reactivex.Single;
 
 /**
@@ -36,7 +36,7 @@ public class FakeHitokotoRemoteRepository implements HitokotoDataSource {
     private final List<Hitokoto> hitokotoList;
 
     public FakeHitokotoRemoteRepository() {
-        Moshi moshi = new Moshi.Builder().add(new DateTimeAdapter()).build();
+        Moshi moshi = new Moshi.Builder().add(new HitokotoDateTimeAdapter()).build();
         JsonAdapter<Hitokoto> adapter = Hitokoto.jsonAdapter(moshi);
         hitokotoList = new ArrayList<>(JSON_STRINGS.length);
         try {

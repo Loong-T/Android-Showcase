@@ -12,4 +12,5 @@ public interface Constant {
 
     String TAG_HITOKOTO = "tag_hitokoto";
     String TAG_ZHIHU_DAILY = "tag_zhihu_daily";
+    String TAG_DRIBBBLE = "tag_dribbble";
 }

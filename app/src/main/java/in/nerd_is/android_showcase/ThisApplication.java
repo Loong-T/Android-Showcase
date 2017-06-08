@@ -24,7 +24,7 @@ public class ThisApplication extends Application {
 
         INSTANCE = this;
 
-        DebugOnly.initStetho(this);
+        DebugOnly.INSTANCE.initStetho(this);
         AndroidThreeTen.init(this);
 
         appComponent = DaggerAppComponent.builder()

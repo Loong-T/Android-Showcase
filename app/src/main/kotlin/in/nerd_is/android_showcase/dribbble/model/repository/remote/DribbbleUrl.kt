@@ -14,17 +14,12 @@
  *    limitations under the License.
  */
 
-package `in`.nerd_is.android_showcase.dribbble
-
-import org.threeten.bp.format.DateTimeFormatter
+package `in`.nerd_is.android_showcase.dribbble.model.repository.remote
 
 /**
- * @author Xuqiang ZHENG on 2017/5/22.
+ * @author Xuqiang ZHENG on 2017/6/5.
  */
-object Constant {
-    val DATE_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ISO_INSTANT
-}
-
-object ParamName {
-    val ACCESS_TOKEN = "access_token"
+object DribbbleUrl {
+    const val BASE_URL = "https://api.dribbble.com/v1/"
+    const val SHOTS = "shots/"
 }

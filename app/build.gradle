@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.squareup.sqldelight'
 
@@ -16,14 +17,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField("String", "DRIBBBLE_ACCESS_TOKEN", "\"$DribbbleAccessToken\"")
     }
 
     buildTypes {
 
         debug {
+            sourceSets.debug.java.srcDirs += 'src/debug/kotlin'
         }
 
         release {
+            sourceSets.release.java.srcDirs += 'src/release/kotlin'
+
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -61,8 +67,9 @@ android {
         }
         test {
             java {
-                srcDirs += 'src/test/kotlin'
-                srcDirs += 'src/integrationTest/java'
+                srcDirs += ['src/test/kotlin',
+                            'src/integrationTest/java',
+                            'src/integrationTest/kotlin']
             }
         }
     }
@@ -92,6 +99,7 @@ dependencies {
 
     // IO
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
+    debugImplementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpVersion"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$rootProject.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
@@ -107,15 +115,15 @@ dependencies {
 
     // di
     implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
     // module
     compileOnly "com.jakewharton.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
-    annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
+    kapt "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
     compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
+    kapt "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
     implementation "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autoValueParcelVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autoValueParcelVersion"
+    kapt "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autoValueParcelVersion"
 
     // debug
     debugImplementation "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"

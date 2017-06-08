@@ -9,7 +9,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 /**
  * @author Xuqiang ZHENG on 2017/3/6.
  */
-public class DateTimeAdapter {
+public class HitokotoDateTimeAdapter {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy.MM.dd kk:mm:ss");
 

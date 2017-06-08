@@ -14,17 +14,15 @@
  *    limitations under the License.
  */
 
-package `in`.nerd_is.android_showcase.dribbble
+package `in`.nerd_is.android_showcase.common.lib_support.retrofit
 
-import org.threeten.bp.format.DateTimeFormatter
+import retrofit2.Retrofit
 
 /**
- * @author Xuqiang ZHENG on 2017/5/22.
+ * @author Xuqiang ZHENG on 2016/10/7.
  */
-object Constant {
-    val DATE_TIME_FORMATTER: DateTimeFormatter = DateTimeFormatter.ISO_INSTANT
-}
-
-object ParamName {
-    val ACCESS_TOKEN = "access_token"
+object RetrofitUtils {
+    @JvmStatic fun <T> create(retrofit: Retrofit, clazz: Class<T>): T {
+        return retrofit.create(clazz)
+    }
 }

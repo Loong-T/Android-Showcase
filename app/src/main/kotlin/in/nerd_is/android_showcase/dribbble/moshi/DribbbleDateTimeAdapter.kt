@@ -14,20 +14,22 @@
  *    limitations under the License.
  */
 
-package in.nerd_is.dragtodismisslayout;
+package `in`.nerd_is.android_showcase.dribbble.moshi
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import `in`.nerd_is.android_showcase.dribbble.Constant.DATE_TIME_FORMATTER
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.temporal.ChronoField
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * @author Xuqiang ZHENG on 2017/5/22.
  */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+class DribbbleDateTimeAdapter {
+    @ToJson fun toJson(date: LocalDateTime) = date.format(DATE_TIME_FORMATTER)
+
+    @FromJson fun fromJson(json: String) = DATE_TIME_FORMATTER.parse(json).query {
+        LocalDateTime.ofEpochSecond(it.getLong(ChronoField.INSTANT_SECONDS), 0, ZoneOffset.UTC)
     }
 }
