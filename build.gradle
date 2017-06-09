@@ -34,6 +34,7 @@ ext {
     buildToolsVersion = '25.0.2'
 
     supportLibraryVersion = '25.3.1'
+    archLibraryVersion = '1.0.0-alpha2'
     rxJavaVersion = '2.0.7'
     rxAndroidVersion = '2.0.1'
     okhttpVersion = '3.6.0'

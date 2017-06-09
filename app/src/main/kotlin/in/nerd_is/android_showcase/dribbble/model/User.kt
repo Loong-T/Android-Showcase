@@ -49,7 +49,10 @@ data class User(val id: Long,
                 @Json(name = "likes_url") val likesUrl: String,
                 @Json(name = "projects_url") val projectsUrl: String,
                 @Json(name = "shots_url") val shotsUrl: String,
-                @Json(name = "teams_url") val teamsUrl: String,
+                @Json(name = "teams_url") val teamsUrl: String?,
                 @Json(name = "created_at") val createdAt: LocalDateTime,
-                @Json(name = "updated_at") val updatedAt: LocalDateTime)
+                @Json(name = "updated_at") val updatedAt: LocalDateTime,
+                @Json(name = "members_count") val membersCount: Int?,
+                @Json(name = "members_url") val membersUrl: String?,
+                @Json(name = "team_shots_url") val teamShotsUrl: String?)
 
