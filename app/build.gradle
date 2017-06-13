@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.squareup.sqldelight'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -24,12 +23,9 @@ android {
     buildTypes {
 
         debug {
-            sourceSets.debug.java.srcDirs += 'src/debug/kotlin'
         }
 
         release {
-            sourceSets.release.java.srcDirs += 'src/release/kotlin'
-
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -67,9 +63,26 @@ android {
         }
         test {
             java {
-                srcDirs += ['src/test/kotlin',
+                srcDirs += ['src/testShared/kotlin',
+                            'src/test/kotlin',
                             'src/integrationTest/java',
                             'src/integrationTest/kotlin']
+            }
+        }
+        androidTest {
+            java {
+                srcDirs += ['src/testShared/kotlin',
+                            'src/androidTest/kotlin']
+            }
+        }
+        debug {
+            java {
+                srcDirs += 'src/debug/kotlin'
+            }
+        }
+        release {
+            java {
+                srcDirs += 'src/release/kotlin'
             }
         }
     }
@@ -103,8 +116,8 @@ dependencies {
     implementation 'com.bm.photoview:library:1.4.1'
 
     // reactive
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
 
     // IO
     implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
@@ -127,12 +140,8 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
     // module
-    compileOnly "com.jakewharton.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
-    kapt "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
-    compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
-    kapt "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
-    implementation "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autoValueParcelVersion"
-    kapt "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autoValueParcelVersion"
+    compile "nz.bradcampbell:paperparcel:$rootProject.ext.paperparcelVersion"
+    kapt "nz.bradcampbell:paperparcel-compiler:$rootProject.ext.paperparcelVersion"
 
     // debug
     debugImplementation "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"

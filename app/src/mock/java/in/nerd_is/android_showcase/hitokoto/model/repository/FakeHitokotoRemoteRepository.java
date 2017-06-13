@@ -37,7 +37,7 @@ public class FakeHitokotoRemoteRepository implements HitokotoDataSource {
 
     public FakeHitokotoRemoteRepository() {
         Moshi moshi = new Moshi.Builder().add(new HitokotoDateTimeAdapter()).build();
-        JsonAdapter<Hitokoto> adapter = Hitokoto.jsonAdapter(moshi);
+        JsonAdapter<Hitokoto> adapter = moshi.adapter(Hitokoto.class);
         hitokotoList = new ArrayList<>(JSON_STRINGS.length);
         try {
             for (String json : JSON_STRINGS) {

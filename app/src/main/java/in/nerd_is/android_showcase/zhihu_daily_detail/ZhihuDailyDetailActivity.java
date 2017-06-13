@@ -70,7 +70,7 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(story.title());
+        actionBar.setTitle(story.getTitle());
         AndroidUtils.adjustViewAccordingToStatusBar(contentView, toolbar);
 
         webView = find(R.id.web_view);
@@ -80,14 +80,14 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         DragToDismissCoordinatorLayout dismissLayout = find(R.id.drag_to_dismiss_layout);
         dismissLayout.addListener(new DefaultDismissAnimator(this));
 
-        presenter.loadDetail(story.id());
+        presenter.loadDetail(story.getId());
     }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     public void showDetail(StoryDetail storyDetail) {
         TextView sourceTv = find(R.id.source_tv);
-        sourceTv.setText(storyDetail.imageSource());
+        sourceTv.setText(storyDetail.getImageSource());
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new JsProxy(this), "activity");
@@ -98,7 +98,7 @@ public class ZhihuDailyDetailActivity extends BaseActivity
                 .fromString()
                 .asBitmap()
                 .transcode(new PaletteBitmapTranscoder(this), PaletteBitmap.class)
-                .load(storyDetail.image())
+                .load(storyDetail.getImage())
                 .into(new ImageViewTarget<PaletteBitmap>(headImage) {
                     @Override
                     protected void setResource(PaletteBitmap resource) {

@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
-        classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -46,4 +45,5 @@ ext {
     autoValueParcelVersion = '0.2.5'
     espressoVersion = '2.2.2'
     bigImageViewVersion = '1.2.8'
+    paperparcelVersion = '2.0.1'
 }

@@ -64,9 +64,9 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
 
         @Override
         public void render(@NonNull Story story) {
-            tvTitle.setText(story.title());
+            tvTitle.setText(story.getTitle());
 
-            List<String> images = story.images();
+            List<String> images = story.getImages();
             if (images != null && !images.isEmpty()) {
                 Glide.with(context)
                         .load(images.get(0))
@@ -74,7 +74,7 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
             }
             ivImage.setContentDescription(context.getString(
                     R.string.content_desc_zhihu_daily_list_item_template,
-                    story.title()));
+                    story.getTitle()));
 
             itemView.setOnClickListener(v -> listener.onItemClicked(story));
         }
@@ -99,7 +99,7 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
 
         @Override
         public void render(@NonNull Date date) {
-            tvDate.setText(FORMATTER.format(date.date()));
+            tvDate.setText(FORMATTER.format(date.getDate()));
         }
     }
 

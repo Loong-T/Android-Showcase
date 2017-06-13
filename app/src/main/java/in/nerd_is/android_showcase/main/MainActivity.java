@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void showHitokoto(Hitokoto hitokoto) {
-        hitokotoTv.setText(hitokoto.text());
+        hitokotoTv.setText(hitokoto.getText());
     }
 
     @Override

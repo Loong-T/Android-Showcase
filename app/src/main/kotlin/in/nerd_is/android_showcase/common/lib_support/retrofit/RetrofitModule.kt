@@ -19,7 +19,6 @@ package `in`.nerd_is.android_showcase.common.lib_support.retrofit
 import `in`.nerd_is.android_showcase.DebugOnly.addLoggingInterceptor
 import `in`.nerd_is.android_showcase.DebugOnly.addStethoInterceptor
 import `in`.nerd_is.android_showcase.common.Constant.*
-import `in`.nerd_is.android_showcase.common.lib_support.moshi.MyMoshiAdapterFactory
 import `in`.nerd_is.android_showcase.dribbble.model.repository.remote.DribbbleUrl
 import `in`.nerd_is.android_showcase.dribbble.moshi.DribbbleDateTimeAdapter
 import `in`.nerd_is.android_showcase.hitokoto.model.repository.remote.HitokotoUrl
@@ -46,7 +45,7 @@ class RetrofitModule {
             .addStethoInterceptor()
             .build()
     private val rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.create()
-    private val moshiBuilder: Moshi.Builder = Moshi.Builder().add(MyMoshiAdapterFactory.create())
+    private val moshiBuilder: Moshi.Builder = Moshi.Builder()
 
     @Provides
     @Named(TAG_HITOKOTO)

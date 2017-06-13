@@ -17,15 +17,13 @@
 
 package in.nerd_is.android_showcase.hitokoto;
 
-import android.content.Context;
-
 import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import in.nerd_is.android_showcase.AppDatabase;
 import in.nerd_is.android_showcase.common.di.annotation.ActivityScope;
 import in.nerd_is.android_showcase.hitokoto.model.repository.HitokotoDataSource;
-import in.nerd_is.android_showcase.hitokoto.model.repository.local.HitokotoDbHelper;
 import in.nerd_is.android_showcase.hitokoto.model.repository.local.HitokotoLocalRepository;
 import in.nerd_is.android_showcase.hitokoto.model.repository.remote.HitokotoRemoteRepository;
 import retrofit2.Retrofit;
@@ -50,7 +48,7 @@ public class HitokotoModule {
     @Provides
     @ActivityScope
     @Named(TAG_LOCAL)
-    public static HitokotoDataSource provideLocalDataSource(Context context) {
-        return new HitokotoLocalRepository(new HitokotoDbHelper(context));
+    public static HitokotoDataSource provideLocalDataSource(AppDatabase appDatabase) {
+        return new HitokotoLocalRepository(appDatabase);
     }
 }
