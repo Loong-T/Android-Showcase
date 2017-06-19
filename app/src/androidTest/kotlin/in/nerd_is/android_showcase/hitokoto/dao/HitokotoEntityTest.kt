@@ -58,7 +58,13 @@ class HitokotoEntityTest {
             list
         })
 
-        hitokotoList.forEach { dao.insertHitokoto(it) }
+        try {
+            db.beginTransaction()
+            hitokotoList.forEach { dao.insertHitokoto(it) }
+            db.setTransactionSuccessful()
+        } finally {
+            db.endTransaction()
+        }
 
         val testObserver = dao.countHitokoto().test()
         testObserver.assertSubscribed()
