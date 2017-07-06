@@ -6,9 +6,11 @@
     <string name="navigation_drawer_open">打开导航抽屉</string>
 
     <string name="zhihu">知乎</string>
+    <string name="dribbble">Dribbble</string>
 
+    <string name="content_desc_common_image_template">%1$s配图</string>
     <string name="content_desc_zhihu_daily_list_item_image">知乎日报列表项配图描述</string>
-    <string name="content_desc_zhihu_daily_list_item_template">%1$s配图</string>
+    <string name="content_desc_zhihu_daily_list_item_template">@string/content_desc_common_image_template</string>
     <string name="content_desc_switch_to_day_mode">切换至日间模式</string>
     <string name="content_desc_switch_to_night_mode">切换至夜间模式</string>
 

@@ -13,9 +13,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.support.AndroidSupportInjection;
+import in.nerd_is.android_showcase.BaseViewFragment;
 import in.nerd_is.android_showcase.R;
-import in.nerd_is.android_showcase.common.BaseFragment;
-import in.nerd_is.android_showcase.main.MainActivity;
 import in.nerd_is.android_showcase.widget.DividerItemDecoration;
 import in.nerd_is.android_showcase.zhihu_daily.model.Story;
 import in.nerd_is.android_showcase.zhihu_daily_detail.ZhihuDailyDetailActivity;
@@ -24,7 +24,7 @@ import in.nerd_is.recycler_simplification.LoadMoreRecyclerAdapter;
 /**
  * @author Xuqiang ZHENG on 2016/10/23.
  */
-public class ZhihuDailyListFragment extends BaseFragment
+public class ZhihuDailyListFragment extends BaseViewFragment
         implements ZhihuDailyListContract.View {
 
     @Inject
@@ -36,14 +36,14 @@ public class ZhihuDailyListFragment extends BaseFragment
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        AndroidSupportInjection.inject(this);
         super.onActivityCreated(savedInstanceState);
-        ((MainActivity) getActivity()).mainComponent.inject(this);
 
         swipeRefreshLayout.setOnRefreshListener(presenter::loadLatestStories);
 
         adapter = new LoadMoreRecyclerAdapter(
                 new ZhihuDailyListTypeFactory(this::openDetail),
-                R.layout.zhihu_daily_list_footer,
+                R.layout.load_more_footer,
                 data -> presenter.loadMoreStories(data)
         );
         recyclerView.setAdapter(adapter);

@@ -11,6 +11,7 @@ import in.nerd_is.android_showcase.ThisApplication;
 public class Configuration {
 
     public static final int PAGE_ZHIHU = 0;
+    public static final int PAGE_DRIBBBLE = 1;
 
     // do not change these constants
     private static final String NIGHT_MODE = "night_mode";

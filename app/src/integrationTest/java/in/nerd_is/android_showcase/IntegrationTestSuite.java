@@ -3,15 +3,17 @@ package in.nerd_is.android_showcase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import in.nerd_is.android_showcase.hitokoto.HitokotoRemoteTest;
-import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyRemoteTest;
+import in.nerd_is.android_showcase.dribbble.model.repository.remote.DribbbleRemoteRepositoryTest;
+import in.nerd_is.android_showcase.hitokoto.HitokotoRemoteRepositoryTest;
+import in.nerd_is.android_showcase.zhihu_daily_list.ZhihuDailyRemoteRepositoryTest;
 
 /**
  * @author Xuqiang ZHENG on 2016/10/22.
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        HitokotoRemoteTest.class,
-        ZhihuDailyRemoteTest.class,
+        HitokotoRemoteRepositoryTest.class,
+        ZhihuDailyRemoteRepositoryTest.class,
+        DribbbleRemoteRepositoryTest.class
 })
 public class IntegrationTestSuite { }

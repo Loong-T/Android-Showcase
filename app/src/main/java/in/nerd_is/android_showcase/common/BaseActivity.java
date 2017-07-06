@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import in.nerd_is.android_showcase.AppComponent;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.ThisApplication;
 
@@ -36,10 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         contentView = find(android.R.id.content);
         thisApplication = (ThisApplication) getApplication();
         configuration = thisApplication.configuration;
-        setupActivityComponent(thisApplication.appComponent);
     }
-
-    protected abstract void setupActivityComponent(AppComponent appComponent);
 
     @SuppressWarnings("unchecked")
     protected <T extends View> T find(@IdRes int viewId) {

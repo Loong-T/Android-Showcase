@@ -54,9 +54,9 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
             ivImage = ViewUtils.find(itemView, R.id.image_view);
         }
 
-        public static StoryHolder newInstance(LayoutInflater inflater,
-                                              ViewGroup parent,
-                                              OnClickListener listener) {
+        static StoryHolder newInstance(LayoutInflater inflater,
+                                       ViewGroup parent,
+                                       OnClickListener listener) {
             return new StoryHolder(parent.getContext(),
                     inflater.inflate(R.layout.zhihu_daily_list_item_story,
                             parent, false), listener);
@@ -64,9 +64,9 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
 
         @Override
         public void render(@NonNull Story story) {
-            tvTitle.setText(story.title());
+            tvTitle.setText(story.getTitle());
 
-            List<String> images = story.images();
+            List<String> images = story.getImages();
             if (images != null && !images.isEmpty()) {
                 Glide.with(context)
                         .load(images.get(0))
@@ -74,7 +74,7 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
             }
             ivImage.setContentDescription(context.getString(
                     R.string.content_desc_zhihu_daily_list_item_template,
-                    story.title()));
+                    story.getTitle()));
 
             itemView.setOnClickListener(v -> listener.onItemClicked(story));
         }
@@ -87,19 +87,19 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
 
         private final TextView tvDate;
 
-        public DateHolder(View itemView) {
+        DateHolder(View itemView) {
             super(itemView);
             tvDate = ViewUtils.find(itemView, R.id.text_view);
         }
 
-        public static DateHolder newInstance(LayoutInflater inflater, ViewGroup parent) {
+        static DateHolder newInstance(LayoutInflater inflater, ViewGroup parent) {
             return new DateHolder(inflater.inflate(
                     R.layout.zhihu_daily_list_item_date, parent, false));
         }
 
         @Override
         public void render(@NonNull Date date) {
-            tvDate.setText(FORMATTER.format(date.date()));
+            tvDate.setText(FORMATTER.format(date.getDate()));
         }
     }
 

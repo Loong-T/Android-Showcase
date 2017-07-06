@@ -47,7 +47,7 @@ public class FakeZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
     @Override
     public Single<List<?>> getLatestNews() {
         List<Object> list = new ArrayList<>();
-        list.add(Date.create(LocalDate.now()));
+        list.add(new Date(LocalDate.now()));
         list.addAll(generateStories(10));
         return Single.just(list);
     }
@@ -55,9 +55,9 @@ public class FakeZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
     @Override
     public Single<List<?>> getNewsBefore(Date date) {
         List<Object> list = new ArrayList<>();
-        LocalDate localDate = date.date().minus(1, ChronoUnit.DAYS);
+        LocalDate localDate = date.getDate().minus(1, ChronoUnit.DAYS);
 
-        list.add(Date.create(localDate));
+        list.add(new Date(localDate));
         list.addAll(generateStories(10));
 
         return Single.just(list);
@@ -69,15 +69,16 @@ public class FakeZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
     }
 
     private Story generateStory() {
-        return Story.FACTORY.creator.create(
+        Story story = new Story(
                 faker.number().randomNumber(),
                 0,
                 faker.book().title(),
                 faker.internet().image(),
                 listOf(faker.internet().image()),
-                false,
-                LocalDate.now()
+                false
         );
+        story.setDate(LocalDate.now());
+        return story;
     }
 
     private List<Story> generateStories(int num) {
@@ -89,7 +90,7 @@ public class FakeZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
     }
 
     private StoryDetail generateDetail() {
-        return StoryDetail.create(
+        return new StoryDetail(
                 faker.number().randomNumber(),
                 0,
                 DETAIL_BODY,

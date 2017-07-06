@@ -1,0 +1,25 @@
+<!--
+  ~    Copyright 2017 Xuqiang ZHENG
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="1024.0"
+    android:viewportWidth="1024.0">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M658.3,857.2c-5.7,-33.1 -27.4,-147.4 -80,-284.6 -0.6,0 -1.7,0.6 -2.3,0.6 0,0 -222.3,77.7 -294.3,234.3 -3.4,-2.9 -8.6,-6.3 -8.6,-6.3a376.6,376.6 0,0 0,238.8 85.7c52,0 101.2,-10.9 146.3,-29.7zM552.6,510.3a1061.5,1061.5 0,0 0,-30.3 -63.4C329.1,504.6 144,500 137.7,500c-0.6,4 -0.6,8 -0.6,12 0,96 36.6,184 96,250.3 102.3,-182.3 304.6,-247.4 304.6,-247.4 5.2,-1.7 10.3,-2.9 14.8,-4.6zM491.4,389.2a2254.8,2254.8 0,0 0,-139.4 -216,375.5 375.5,0 0,0 -206.8,261.7c9.7,0 166.3,1.7 346.3,-45.7zM882.3,571.4c-8,-2.3 -112.6,-35.4 -233.7,-16.6 49.2,135.4 69.2,245.7 73.1,268a376.4,376.4 0,0 0,160.6 -251.4zM422.3,148c-0.6,0 -0.6,0 -1.1,0.6 0,0 0.6,-0.6 1.1,-0.6zM759.4,230.8a371.9,371.9 0,0 0,-336 -82.8c5.7,7.4 76.6,100.6 140.6,218.3 141.1,-52.6 194.3,-133.7 195.4,-135.4zM886.9,508a375.7,375.7 0,0 0,-85.1 -234.3c-1.1,1.1 -61.1,88 -209.2,148.6 8.6,17.7 17.2,36 25.2,54.3 2.9,6.3 5.2,13.1 8,19.4 129.1,-16.6 256.6,11.4 261.2,12zM950.9,512c0,242.3 -196.6,438.9 -438.9,438.9S73.1,754.3 73.1,512 269.7,73.1 512,73.1s438.9,196.6 438.9,438.9z" />
+</vector>

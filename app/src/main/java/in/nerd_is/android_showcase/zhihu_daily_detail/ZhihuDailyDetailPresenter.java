@@ -13,9 +13,9 @@ public class ZhihuDailyDetailPresenter implements ZhihuDailyDetailContract.Prese
 
     private ZhihuDailyDetailContract.View view;
 
-    @Inject
-    GetZhihuDailyDetail getZhihuDailyDetail;
+    private GetZhihuDailyDetail getZhihuDailyDetail;
 
+    @Inject
     public ZhihuDailyDetailPresenter(GetZhihuDailyDetail getZhihuDailyDetail) {
         this.getZhihuDailyDetail = getZhihuDailyDetail;
     }

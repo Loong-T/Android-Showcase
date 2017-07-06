@@ -20,6 +20,8 @@ import com.annimon.stream.Stream;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import in.nerd_is.android_showcase.zhihu_daily.model.Date;
 import in.nerd_is.android_showcase.zhihu_daily.usecase.GetZhihuDailyList;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -32,6 +34,7 @@ public class ZhihuDailyListPresenter implements ZhihuDailyListContract.Presenter
     private ZhihuDailyListContract.View view;
     private final GetZhihuDailyList getZhihuDailyList;
 
+    @Inject
     public ZhihuDailyListPresenter(GetZhihuDailyList getZhihuDailyList) {
         this.getZhihuDailyList = getZhihuDailyList;
     }

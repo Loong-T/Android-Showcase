@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.squareup.sqldelight'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -16,6 +16,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField("String", "DRIBBBLE_ACCESS_TOKEN", "\"$DribbbleAccessToken\"")
     }
 
     buildTypes {
@@ -29,12 +31,15 @@ android {
         }
     }
 
+    flavorDimensions 'env'
+
     productFlavors {
         mock {
+            dimension 'env'
             applicationIdSuffix = ".mock"
         }
         prod {
-
+            dimension 'env'
         }
     }
 
@@ -50,82 +55,137 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     sourceSets {
+        main {
+            java {
+                srcDirs += 'src/main/kotlin'
+            }
+        }
         test {
             java {
-                srcDirs += 'src/integrationTest/java'
+                srcDirs += ['src/testShared/kotlin',
+                            'src/test/kotlin',
+                            'src/integrationTest/java',
+                            'src/integrationTest/kotlin']
+            }
+        }
+        androidTest {
+            java {
+                srcDirs += ['src/testShared/kotlin',
+                            'src/androidTest/kotlin']
+            }
+        }
+
+        debug {
+            java {
+                srcDirs += 'src/debug/kotlin'
+            }
+        }
+        release {
+            java {
+                srcDirs += 'src/release/kotlin'
+            }
+        }
+
+        mock {
+            java {
+                srcDirs += 'src/mock/kotlin'
+            }
+        }
+
+        prod {
+            java {
+                srcDirs += 'src/prod/kotlin'
             }
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(path: ':recycler_simplification')
-    compile project(path: ':dragtodismisslayout')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':recycler_simplification')
+    implementation project(path: ':dragtodismisslayout')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     // support library
-    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibaryVersion"
-    compile "com.android.support:design:$rootProject.ext.supportLibaryVersion"
-    compile "com.android.support:support-annotations:$rootProject.ext.supportLibaryVersion"
-    compile "com.android.support:palette-v7:$rootProject.ext.supportLibaryVersion"
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:support-annotations:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:palette-v7:$rootProject.ext.supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // architecture components
+    implementation "android.arch.lifecycle:runtime:$rootProject.ext.archLibraryVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.ext.archLibraryVersion"
+    kapt "android.arch.lifecycle:compiler:$rootProject.ext.archLibraryVersion"
+    implementation "android.arch.persistence.room:runtime:$rootProject.ext.archLibraryVersion"
+    kapt "android.arch.persistence.room:compiler:$rootProject.ext.archLibraryVersion"
+    testImplementation "android.arch.persistence.room:testing:$rootProject.ext.archLibraryVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.archLibraryVersion"
+
+    // data binding
+    kapt "com.android.databinding:compiler:2.3.3"
 
     // UI
-    compile 'net.opacapp:multiline-collapsingtoolbar:1.3.1'
-    compile 'me.zhanghai.android.systemuihelper:library:1.0.0'
-    compile 'com.bm.photoview:library:1.4.1'
+    implementation 'net.opacapp:multiline-collapsingtoolbar:1.3.1'
+    implementation 'me.zhanghai.android.systemuihelper:library:1.0.0'
+    implementation 'com.bm.photoview:library:1.4.1'
 
     // reactive
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
 
     // IO
-    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
-    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-moshi:$rootProject.ext.retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
-    compile 'com.squareup.moshi:moshi:1.4.0'
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
+    debugImplementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
+    implementation 'com.squareup.moshi:moshi:1.4.0'
 
     // Java 8 support
-    compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
-    compile 'com.annimon:stream:1.1.6'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    implementation 'com.annimon:stream:1.1.6'
 
     // media
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
 
     // di
-    compile "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+    implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.ext.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.ext.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.ext.daggerVersion"
 
     // module
-    provided "com.jakewharton.auto.value:auto-value-annotations:$rootProject.ext.autoValueVersion"
-    annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"
-    provided "com.ryanharter.auto.value:auto-value-moshi-annotations:$rootProject.ext.autoValueMoshiVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$rootProject.ext.autoValueMoshiVersion"
-    compile "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autoValueParcelVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autoValueParcelVersion"
+    implementation "nz.bradcampbell:paperparcel:$rootProject.ext.paperparcelVersion"
+    kapt "nz.bradcampbell:paperparcel-compiler:$rootProject.ext.paperparcelVersion"
 
     // debug
-    debugCompile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
-    debugCompile "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stethoVersion"
+    debugImplementation "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stethoVersion"
 
     // test
-    testCompile('junit:junit:4.12', {
+    testImplementation('junit:junit:4.12', {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     })
-    testCompile 'org.mockito:mockito-core:2.7.17'
-    testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile 'org.threeten:threetenbp:1.3.3'
-    testCompile 'com.github.javafaker:javafaker:0.13'
-    mockCompile 'com.github.javafaker:javafaker:0.13'
+    testImplementation 'org.mockito:mockito-core:2.7.19'
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'
+    testImplementation 'org.threeten:threetenbp:1.3.3'
+    testImplementation 'com.github.javafaker:javafaker:0.13'
+    androidTestImplementation 'com.github.javafaker:javafaker:0.13'
+    mockImplementation 'com.github.javafaker:javafaker:0.13'
 
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion", {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion", {
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion", {
         exclude group: 'com.android.support'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })

@@ -45,7 +45,7 @@ public class ZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
                     List<Object> list = new ArrayList<>(latestNews.stories.size() + 1);
                     LocalDate date = latestNews.date;
 
-                    list.add(Date.create(date));
+                    list.add(new Date(date));
                     for (Story story : latestNews.stories) {
                         story.setDate(date);
                         list.add(story);
@@ -56,12 +56,12 @@ public class ZhihuDailyRemoteRepository implements ZhihuDailyDataSource {
 
     @Override
     public Single<List<?>> getNewsBefore(Date date) {
-        return api.getNewsBefore(NEWS_DATE_FORMATTER.format(date.date()))
+        return api.getNewsBefore(NEWS_DATE_FORMATTER.format(date.getDate()))
                 .map(news -> {
                     List<Object> list = new ArrayList<>(news.stories.size() + 1);
                     LocalDate localDate = news.date;
 
-                    list.add(Date.create(localDate));
+                    list.add(new Date(localDate));
                     for (Story story : news.stories) {
                         story.setDate(localDate);
                         list.add(story);

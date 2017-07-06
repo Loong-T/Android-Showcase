@@ -112,11 +112,6 @@ public class ImageViewerActivity extends BaseActivity {
         // empty
     }
 
-    @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
-        // empty
-    }
-
     private void handleIntent() {
         Intent intent = getIntent();
         String[] arrayExtra = intent.getStringArrayExtra(EXTRA_URL_ARRAY);
