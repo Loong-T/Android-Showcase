@@ -22,7 +22,6 @@ import javax.inject.Named;
 import dagger.Module;
 import dagger.Provides;
 import in.nerd_is.android_showcase.AppDatabase;
-import in.nerd_is.android_showcase.common.di.annotation.ActivityScope;
 import in.nerd_is.android_showcase.hitokoto.model.repository.FakeHitokotoRemoteRepository;
 import in.nerd_is.android_showcase.hitokoto.model.repository.HitokotoDataSource;
 import in.nerd_is.android_showcase.hitokoto.model.repository.local.HitokotoLocalRepository;
@@ -36,14 +35,12 @@ import static in.nerd_is.android_showcase.common.Constant.TAG_REMOTE;
 @Module
 public class HitokotoModule {
     @Provides
-    @ActivityScope
     @Named(TAG_REMOTE)
     public static HitokotoDataSource provideRemoteDataSource() {
         return new FakeHitokotoRemoteRepository();
     }
 
     @Provides
-    @ActivityScope
     @Named(TAG_LOCAL)
     public static HitokotoDataSource provideLocalDataSource(AppDatabase appDatabase) {
         return new HitokotoLocalRepository(appDatabase);

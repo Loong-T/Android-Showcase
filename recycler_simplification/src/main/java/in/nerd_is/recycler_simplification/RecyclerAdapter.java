@@ -14,7 +14,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     protected final TypeFactory typeFactory;
     @SuppressWarnings("unchecked")
-    protected List<Object> data = Collections.EMPTY_LIST;
+    @NonNull protected List<Object> data = Collections.EMPTY_LIST;
 
     public RecyclerAdapter(@NonNull TypeFactory typeFactory) {
         this.typeFactory = typeFactory;
@@ -40,17 +40,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         typeFactory.bindViewHolder(holder, data.get(position));
     }
 
+    @NonNull
     public List<?> getData() {
         return data;
     }
 
-    public final void swap(List<?> list) {
+    public final void swap(@NonNull List<?> list) {
         //noinspection unchecked
         this.data = (List<Object>) list;
         notifyDataSetChanged();
     }
 
-    public void append(List<?> list) {
+    public void append(@NonNull List<?> list) {
         int startPos = data.size();
         data.addAll(list);
         notifyItemRangeInserted(startPos, list.size());

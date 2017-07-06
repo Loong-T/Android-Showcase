@@ -24,4 +24,5 @@ import io.reactivex.Single
  */
 interface DribbbleDataSource {
     fun getShots(): Single<List<Shot>>
+    fun getNextPageShots(page: Int): Single<List<Shot>>
 }

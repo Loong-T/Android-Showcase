@@ -19,6 +19,7 @@ package `in`.nerd_is.android_showcase.dribbble.model.repository.remote
 import `in`.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitModule
 import `in`.nerd_is.android_showcase.dribbble.model.Shot
 import io.reactivex.observers.TestObserver
+import io.reactivex.schedulers.Schedulers
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsEmptyCollection.empty
@@ -31,7 +32,10 @@ class DribbbleRemoteRepositoryTest {
 
     @Test
     fun getShots_notNullValue() {
-        val repo = DribbbleRemoteRepository(RetrofitModule().provideDribbbleRetrofit())
+        val repo = DribbbleRemoteRepository(
+                RetrofitModule().provideDribbbleRetrofit(),
+                Schedulers.io(),
+                Schedulers.computation())
 
         val testObserver: TestObserver<List<Shot>> = repo.getShots().test()
 

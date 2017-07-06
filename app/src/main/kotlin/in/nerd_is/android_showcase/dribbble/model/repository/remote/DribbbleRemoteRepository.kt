@@ -17,27 +17,42 @@
 package `in`.nerd_is.android_showcase.dribbble.model.repository.remote
 
 import `in`.nerd_is.android_showcase.BuildConfig
-import `in`.nerd_is.android_showcase.common.Constant.TAG_DRIBBBLE
+import `in`.nerd_is.android_showcase.common.Constant.*
 import `in`.nerd_is.android_showcase.common.lib_support.retrofit.RetrofitUtils
 import `in`.nerd_is.android_showcase.dribbble.ParamName
 import `in`.nerd_is.android_showcase.dribbble.model.Shot
 import `in`.nerd_is.android_showcase.dribbble.model.repository.DribbbleDataSource
 import `in`.nerd_is.android_showcase.dribbble.model.repository.remote.DribbbleUrl.SHOTS
+import io.reactivex.Scheduler
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
+import javax.inject.Inject
 import javax.inject.Named
 
 /**
  * @author Xuqiang ZHENG on 2017/6/5.
  */
-class DribbbleRemoteRepository(@Named(TAG_DRIBBBLE) retrofit: Retrofit) : DribbbleDataSource {
+class DribbbleRemoteRepository @Inject constructor(
+        @Named(TAG_DRIBBBLE) retrofit: Retrofit,
+        @Named(TAG_IO) val ioScheduler: Scheduler,
+        @Named(TAG_MAIN) val mainScheduler: Scheduler) : DribbbleDataSource {
 
     private val api = RetrofitUtils.create(retrofit, Api::class.java)
 
     override fun getShots(): Single<List<Shot>> {
         return api.getShots(mapOf(ParamName.ACCESS_TOKEN to BuildConfig.DRIBBBLE_ACCESS_TOKEN))
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler)
+    }
+
+    override fun getNextPageShots(page: Int): Single<List<Shot>> {
+        return api.getShots(mapOf(
+                ParamName.PAGE to page.toString(),
+                ParamName.ACCESS_TOKEN to BuildConfig.DRIBBBLE_ACCESS_TOKEN
+        )).subscribeOn(ioScheduler)
+                .observeOn(mainScheduler)
     }
 
     private interface Api {

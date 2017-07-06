@@ -33,6 +33,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
+import javax.inject.Singleton
 
 /**
  * @author Xuqiang ZHENG on 2016/11/25.
@@ -45,26 +46,28 @@ class RetrofitModule {
             .addStethoInterceptor()
             .build()
     private val rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.create()
-    private val moshiBuilder: Moshi.Builder = Moshi.Builder()
 
+    @Singleton
     @Provides
     @Named(TAG_HITOKOTO)
     fun provideHitokotoRetrofit(): Retrofit {
-        val moshi = moshiBuilder.add(HitokotoDateTimeAdapter()).build()
+        val moshi = Moshi.Builder().add(HitokotoDateTimeAdapter()).build()
         return createRetrofit(moshi, HitokotoUrl.BASE_URL)
     }
 
+    @Singleton
     @Provides
     @Named(TAG_ZHIHU_DAILY)
     fun provideZhihuDailyRetrofit(): Retrofit {
-        val moshi = moshiBuilder.add(ZhihuDailyDateAdapter()).build()
+        val moshi = Moshi.Builder().add(ZhihuDailyDateAdapter()).build()
         return createRetrofit(moshi, ZhihuDailyUrl.BASE_URL)
     }
 
+    @Singleton
     @Provides
     @Named(TAG_DRIBBBLE)
     fun provideDribbbleRetrofit(): Retrofit {
-        val moshi = moshiBuilder.add(DribbbleDateTimeAdapter()).build()
+        val moshi = Moshi.Builder().add(DribbbleDateTimeAdapter()).build()
         return createRetrofit(moshi, DribbbleUrl.BASE_URL)
     }
 

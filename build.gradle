@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha5'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -32,17 +32,14 @@ ext {
     compileSdkVersion = 25
     buildToolsVersion = '25.0.2'
 
-    supportLibraryVersion = '25.3.1'
-    archLibraryVersion = '1.0.0-alpha2'
+    supportLibraryVersion = '25.4.0'
+    archLibraryVersion = '1.0.0-alpha3'
     rxJavaVersion = '2.0.7'
     rxAndroidVersion = '2.0.1'
     okhttpVersion = '3.6.0'
     retrofitVersion = '2.2.0'
-    daggerVersion = '2.9'
+    daggerVersion = '2.11'
     stethoVersion = '1.4.2'
-    autoValueVersion = '1.4'
-    autoValueMoshiVersion = '0.4.3'
-    autoValueParcelVersion = '0.2.5'
     espressoVersion = '2.2.2'
     bigImageViewVersion = '1.2.8'
     paperparcelVersion = '2.0.1'

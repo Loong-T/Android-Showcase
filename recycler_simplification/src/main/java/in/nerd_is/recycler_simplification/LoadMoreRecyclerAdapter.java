@@ -2,6 +2,9 @@ package in.nerd_is.recycler_simplification;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
 
     private boolean isLoading;
     private boolean shouldLoadMore;
+    private RecyclerView.LayoutManager layoutManager;
 
     public LoadMoreRecyclerAdapter(@NonNull TypeFactory typeFactory,
                                    @LayoutRes final int loadMoreLayoutResId,
@@ -56,11 +60,45 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
                 listener.loadMore(getData());
             }
 
+
             typeFactory.bindViewHolder(holder, loadMore);
             return;
         }
 
         super.onBindViewHolder(holder, position);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        layoutManager = recyclerView.getLayoutManager();
+
+        if (layoutManager == null) {
+            throw new IllegalStateException("please set a layout manager first");
+        }
+
+        if (layoutManager instanceof GridLayoutManager) {
+            final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (getItemViewType(position) == typeFactory.getType(LoadMore.class)) {
+                        return gridLayoutManager.getSpanCount();
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(ViewHolder holder) {
+        if (holder instanceof LoadMoreHolder
+                && layoutManager instanceof StaggeredGridLayoutManager) {
+            StaggeredGridLayoutManager.LayoutParams lp =
+                    (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+            lp.setFullSpan(true);
+        }
     }
 
     public void startEndlessLoadMore() {
@@ -86,7 +124,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
     }
 
     @Override
-    public void append(List<?> list) {
+    public void append(@NonNull List<?> list) {
         int startPos = data.size();
         data.addAll(list);
         notifyItemRangeInserted(startPos, list.size());
@@ -100,7 +138,8 @@ public class LoadMoreRecyclerAdapter extends RecyclerAdapter {
         void loadMore(List<?> data);
     }
 
-    private static final class LoadMore { }
+    private static final class LoadMore {
+    }
 
     private static final class LoadMoreHolder extends ViewHolder<LoadMore> {
 

@@ -54,9 +54,9 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
             ivImage = ViewUtils.find(itemView, R.id.image_view);
         }
 
-        public static StoryHolder newInstance(LayoutInflater inflater,
-                                              ViewGroup parent,
-                                              OnClickListener listener) {
+        static StoryHolder newInstance(LayoutInflater inflater,
+                                       ViewGroup parent,
+                                       OnClickListener listener) {
             return new StoryHolder(parent.getContext(),
                     inflater.inflate(R.layout.zhihu_daily_list_item_story,
                             parent, false), listener);
@@ -87,12 +87,12 @@ public class ZhihuDailyListTypeFactory extends TypeFactory {
 
         private final TextView tvDate;
 
-        public DateHolder(View itemView) {
+        DateHolder(View itemView) {
             super(itemView);
             tvDate = ViewUtils.find(itemView, R.id.text_view);
         }
 
-        public static DateHolder newInstance(LayoutInflater inflater, ViewGroup parent) {
+        static DateHolder newInstance(LayoutInflater inflater, ViewGroup parent) {
             return new DateHolder(inflater.inflate(
                     R.layout.zhihu_daily_list_item_date, parent, false));
         }

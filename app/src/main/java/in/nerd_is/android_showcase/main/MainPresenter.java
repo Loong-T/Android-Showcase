@@ -16,6 +16,8 @@
 
 package in.nerd_is.android_showcase.main;
 
+import javax.inject.Inject;
+
 import in.nerd_is.android_showcase.hitokoto.model.Hitokoto;
 import in.nerd_is.android_showcase.hitokoto.usecase.GetHitokoto;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -28,6 +30,7 @@ public class MainPresenter implements MainContract.Presenter {
     private MainContract.View view;
     private GetHitokoto getHitokoto;
 
+    @Inject
     public MainPresenter(GetHitokoto getHitokoto) {
         this.getHitokoto = getHitokoto;
     }

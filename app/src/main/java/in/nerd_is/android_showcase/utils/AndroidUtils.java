@@ -1,8 +1,8 @@
 package in.nerd_is.android_showcase.utils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +20,7 @@ public class AndroidUtils {
         return height;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
+    @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
     public static void adjustViewAccordingToStatusBar(View container, View... targets) {
         container.setOnApplyWindowInsetsListener((v, insets) -> {
             for (View view : targets) {

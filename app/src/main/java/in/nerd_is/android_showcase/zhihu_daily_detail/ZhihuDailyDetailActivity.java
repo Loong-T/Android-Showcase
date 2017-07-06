@@ -22,7 +22,7 @@ import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
 import javax.inject.Inject;
 
-import in.nerd_is.android_showcase.AppComponent;
+import dagger.android.AndroidInjection;
 import in.nerd_is.android_showcase.R;
 import in.nerd_is.android_showcase.common.BaseActivity;
 import in.nerd_is.android_showcase.common.lib_support.glide.PaletteBitmap;
@@ -54,6 +54,8 @@ public class ZhihuDailyDetailActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
+
         // WebView has a bug with night mode, it will change ui mode while first creation
         // see https://code.google.com/p/android/issues/detail?id=226208 for more detail
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -71,7 +73,9 @@ public class ZhihuDailyDetailActivity extends BaseActivity
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(story.getTitle());
-        AndroidUtils.adjustViewAccordingToStatusBar(contentView, toolbar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            AndroidUtils.adjustViewAccordingToStatusBar(contentView, toolbar);
+        }
 
         webView = find(R.id.web_view);
         headImage = find(R.id.app_bar_image);
@@ -123,14 +127,6 @@ public class ZhihuDailyDetailActivity extends BaseActivity
     @Override
     public void setupPresenter() {
         presenter.setView(this);
-    }
-
-    @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
-        appComponent.zhihuDailyDetailComponentBuilder()
-                .detailActivityModule(new ZhihuDailyDetailActivityModule())
-                .build()
-                .inject(this);
     }
 
     private void changeThemeByPalette(Palette palette) {

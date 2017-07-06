@@ -14,12 +14,19 @@
  *    limitations under the License.
  */
 
-package `in`.nerd_is.android_showcase.dribbble.viewmodel
+package `in`.nerd_is.android_showcase.common.lib_support.databinding
 
-import android.arch.lifecycle.ViewModel
+import android.databinding.BindingAdapter
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 
 /**
- * @author Xuqiang ZHENG on 2017/6/8.
+ * @author Xuqiang ZHENG on 2017/6/18.
  */
-class ShotsViewModel : ViewModel() {
+object BindingAdapters {
+    @BindingAdapter("bind:image")
+    @JvmStatic
+    fun loadImage(imageView: ImageView, url: String) {
+        Glide.with(imageView.context).load(url).into(imageView)
+    }
 }

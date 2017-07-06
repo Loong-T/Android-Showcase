@@ -27,4 +27,5 @@ object Constant {
 
 object ParamName {
     val ACCESS_TOKEN = "access_token"
+    val PAGE = "page"
 }
